@@ -28,6 +28,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://github.com/soitgoes511/soitgoes511.github.io.git" # the base hostname & protocol for your site, e.g. http://example.com
 # twitter_username: jekyllrb
 github_username:  soitgoes511
+linkedin_username: mike-hinkle-054808a6
 
 # Build settings
 theme: minima
@@ -35,8 +36,11 @@ theme: minima
 plugins:
   - jekyll-feed
   - jemoji
+#  - jekyll-paginate
 timezone: Europe/Paris
 future: true
+# paginate: 5
+# paginate_path: "/home/soitgoes/Pulse_grafana/Heroku_app/soitgoes511_page/soitgoes511.github.io/page:num/"
 
 # Exclude from processing.
 # The following items will not be processed, by default.
