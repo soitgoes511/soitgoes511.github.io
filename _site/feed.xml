@@ -1,4 +1,35 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-06-25T09:52:18+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>My family and I took a road less traveled. This blog will be a journal concerning our new life in France. I hope to share some fun engineering projects also along the way.</subtitle><entry><title type="html">A New Start in France</title><link href="http://localhost:4000/first/france/blog/careers/family/2021/06/21/new_start_in_france.html" rel="alternate" type="text/html" title="A New Start in France" /><published>2021-06-21T16:01:00+02:00</published><updated>2021-06-21T16:01:00+02:00</updated><id>http://localhost:4000/first/france/blog/careers/family/2021/06/21/new_start_in_france</id><content type="html" xml:base="http://localhost:4000/first/france/blog/careers/family/2021/06/21/new_start_in_france.html">&lt;p&gt;I will keep this short and sweet. I left corporate life in &lt;strong&gt;America&lt;/strong&gt; to move to my wife’s home country, &lt;strong&gt;France&lt;/strong&gt;. I had worked in the &lt;em&gt;semiconductor industry&lt;/em&gt; for about 4 years as 
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-06-26T22:33:01+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>My family and I took a road less traveled. This blog will be a journal concerning our new life in France. I hope to share some fun engineering projects also along the way.</subtitle><entry><title type="html">Initial observations while settling in</title><link href="http://localhost:4000/france/blog/careers/ee/2021/06/26/initial_observations.html" rel="alternate" type="text/html" title="Initial observations while settling in" /><published>2021-06-26T17:00:00+02:00</published><updated>2021-06-26T17:00:00+02:00</updated><id>http://localhost:4000/france/blog/careers/ee/2021/06/26/initial_observations</id><content type="html" xml:base="http://localhost:4000/france/blog/careers/ee/2021/06/26/initial_observations.html">&lt;p&gt;I have begun applying for jobs. Perhaps I am being un-realistic considering
+I am a beginner in the French language. I could not imagine finding a job in
+the states and not speaking English. :crossed_fingers:&lt;/p&gt;
+
+&lt;h3 id=&quot;some-observations-&quot;&gt;Some observations …&lt;/h3&gt;
+
+&lt;p&gt;My first observation is that most positions in the fields I am looking for are
+looking for Master’s or PHd’s. I guess when university doesn’t cost $100k for
+an undergraduate degree :moneybag:, there is more motivation to go a step further. I find myself
+regretting not sticking it out for my Master’s but that ship has sailed. At least
+I have experience in industry.&lt;/p&gt;
+
+&lt;p&gt;My second observation is that Electrical Engineering degrees here do not translate
+to the same studies in the US. I could be wrong and I will have a better perspective
+on this very shortly. I have noticed quite a bit of variation in EE degrees in the US, 
+too. I have friends which never studied transistors at their schools. We were drowned in
+small signal models, large signal models, BJT’s, MOSFET’s, etc.. After long
+discussions with my wife in the past, my understanding is that the French University
+system is, for the most part, standardized.&lt;/p&gt;
+
+&lt;p&gt;Due to the second observation above :point_up:, there will probably be some
+ambiguity for potential employers. I am attempting to find a career in big data,
+data science, data engineering, analytics, web development, etc.. Not sure if that
+aligns even remotely with what their EE’s learn at University, but it is not a huge
+leap from my past curriculum and studies. Only time will tell. It has only been
+2 weeks since I set foot on French soil and I need to be patient and keep plugging away.
+On the bright side, in the meantime, I can spend time with my family. I never would 
+have had this much time with my children had we stayed in the US.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Per aspera ad astra&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name></name></author><category term="france" /><category term="blog" /><category term="careers" /><category term="EE" /><summary type="html">I have begun applying for jobs. Perhaps I am being un-realistic considering I am a beginner in the French language. I could not imagine finding a job in the states and not speaking English. :crossed_fingers:</summary></entry><entry><title type="html">A New Start in France</title><link href="http://localhost:4000/first/france/blog/careers/family/2021/06/21/new_start_in_france.html" rel="alternate" type="text/html" title="A New Start in France" /><published>2021-06-21T16:01:00+02:00</published><updated>2021-06-21T16:01:00+02:00</updated><id>http://localhost:4000/first/france/blog/careers/family/2021/06/21/new_start_in_france</id><content type="html" xml:base="http://localhost:4000/first/france/blog/careers/family/2021/06/21/new_start_in_france.html">&lt;p&gt;I will keep this short and sweet. I left corporate life in &lt;strong&gt;America&lt;/strong&gt; to move to my wife’s home country, &lt;strong&gt;France&lt;/strong&gt;. I had worked in the &lt;em&gt;semiconductor industry&lt;/em&gt; for about 4 years as 
 an &lt;em&gt;engineer&lt;/em&gt; in various roles. My background at University was &lt;strong&gt;Electrical Engineering&lt;/strong&gt; with a concentration in microelectronics. My employer treated me well and finances were good. 
 I had a real career. About 3.5 years ago my beautiful daughter was born. My wife and I were informed at our 20 week sonogram that there were issues. Our life has never been the same 
 since.&lt;/p&gt;
