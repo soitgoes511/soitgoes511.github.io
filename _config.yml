@@ -36,6 +36,7 @@ theme: minima
 plugins:
   - jekyll-feed
   - jemoji
+  - jekyll-seo-tag
 #  - jekyll-paginate
 timezone: Europe/Paris
 future: true
