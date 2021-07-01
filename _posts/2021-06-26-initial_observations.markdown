@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: single
 title:  "Initial observations while settling in"
 date:   2021-06-26 15:00:00
 categories: france blog careers EE 

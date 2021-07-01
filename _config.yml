@@ -30,15 +30,36 @@ github_username:  soitgoes511
 linkedin_username: mike-hinkle-054808a6
 
 # Build settings
-theme: minima
-#theme: minimal-mistakes-jekyll
+# theme: minima
+theme: minimal-mistakes-jekyll
+minimal_mistakes_skin: "dark"
+defaults:
+  # _posts
+  - scope:
+      path: ""
+      type: posts
+    values:
+      layout: single
+      author_profile: true
+      read_time: true
+      comments: true
+      share: true
+      related: true
 plugins:
   - jekyll-feed
   - jemoji
-  - jekyll-seo-tag
+#  - jekyll-seo-tag
 #  - jekyll-paginate
 timezone: Europe/Paris
 future: true
+footer:
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://soitgoes511.github.io/"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/mike-hinkle-054808a6"
 # minima:
 #   skin: dark
 #   date_format: "%b %-d, %Y"
