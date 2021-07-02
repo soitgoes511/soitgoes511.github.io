@@ -28,7 +28,7 @@ systems**. If you read this, thank you. :grin:
   <img src="/assets/baby_boy_1.jpeg" alt="drawing" style="height: 300px;"/>
 </div>
 
-<form method="POST" action="https://staticman-soitgoes511.herokuapp.com/v3/entry/github/soitgoes511/staticman/gh-pages/comments">
+<form method="POST" action="https://staticman-soitgoes511.herokuapp.com/v3/entry/github/soitgoes511/staticman-soitgoes511/gh-pages/comments">
   <input name="options[redirect]" type="hidden" value="https://my-site.com">
   <!-- e.g. "2016-01-02-this-is-a-post" -->
   <input name="options[slug]" type="hidden" value="{{ page.slug }}">
