@@ -8,10 +8,6 @@
 # For technical reasons, this file is *NOT* reloaded automatically when you use
 # 'bundle exec jekyll serve'. If you change this file, please restart the server process.
 #
-# If you need help with YAML syntax, here are some quick references for you: 
-# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
-# https://learnxinyminutes.com/docs/yaml/
-#
 # Site settings
 # These are used to personalize your new site. If you look in the HTML files,
 # you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
@@ -30,7 +26,6 @@ github_username:  soitgoes511
 linkedin_username: mike-hinkle-054808a6
 
 # Build settings
-# theme: minima
 # theme: minimal-mistakes-jekyll
 remote_theme: "mmistakes/minimal-mistakes@4.23.0"
 minimal_mistakes_skin: "dark"
@@ -46,27 +41,37 @@ defaults:
       comments: true
       share: true
       related: true
+
+author:
+  name: "Mike Hinkle"
+  avatar: "/assets/my_pic.png"
+  bio: "_Ex-semiconductor engineer_, fascinated with **big data, analytics, visualization, dashboarding & observability**.
+       Looking to turn my hobbies into a career."
+  location: "Burgundy France"
+  links:
+    - label: "GitHub"
+      icon: "fab fa-fw fa-github"
+      url: "https://github.com/soitgoes511"
+    - label: "LinkedIn"
+      icon: "fab fa-fw fa-linkedin"
+      url: "https://www.linkedin.com/in/mike-hinkle-054808a6"
+
 plugins:
   - jekyll-feed
   - jekyll-include-cache
   - jemoji
-#  - jekyll-seo-tag
-#  - jekyll-paginate
+
 timezone: Europe/Paris
 future: true
+
 footer:
   links:
     - label: "GitHub"
       icon: "fab fa-fw fa-github"
-      url: "https://soitgoes511.github.io/"
+      url: "https://github.com/soitgoes511"
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/mike-hinkle-054808a6"
-# minima:
-#   skin: dark
-#   date_format: "%b %-d, %Y"
-# paginate: 5
-# paginate_path: "/home/soitgoes/Pulse_grafana/Heroku_app/soitgoes511_page/soitgoes511.github.io/page:num/"
 
 # Exclude from processing.
 # The following items will not be processed, by default.
