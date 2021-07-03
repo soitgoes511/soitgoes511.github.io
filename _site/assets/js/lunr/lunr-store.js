@@ -1,5 +1,5 @@
 var store = [{
-        "title": "A New Start in France",
+        "title": "A new start in France",
         "excerpt":"I will keep this short and sweet. I left corporate life in America to move to my wife’s home country, France. I had worked in the semiconductor industry for about 4 years as an engineer in various roles. My background at University was Electrical Engineering with a concentration in microelectronics....","categories": ["first","france","blog","careers","family"],
         "tags": [],
         "url": "/first/france/blog/careers/family/2021/06/21/new_start_in_france.html",

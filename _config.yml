@@ -26,8 +26,8 @@ github_username:  soitgoes511
 linkedin_username: mike-hinkle-054808a6
 
 # Build settings
-# theme: minimal-mistakes-jekyll
-remote_theme: "mmistakes/minimal-mistakes@4.23.0"
+theme: minimal-mistakes-jekyll
+# remote_theme: "mmistakes/minimal-mistakes@4.23.0"
 minimal_mistakes_skin: "dark"
 defaults:
   # _posts
@@ -45,8 +45,8 @@ defaults:
 author:
   name: "Mike Hinkle"
   avatar: "/assets/my_pic.png"
-  bio: "_Ex-semiconductor engineer_, fascinated with **big data, analytics, visualization, dashboarding & observability**.
-       Looking to turn my hobbies into a career."
+  bio: "_Ex-semiconductor engineer_, fascinated with **big data, analytics, data visualization, dashboarding & observability**.
+       I am a father, husband, lifelong learner & tech nerd. More on me in the **ABOUT** section."
   location: "Bourgogne, France (Côte-d'Or)"
   links:
     - label: "GitHub"
@@ -55,6 +55,9 @@ author:
     - label: "LinkedIn"
       icon: "fab fa-fw fa-linkedin"
       url: "https://www.linkedin.com/in/mike-hinkle-054808a6"
+    - label: "Email"
+      icon: "fas fa-fw fa-envelope-square"
+      url: "mailto:michael0745@protonmail.com"
 
 plugins:
   - jekyll-feed

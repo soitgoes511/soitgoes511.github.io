@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "A New Start in France"
+title:  "A new start in France"
 date:   2021-06-21 14:01:00
 categories: first france blog careers family
 ---
