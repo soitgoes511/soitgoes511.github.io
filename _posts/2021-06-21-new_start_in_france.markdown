@@ -2,7 +2,6 @@
 layout: single
 title:  "A New Start in France"
 date:   2021-06-21 14:01:00
-moderation: false
 categories: first france blog careers family
 ---
 I will keep this short and sweet. I left corporate life in **America** to move to my wife's home country, **France**. I had worked in the _semiconductor industry_ for about 4 years as 
@@ -27,15 +26,3 @@ systems**. If you read this, thank you. :grin:
 <div style="display: inline-block;">
   <img src="/assets/baby_boy_1.jpeg" alt="drawing" style="height: 300px;"/>
 </div>
-
-<!--
-<form method="POST" action="https://staticman-soitgoes511.herokuapp.com/v3/entry/github.com/soitgoes511/soitgoes511.github.io/gh-pages/comments">
-  <input name="options[redirect]" type="hidden" value="https://my-site.com">
- --> <!-- e.g. "2016-01-02-this-is-a-post" --><!--
-  <input name="options[slug]" type="hidden" value="{{ page.slug }}">
-  <label><input name="fields[name]" type="text">Name</label>
-  <label><input name="fields[email]" type="email">E-mail</label>
-  <label><textarea name="fields[message]"></textarea>Message</label>
-  
-  <button type="submit">Go!</button>
-</form>-->
