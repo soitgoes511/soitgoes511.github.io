@@ -10,4 +10,10 @@ var store = [{
         "tags": [],
         "url": "/france/blog/careers/ee/2021/06/26/initial_observations.html",
         "teaser": null
+      },{
+        "title": "Broken virtual environments: Why it happened and how I should have prevented it",
+        "excerpt":"Approximately 3-4 days ago, I updated my Linux box (Pop!_OS version 20.10 -&gt; 21.04). I have run Linux long enough to know that there could be unintended issues during these major version updates. My first defense against possible headaches is to wait for a few days and hope others find...","categories": ["linux","update","python","venv","broken","prevention"],
+        "tags": [],
+        "url": "/linux/update/python/venv/broken/prevention/2021/07/06/fixing_broken_venv.html",
+        "teaser": null
       }]

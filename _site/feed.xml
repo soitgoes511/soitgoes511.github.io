@@ -1,4 +1,111 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-07-03T23:22:46+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>My family and I took a road less traveled. This blog will be a journal concerning our new life in France. I hope to share some fun engineering projects also along the way.</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">Initial observations while settling in</title><link href="http://localhost:4000/france/blog/careers/ee/2021/06/26/initial_observations.html" rel="alternate" type="text/html" title="Initial observations while settling in" /><published>2021-06-26T17:00:00+02:00</published><updated>2021-06-26T17:00:00+02:00</updated><id>http://localhost:4000/france/blog/careers/ee/2021/06/26/initial_observations</id><content type="html" xml:base="http://localhost:4000/france/blog/careers/ee/2021/06/26/initial_observations.html">&lt;p&gt;I have begun applying for jobs. Perhaps I am being un-realistic considering
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-07-07T00:26:45+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>My family and I took a road less traveled. This blog will be a journal concerning our new life in France. I hope to share some fun engineering projects also along the way.</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">Broken virtual environments: Why it happened and how I should have prevented it</title><link href="http://localhost:4000/linux/update/python/venv/broken/prevention/2021/07/06/fixing_broken_venv.html" rel="alternate" type="text/html" title="Broken virtual environments: Why it happened and how I should have prevented it" /><published>2021-07-06T17:00:00+02:00</published><updated>2021-07-06T17:00:00+02:00</updated><id>http://localhost:4000/linux/update/python/venv/broken/prevention/2021/07/06/fixing_broken_venv</id><content type="html" xml:base="http://localhost:4000/linux/update/python/venv/broken/prevention/2021/07/06/fixing_broken_venv.html">&lt;p&gt;Approximately 3-4 days ago, I updated my Linux box (&lt;strong&gt;Pop!_OS&lt;/strong&gt; version 20.10 -&amp;gt; 21.04). 
+I have run Linux long enough to know that there could be unintended issues during
+these major version updates. My first defense against possible headaches is to wait for
+a few days and hope others find the bugs, report them and everything gets ironed out quickly.
+Years ago I was not as cautious :see_no_evil:, but I no longer have the luxury of time to bang my head
+into a desk for days and slog through issues or re-compile kernels. I just play it safe now.&lt;/p&gt;
+
+&lt;p&gt;The good news is that despite a drastic change to the Pop!_OS desktop environment
+(from &lt;strong&gt;GNOME 3.38.4&lt;/strong&gt; to &lt;strong&gt;COSMIC&lt;/strong&gt;), the update and upgrade went very smoothly. The new DE
+is an improvement on GNOME, my system is very responsive, the stars all aligned and
+everything is perfect. Kudos to the system76 team :thumbsup:. But.. Not everything
+was perfect…&lt;/p&gt;
+
+&lt;h3 id=&quot;what-exactly-was-the-problem&quot;&gt;What exactly was the problem?&lt;/h3&gt;
+
+&lt;p&gt;Let me begin by saying that my issue has nothing to do with my updated OS. I decided
+yesterday that I wanted to update a Heroku application which lives in a local repository
+on my now updated workstation. This application was written in Python and executed within a 
+virtual environment (venv). Virtual environments should be self contained, correct? 
+Sounds safe :skull:. What happened was that the OS upgrade replaced my system python (3.8) with
+a newer python version (3.9). Had I sourced a standalone python install when creating the
+virtual environment, or had the OS just switched PYTHON_TARGETS, then I would not be
+writing this right now. I had created the venv like so for this particular Heroku app:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;soitgoes@pop-os:~$ python3 -m venv venv&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The above command created said virtual environment inside a directory called venv with a symbolic link
+pointing from the venv to my system python in /usr/bin/python3.8 which no longer existed :disappointed::&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;lrwxrwxrwx 1 soitgoes soitgoes    6 Jun 17 21:38 python3.8 -&amp;gt; python&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;At my previous work, I had many python versions installed 
+on a dev mount to avoid this very issue.&lt;/p&gt;
+
+&lt;h3 id=&quot;how-fix-the-issue-and-my-steps-moving-forward-&quot;&gt;How fix the issue and my steps moving forward …&lt;/h3&gt;
+
+&lt;p&gt;Install a standalone development python which lives seperately and isolated from my system python in /usr/bin/. 
+I have no excuse for this choice but it is what it is.
+Steps to remedy the situation, starting with that isolated python install:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Download desired python version &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ wget https://www.python.org/ftp/python/3.8.11/Python-3&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Uncompress the python version   &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ tar -xzvf Python-3.8.11.tgz&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Change into directory           &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ cd Python-3.8.11/&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Configure with target location  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ ./configure --prefix=/home/soitgoes/python-3.8.11&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Compile and build               &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ make&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Test build                      &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ make test&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Install python to target local  &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ make altinstall&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I can see that the above steps were successful by executing the newly installed
+interpreter which was specified in my target location above (/home/soitgoes/python-3.8.11)
+:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;soitgoes@pop-os:~$ ~/python-3.8.11/bin/python3.8&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;And viola… The REPL (Read, Evaluate, Print, Loop) prompt appears reflecting
+my desired version:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Python 3.8.11 (default, Jul  6 2021, 22:44:39)
+[GCC 10.3.0] on linux
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&amp;gt;&amp;gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;My system python has been unchanged and I can verify this very easily:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;soitgoes@pop-os:~$ which python3
+/usr/bin/python3
+soitgoes@pop-os:~$ python3
+Python 3.9.5 (default, May 11 2021, 08:20:37)
+[GCC 10.3.0] on linux
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&amp;gt;&amp;gt;&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Please notice the versioning differences. The next step in this process will be to
+rebuild the symbolic links in the affected virtual environment. Please make note that
+the python3 symlink points to the system /usr/bin/python3 (which is the issue since it
+is now python 3.9 rather than 3.8). The other symlinks just chain all the python 
+arguments together: python -&amp;gt; python3 which I just mentioned points to the system python
+install. Finally, the last link is python3.9 -&amp;gt; python3 again:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;lrwxrwxrwx 1 soitgoes soitgoes    7 Jul  4 22:58 python -&amp;gt; python3
+lrwxrwxrwx 1 soitgoes soitgoes   16 Jul  4 22:58 python3 -&amp;gt; /usr/bin/python3
+lrwxrwxrwx 1 soitgoes soitgoes    7 Jul  4 22:58 python3.9 -&amp;gt; python3
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;These soft links need to be re-directed to my newly built and installed python which
+is located in my home directory. I can do this simply by changing into the affected
+venv/bin/ directory where the symlinks are present and then:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;$ ln -sf /home/soitgoes/python-3.8.11/bin/python3.8 python3&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The symlinks are now corrected. When activating the previously affected venv, and
+running the python interpreter I am greeted with version 3.8.11 rather than 3.9.5.
+My application will again run without the need of rebuilding all of my dependencies.
+Since this is fixed and it is getting late, I will need to actually do what I set out
+to do initially (update my Heroku app) later. Enough problems solved for one day.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;The moral of the story is to ensure you seperate your system dependencies from your
+development dependencies. No sense in muddying the waters and causing unnecessary
+headaches.&lt;/strong&gt;:heavy_check_mark:&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The mind is not a vessel to be filled, but a fire to be kindled.
+&lt;em&gt;― Plutarch&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>Mike Hinkle</name></author><category term="linux" /><category term="update" /><category term="python" /><category term="venv" /><category term="broken" /><category term="prevention" /><summary type="html">Approximately 3-4 days ago, I updated my Linux box (Pop!_OS version 20.10 -&amp;gt; 21.04). I have run Linux long enough to know that there could be unintended issues during these major version updates. My first defense against possible headaches is to wait for a few days and hope others find the bugs, report them and everything gets ironed out quickly. Years ago I was not as cautious :see_no_evil:, but I no longer have the luxury of time to bang my head into a desk for days and slog through issues or re-compile kernels. I just play it safe now.</summary></entry><entry><title type="html">Initial observations while settling in</title><link href="http://localhost:4000/france/blog/careers/ee/2021/06/26/initial_observations.html" rel="alternate" type="text/html" title="Initial observations while settling in" /><published>2021-06-26T17:00:00+02:00</published><updated>2021-06-26T17:00:00+02:00</updated><id>http://localhost:4000/france/blog/careers/ee/2021/06/26/initial_observations</id><content type="html" xml:base="http://localhost:4000/france/blog/careers/ee/2021/06/26/initial_observations.html">&lt;p&gt;I have begun applying for jobs. Perhaps I am being un-realistic considering
 I am a beginner in the French language. I could not imagine finding a job in
 the states and not speaking English. :crossed_fingers:&lt;/p&gt;
 
