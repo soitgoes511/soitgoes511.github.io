@@ -334,27 +334,27 @@ was perfect…</p>
 
 <p>Let me begin by saying that my issue has nothing to do with my updated OS. I decided
 yesterday that I wanted to update a Heroku application which lives in a local repository
-on my now updated workstation. This application was written in Python and executed within a 
+on my now updated workstation. This application was written in Python and the interpreter executed within a 
 virtual environment (venv). Virtual environments should be self contained, correct? 
-Sounds safe <img class="emoji" title=":skull:" alt=":skull:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f480.png" height="20" width="20">. What happened was that the OS upgrade replaced my system python (3.8) with
+Sounds safe right <img class="emoji" title=":skull:" alt=":skull:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f480.png" height="20" width="20">? What happened was that the OS upgrade replaced my pre-existing system python (3.8) with
 a newer python version (3.9). Had I sourced a standalone python install when creating the
 virtual environment, or had the OS just switched PYTHON_TARGETS, then I would not be
-writing this right now. I had created the venv like so for this particular Heroku app:</p>
+writing this right now. I had created the venv like so for this particular Heroku application:</p>
 
 <p><code class="language-plaintext highlighter-rouge">soitgoes@pop-os:~$ python3 -m venv venv</code></p>
 
 <p>The above command created said virtual environment inside a directory called venv with a symbolic link
-pointing from the venv to my system python in /usr/bin/python3.8 which no longer existed <img class="emoji" title=":disappointed:" alt=":disappointed:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f61e.png" height="20" width="20">:</p>
+pointing from the venv interpreter to my system python interpreter @ /usr/bin/python3.8 which no longer existed <img class="emoji" title=":disappointed:" alt=":disappointed:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f61e.png" height="20" width="20">:</p>
 
 <p><code class="language-plaintext highlighter-rouge">lrwxrwxrwx 1 soitgoes soitgoes    6 Jun 17 21:38 python3.8 -&gt; python</code></p>
 
-<p>At my previous work, I had many python versions installed 
-on a dev mount to avoid this very issue.</p>
+<p>At my previous work, I had many python versions installed on a dev mount to avoid this very issue.</p>
 
-<h3 id="how-fix-the-issue-and-my-steps-moving-forward-">How fix the issue and my steps moving forward …</h3>
+<h3 id="how-to-fix-the-issue-and-my-steps-moving-forward-">How to fix the issue and my steps moving forward …</h3>
 
-<p>Install a standalone development python which lives seperately and isolated from my system python in /usr/bin/. 
-I have no excuse for this choice but it is what it is.
+<p>Install a standalone development python which lives seperately and isolated from my system python. This
+would avoid the pain I am enduring now when my system is updated again with a new python install. 
+I have no excuse for dropping the ball like this but it is what it is. Lesson learned.
 Steps to remedy the situation, starting with that isolated python install:</p>
 
 <ol>
@@ -370,7 +370,7 @@ Steps to remedy the situation, starting with that isolated python install:</p>
 </li>
   <li>Test build                      <code class="language-plaintext highlighter-rouge">$ make test</code>
 </li>
-  <li>Install python to target local  <code class="language-plaintext highlighter-rouge">$ make altinstall</code>
+  <li>Install python to target location  <code class="language-plaintext highlighter-rouge">$ make altinstall</code>
 </li>
 </ol>
 
@@ -380,7 +380,7 @@ interpreter which was specified in my target location above (/home/soitgoes/pyth
 
 <p><code class="language-plaintext highlighter-rouge">soitgoes@pop-os:~$ ~/python-3.8.11/bin/python3.8</code></p>
 
-<p>And viola… The REPL (Read, Evaluate, Print, Loop) prompt appears reflecting
+<p>And voilà… The REPL (<strong>R</strong>ead, <strong>E</strong>valuate, <strong>P</strong>rint, <strong>L</strong>oop) prompt appears reflecting
 my desired version:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Python 3.8.11 (default, Jul  6 2021, 22:44:39)
@@ -404,7 +404,7 @@ Type "help", "copyright", "credits" or "license" for more information.
 rebuild the symbolic links in the affected virtual environment. Please make note that
 the python3 symlink points to the system /usr/bin/python3 (which is the issue since it
 is now python 3.9 rather than 3.8). The other symlinks just chain all the python 
-arguments together: python -&gt; python3 which I just mentioned points to the system python
+aliases together: python -&gt; python3 which I just mentioned points to the system python
 install. Finally, the last link is python3.9 -&gt; python3 again:</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lrwxrwxrwx 1 soitgoes soitgoes    7 Jul  4 22:58 python -&gt; python3
@@ -413,7 +413,7 @@ lrwxrwxrwx 1 soitgoes soitgoes    7 Jul  4 22:58 python3.9 -&gt; python3
 </code></pre></div></div>
 
 <p>These soft links need to be re-directed to my newly built and installed python which
-is located in my home directory. I can do this simply by changing into the affected
+is now located in my home directory. I can do this simply by changing into the affected
 venv/bin/ directory where the symlinks are present and then:</p>
 
 <p><code class="language-plaintext highlighter-rouge">$ ln -sf /home/soitgoes/python-3.8.11/bin/python3.8 python3</code></p>
@@ -426,7 +426,7 @@ to do initially (update my Heroku app) later. Enough problems solved for one day
 
 <p><strong>The moral of the story is to ensure you seperate your system dependencies from your
 development dependencies. No sense in muddying the waters and causing unnecessary
-headaches.</strong><img class="emoji" title=":heavy_check_mark:" alt=":heavy_check_mark:" src="https://github.githubassets.com/images/icons/emoji/unicode/2714.png" height="20" width="20"></p>
+headaches.</strong> <img class="emoji" title=":heavy_check_mark:" alt=":heavy_check_mark:" src="https://github.githubassets.com/images/icons/emoji/unicode/2714.png" height="20" width="20"></p>
 
 <blockquote>
   <p>The mind is not a vessel to be filled, but a fire to be kindled.
