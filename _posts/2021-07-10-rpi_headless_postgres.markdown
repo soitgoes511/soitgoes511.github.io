@@ -157,7 +157,7 @@ Anyway, moving on... Let's install it:
 The above command is used to search through the default system repos. There will be many items returned,
 but the package I would like to install is the supported version seen above.
 
-    $ apt install postgresql
+    $ sudo apt install postgresql
 
 After this is complete, you can check to see if the database server is running:
 
@@ -243,15 +243,71 @@ From my workstation, I am using a **jupyter-notebook** and python 3 to first tes
 then to load a dummy dataset I downloaded as a csv file off **Kaggle**. Here is a screenshot of those scripts
 and the output:
 
-<img src="/assets/psql_test_connection.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
+```python
+import psycopg2
 
-The connection was successful, now let me try to write some data:
+conn = psycopg2.connect(
+    host="192.168.0.12",
+    database="pulse_oximeter_historic",
+    user="soitgoes511",
+    password="<YOUR_PSQL_PASSWORD>",
+)
 
-<img src="/assets/df_to_psql.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
+# create a cursor
+cur = conn.cursor()
+
+# execute a statement
+print("PostgreSQL database version:")
+cur.execute("SELECT version()")
+
+# display the PostgreSQL database server version
+db_version = cur.fetchone()
+print(db_version)
+
+# close the communication with the PostgreSQL
+cur.close()
+```
+
+The connection was successful. OUTPUT:
+
+    PostgreSQL database version:
+    ('PostgreSQL 11.12 (Raspbian 11.12-0+deb10u1) on arm-unknown-linux-gnueabihf, compiled by gcc (Raspbian 8.3.0-6+rpi1) 8.3.0, 32-bit',)
+
+Let me attempt to write some data to the db:
+
+```python
+from sqlalchemy import create_engine
+import pandas as pd
+
+engine = create_engine(
+    "postgresql://soitgoes511:<YOUR_PSQL_PASSWORD>@192.168.0.12:5432/pulse_oximeter_historic"
+)
+df_best_sellers = pd.read_csv("/home/soitgoes/Kaggle/bestsellers_with_categories.csv")
+
+df_best_sellers.to_sql("bestsellers", engine, if_exists="replace", index=False)
+
+engine.dispose()
+```
 
 Finally, to sanity check the data made it there, let me query it:
 
-<img src="/assets/query_psql.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
+```python
+from sqlalchemy import create_engine
+import pandas as pd
+
+engine = create_engine(
+    "postgresql://soitgoes511:<YOUR_PSQL_PASSWORD>@192.168.0.12:5432/pulse_oximeter_historic"
+)
+query = """SELECT * FROM bestsellers LIMIT 5;"""
+
+df = pd.read_sql(query, engine)
+
+engine.dispose()
+
+df.head()
+```
+
+<img src="/assets/dummy_table.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
 
 It worked :sparkles:. That is a wrap for today. Part II as I mentioned will delve into actually extracting the relevant
 data, transforming/shaping it and then loading it into my new postgres instance hosted on my very cheap and

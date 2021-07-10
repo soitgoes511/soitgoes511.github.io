@@ -1,6 +1,6 @@
 <!doctype html>
 <!--
-  Minimal Mistakes Jekyll Theme 4.23.0 by Michael Rose
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
   Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
   Free for personal and commercial use under the MIT license
   https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
@@ -115,7 +115,6 @@
 
   <body class="layout--single">
     <nav class="skip-links">
-  <h2 class="screen-reader-text">Skip links</h2>
   <ul>
     <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
     <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
@@ -305,7 +304,7 @@
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          9 minute read
+          10 minute read
         
       </span>
     
@@ -479,7 +478,7 @@ postgresql/stable,now 11+200+deb10u4 all
 <p>The above command is used to search through the default system repos. There will be many items returned,
 but the package I would like to install is the supported version seen above.</p>
 
-<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ apt install postgresql
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ sudo apt install postgresql
 </code></pre></div></div>
 
 <p>After this is complete, you can check to see if the database server is running:</p>
@@ -577,15 +576,69 @@ host    all             all             192.168.0.28/32         trust
 then to load a dummy dataset I downloaded as a csv file off <strong>Kaggle</strong>. Here is a screenshot of those scripts
 and the output:</p>
 
-<p><img src="/assets/psql_test_connection.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">psycopg2</span>
 
-<p>The connection was successful, now let me try to write some data:</p>
+<span class="n">conn</span> <span class="o">=</span> <span class="n">psycopg2</span><span class="p">.</span><span class="n">connect</span><span class="p">(</span>
+    <span class="n">host</span><span class="o">=</span><span class="s">"192.168.0.12"</span><span class="p">,</span>
+    <span class="n">database</span><span class="o">=</span><span class="s">"pulse_oximeter_historic"</span><span class="p">,</span>
+    <span class="n">user</span><span class="o">=</span><span class="s">"soitgoes511"</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="s">"&lt;YOUR_PSQL_PASSWORD&gt;"</span><span class="p">,</span>
+<span class="p">)</span>
 
-<p><img src="/assets/df_to_psql.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"></p>
+<span class="c1"># create a cursor
+</span><span class="n">cur</span> <span class="o">=</span> <span class="n">conn</span><span class="p">.</span><span class="n">cursor</span><span class="p">()</span>
+
+<span class="c1"># execute a statement
+</span><span class="k">print</span><span class="p">(</span><span class="s">"PostgreSQL database version:"</span><span class="p">)</span>
+<span class="n">cur</span><span class="p">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"SELECT version()"</span><span class="p">)</span>
+
+<span class="c1"># display the PostgreSQL database server version
+</span><span class="n">db_version</span> <span class="o">=</span> <span class="n">cur</span><span class="p">.</span><span class="n">fetchone</span><span class="p">()</span>
+<span class="k">print</span><span class="p">(</span><span class="n">db_version</span><span class="p">)</span>
+
+<span class="c1"># close the communication with the PostgreSQL
+</span><span class="n">cur</span><span class="p">.</span><span class="n">close</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>The connection was successful. OUTPUT:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>PostgreSQL database version:
+('PostgreSQL 11.12 (Raspbian 11.12-0+deb10u1) on arm-unknown-linux-gnueabihf, compiled by gcc (Raspbian 8.3.0-6+rpi1) 8.3.0, 32-bit',)
+</code></pre></div></div>
+
+<p>Let me attempt to write some data to the db:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span>
+    <span class="s">"postgresql://soitgoes511:&lt;YOUR_PSQL_PASSWORD&gt;@192.168.0.12:5432/pulse_oximeter_historic"</span>
+<span class="p">)</span>
+<span class="n">df_best_sellers</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s">"/home/soitgoes/Kaggle/bestsellers_with_categories.csv"</span><span class="p">)</span>
+
+<span class="n">df_best_sellers</span><span class="p">.</span><span class="n">to_sql</span><span class="p">(</span><span class="s">"bestsellers"</span><span class="p">,</span> <span class="n">engine</span><span class="p">,</span> <span class="n">if_exists</span><span class="o">=</span><span class="s">"replace"</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="bp">False</span><span class="p">)</span>
+
+<span class="n">engine</span><span class="p">.</span><span class="n">dispose</span><span class="p">()</span>
+</code></pre></div></div>
 
 <p>Finally, to sanity check the data made it there, let me query it:</p>
 
-<p><img src="/assets/query_psql.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"></p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">sqlalchemy</span> <span class="kn">import</span> <span class="n">create_engine</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">create_engine</span><span class="p">(</span>
+    <span class="s">"postgresql://soitgoes511:&lt;YOUR_PSQL_PASSWORD&gt;@192.168.0.12:5432/pulse_oximeter_historic"</span>
+<span class="p">)</span>
+<span class="n">query</span> <span class="o">=</span> <span class="s">"""SELECT * FROM bestsellers LIMIT 5;"""</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">read_sql</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">engine</span><span class="p">)</span>
+
+<span class="n">engine</span><span class="p">.</span><span class="n">dispose</span><span class="p">()</span>
+
+<span class="n">df</span><span class="p">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p><img src="/assets/dummy_table.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"></p>
 
 <p>It worked <img class="emoji" title=":sparkles:" alt=":sparkles:" src="https://github.githubassets.com/images/icons/emoji/unicode/2728.png" height="20" width="20">. That is a wrap for today. Part II as I mentioned will delve into actually extracting the relevant
 data, transforming/shaping it and then loading it into my new postgres instance hosted on my very cheap and
