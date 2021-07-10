@@ -16,4 +16,10 @@ var store = [{
         "tags": [],
         "url": "/linux/update/python/venv/broken/prevention/2021/07/06/fixing_broken_venv.html",
         "teaser": null
+      },{
+        "title": "RPI3b+ (Headless) running PostgreSQL instance on localhost for longer term data retention (Part 1)",
+        "excerpt":"Motivation I have been collecting my daughter’s pulse oximeter data for almost two years. She is 24-hour ventilator dependent and my wife and I have had some close calls where she has stopped breathing. Initially, the only way we could see her sats was to be physically in front of...","categories": ["rpi","headless","postgresql"],
+        "tags": [],
+        "url": "/rpi/headless/postgresql/2021/07/10/rpi_headless_postgres.html",
+        "teaser": null
       }]
