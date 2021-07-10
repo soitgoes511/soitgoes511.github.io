@@ -65,7 +65,13 @@ plugins:
   - jekyll-include-cache
   - jemoji
 
-markdown: redcarpet
+# markdown: redcarpet
+markdown: kramdown
+highlighter: rouge
+
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
 timezone: Europe/Paris
 future: true
 

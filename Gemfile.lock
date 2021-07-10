@@ -285,8 +285,10 @@ DEPENDENCIES
   jekyll-include-cache
   jekyll-paginate
   jemoji
+  kramdown
   minimal-mistakes-jekyll
   redcarpet
+  rouge
   tzinfo (~> 1.2)
   tzinfo-data
   wdm (~> 0.1.1)
