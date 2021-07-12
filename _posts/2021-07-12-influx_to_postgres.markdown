@@ -33,7 +33,7 @@ I will be using to perform the ETL operation.
 #### Why postgres rather than a local influxdb instance?
 
 Using InfluxDB OSS, seemed like the most obvious choice. This was my initial intent. What
-stopped me short of doing this is the lack an InfluxDB version >=2.0 available for my
+stopped me short of doing this is the lack of an InfluxDB version >=2.0 available for my
 rpi3B+ architecture (armv7l). If I had a spare rpi4 lying around, this would have been
 my choice. I do have InfluxDB version 1.8.6-1 available in my repo:
 
@@ -52,8 +52,8 @@ aggregate the data. I take samples from my daughter's pulse oximeter once a seco
 resolution I store in the cloud. The start time is the starting timeframe of the query (now() - 10s) in this
 case. The stop time is/was now(). The time column is the actual time of the sensor read. The value
 column is the sensor reading itself and is paired with the field column. The field in time-series lingo is
-an un-indexed column. The measurement is analogous to the table name in a relational database which in this
-case in spo2 (not the best choice and I should have named it differently). Finally, UID is a tag or an
+an un-indexed column. The measurement column is analogous to the table name in a relational database which in this
+case is spo2 (not the best choice and I should have named it differently). Finally, UID is a tag or an
 indexed column. This is residual from me experimenting with multiple sensors and completely lacks
 any information or utility at this point-in-time.
 
@@ -67,11 +67,11 @@ and to handle any timezones on the application end while modeling.
 
 So, a brief outline of what the script should do:
 
-1. Create a time constraint of one hour since I will be taking snapshots every hour of everyday
+1. Create a time range/constraint of one hour since I will be taking snapshots every hour of everyday
 2. Query InfluxDB using those created time constraints
 3. Handle as much of the transformation as I can during the query, e.g. Aggregate, Pivot and Drop columns
 4. Save query return to pandas dataframe
-5. Drop final un-wanted columns, convert timestamp into datetime64 and make dttm index
+5. Drop final un-wanted columns, convert timestamp into datetime64 and make dttm an index
 6. Push dataframe to postgresql instance, appending onto table if it exists
 
 This script will only execute once, therefore, since I am taking one hour snapshots, I need
