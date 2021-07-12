@@ -22,4 +22,10 @@ var store = [{
         "tags": [],
         "url": "/rpi/headless/postgresql/2021/07/10/rpi_headless_postgres.html",
         "teaser": null
+      },{
+        "title": "Extract, transform & load: InfluxDB Cloud to Local PostgreSQL (Part 2)",
+        "excerpt":"Quick Recap During part 1, I walked through the following actions in the effort to keep my cloud storage data for a longer duration: Burning a new OS image to a microSD Setting up a raspberry pi 3b+ to run headless Installing and configuring a postgresql server on the rpi...","categories": ["rpi","influxdb","postgresql","etl","cronjob"],
+        "tags": [],
+        "url": "/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres.html",
+        "teaser": null
       }]

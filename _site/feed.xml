@@ -1,4 +1,199 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-07-10T23:42:33+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>My family and I took a road less traveled. This blog will be a journal concerning our new life in France. I hope to share some fun engineering projects also along the way.</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">RPI3b+ (Headless) running PostgreSQL instance on localhost for longer term data retention (Part 1)</title><link href="http://localhost:4000/rpi/headless/postgresql/2021/07/10/rpi_headless_postgres.html" rel="alternate" type="text/html" title="RPI3b+ (Headless) running PostgreSQL instance on localhost for longer term data retention (Part 1)" /><published>2021-07-10T17:00:00+02:00</published><updated>2021-07-10T17:00:00+02:00</updated><id>http://localhost:4000/rpi/headless/postgresql/2021/07/10/rpi_headless_postgres</id><content type="html" xml:base="http://localhost:4000/rpi/headless/postgresql/2021/07/10/rpi_headless_postgres.html">&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-07-12T23:36:24+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>My family and I took a road less traveled. This blog will be a journal concerning our new life in France. I hope to share some fun engineering projects also along the way.</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">Extract, transform &amp;amp; load: InfluxDB Cloud to Local PostgreSQL (Part 2)</title><link href="http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres.html" rel="alternate" type="text/html" title="Extract, transform &amp;amp; load: InfluxDB Cloud to Local PostgreSQL (Part 2)" /><published>2021-07-12T17:00:00+02:00</published><updated>2021-07-12T17:00:00+02:00</updated><id>http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres</id><content type="html" xml:base="http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres.html">&lt;h3 id=&quot;quick-recap&quot;&gt;Quick Recap&lt;/h3&gt;
+
+&lt;p&gt;During part 1, I walked through the following actions in the effort
+to keep my cloud storage data for a longer duration:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Burning a new OS image to a microSD&lt;/li&gt;
+  &lt;li&gt;Setting up a raspberry pi 3b+ to run headless&lt;/li&gt;
+  &lt;li&gt;Installing and configuring a postgresql server on the rpi&lt;/li&gt;
+  &lt;li&gt;Testing the postgresql instance by writing data to it remotely&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This probably sounds backwards, if you did not read 
+&lt;a href=&quot;https://soitgoes511.github.io/rpi/headless/postgresql/2021/07/10/rpi_headless_postgres.html&quot;&gt;part 1&lt;/a&gt;, 
+but to recap, I don’t pay for my InfluxDB cloud account and have a 30-day 
+retention policy on my data storage. 30-days is fine for real-time
+monitoring but for longer term modeling, I have installed a postgreSQL
+database on an oldish raspberry pi 3b+ and aim to collect longintudinal 
+health metrics. So, without further ado…&lt;/p&gt;
+
+&lt;h3 id=&quot;extract-transform-and-load&quot;&gt;Extract, Transform and Load&lt;/h3&gt;
+
+&lt;p&gt;First, I would like to offer an explanation as to why I have decided to not store the data 
+on a local instance of InfluxDB and then I will give some insight into the data I have stored 
+on the cloud, the structure of the data and the resolution. Finally, I will share the script
+I will be using to perform the ETL operation.&lt;/p&gt;
+
+&lt;h4 id=&quot;why-postgres-rather-than-a-local-influxdb-instance&quot;&gt;Why postgres rather than a local influxdb instance?&lt;/h4&gt;
+
+&lt;p&gt;Using InfluxDB OSS, seemed like the most obvious choice. This was my initial intent. What
+stopped me short of doing this is the lack an InfluxDB version &amp;gt;=2.0 available for my
+rpi3B+ architecture (armv7l). If I had a spare rpi4 lying around, this would have been
+my choice. I do have InfluxDB version 1.8.6-1 available in my repo:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;influxdb/unknown,now 1.8.6-1 armhf
+  Distributed time-series database.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This version will allow me to query with both the legacy InfluxQL query language and
+Flux if I toggle that option within the configuration. But, I cannot write to the
+time-series database using Flux. I do not like the idea of being locked into the
+older version of InfluxDB and therefore, I chose postgres as my storage solution.&lt;/p&gt;
+
+&lt;h4 id=&quot;a-glimpse-of-the-raw-data&quot;&gt;A glimpse of the raw data&lt;/h4&gt;
+
+&lt;p&gt;The screenshot below was taken from InfluxData’s GUI &lt;strong&gt;Data Explorer&lt;/strong&gt;. A few items to note. I did not
+aggregate the data. I take samples from my daughter’s pulse oximeter once a second. This is the same
+resolution I store in the cloud. The start time is the starting timeframe of the query (now() - 10s) in this
+case. The stop time is/was now(). The time column is the actual time of the sensor read. The value
+column is the sensor reading itself and is paired with the field column. The field in time-series lingo is
+an un-indexed column. The measurement is analogous to the table name in a relational database which in this
+case in spo2 (not the best choice and I should have named it differently). Finally, UID is a tag or an
+indexed column. This is residual from me experimenting with multiple sensors and completely lacks
+any information or utility at this point-in-time.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/streaming_tables.png&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The sensor reads are all stored to InfluxDB in UTC time. I plan on doing the same for my postgresql instance.
+From my experience, timestamps can cause some real headaches and the clearest path is to store in UTC time
+and to handle any timezones on the application end while modeling.&lt;/p&gt;
+
+&lt;h4 id=&quot;etl-script&quot;&gt;ETL Script&lt;/h4&gt;
+
+&lt;p&gt;So, a brief outline of what the script should do:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Create a time constraint of one hour since I will be taking snapshots every hour of everyday&lt;/li&gt;
+  &lt;li&gt;Query InfluxDB using those created time constraints&lt;/li&gt;
+  &lt;li&gt;Handle as much of the transformation as I can during the query, e.g. Aggregate, Pivot and Drop columns&lt;/li&gt;
+  &lt;li&gt;Save query return to pandas dataframe&lt;/li&gt;
+  &lt;li&gt;Drop final un-wanted columns, convert timestamp into datetime64 and make dttm index&lt;/li&gt;
+  &lt;li&gt;Push dataframe to postgresql instance, appending onto table if it exists&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This script will only execute once, therefore, since I am taking one hour snapshots, I need
+to schedule the script to execute once per hour. More on that shortly.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;# Filename: health_metrics_loader.py
+# Author:   Mike Hinkle
+# Purpose:  Extract data from InfluxDB cloud account, sanitize 
+#           and push to local postgres instance
+&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;os&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pandas&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;influxdb_client&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;InfluxDBClient&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;sqlalchemy&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;create_engine&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;dotenv&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;load_dotenv&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;datetime&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timedelta&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;load_dotenv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#
+# Load secrets from dotenv file
+#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TOKEN&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getenv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;TOKEN&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ORG&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getenv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ORG&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;URL&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getenv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;CONNECTION&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;PG_CONNECT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getenv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;PG_CONNECT&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#
+# Create time range to bound query
+#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;now&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utcnow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strftime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;%Y-%m-%dT%H:00:00Z&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;last&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;utcnow&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timedelta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hours&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;last_hour&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strftime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;%Y-%m-%dT%H:00:00Z&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#
+# Instantiate connection object for TSDB
+#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;InfluxDBClient&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;URL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;token&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;TOKEN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ORG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;query_api&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;query_api&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#
+# Query InfluxDB cloud instance and return in df
+#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;query_api&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;query_data_frame&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'from(bucket: &quot;pulse_oximeter&quot;) '&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;|&amp;gt; range(start: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;last_hour&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;, stop: &quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;now&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;) &quot;&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'|&amp;gt; filter(fn: (r) =&amp;gt; r._measurement == &quot;spo2&quot;) '&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;&quot;|&amp;gt; aggregateWindow(every: 5s, fn: mean, createEmpty: false)&quot;&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'|&amp;gt; drop(columns: [&quot;_start&quot;,&quot;_stop&quot;,&quot;_measurement&quot;,&quot;uid&quot;])'&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'|&amp;gt; pivot(rowKey:[&quot;_time&quot;], columnKey: [&quot;_field&quot;], valueColumn: &quot;_value&quot;)'&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#
+# Close connection object
+#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__del__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#
+# Drop don't care columns, rename time header and set time as index
+#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;table&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;result&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;_time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;astype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;datetime64[us]&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#
+# Instantiate sqlalchemy connection object
+#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;engine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;create_engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PG_CONNECT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#
+# Use pandas to write dataframe to postgres instance
+#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_sql&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pox_five_second_mean&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;if_exists&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;append&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;#
+# Close sqlalchemy connection object
+#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dispose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;scheduling-considerations&quot;&gt;Scheduling considerations&lt;/h3&gt;
+
+&lt;p&gt;Now that the script is complete, and I know that it works, I need to
+ensure that it is run once per hour. The path of least resistence since
+I am running a single script on the same raspberry hosting the postgresql
+server, will be to run the script as a cronjob. I realize that there
+are more robust scheduling solutions such as &lt;strong&gt;Apache Airflow&lt;/strong&gt; and I
+intend to do the same with a DAG (Directed Acyclic Graph) at a later date.
+For now, I want to get the data collected and I do not have airflow
+installed on the rpi3b+. So, forgive my rush and the simplicity of
+the solution.&lt;/p&gt;
+
+&lt;p&gt;After pushing the script to the raspberry pi 3b+, installing the
+dependencies (python-dotenv, psycopg2, sqlalchemy, influxdb-client and
+pandas) and creating my .env file containing my secrets, I can create the cronjob
+like so:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;pi@influxdb-historic:~ &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;crontab &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;0 &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; /usr/bin/python3 /home/pi/pg_loader/health_metrics_loader.py &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; ~/cron.log 2&amp;gt;&amp;amp;1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;That should do the trick. I will check later tonight, plug my new postgres instance
+into my Grafana install running on my workstation and see if the data
+is collecting successfully.&lt;/p&gt;
+
+&lt;h3 id=&quot;8-hours-later-update&quot;&gt;8-hours later (Update)&lt;/h3&gt;
+
+&lt;p&gt;It looks like the script and the cronjob were a success:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/grafana_historic.png&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I will be revisiting this project to discuss various models when I have ample
+historical data. I might also redo the scheduling using Apache Airflow. I am hesitant
+since it seems like bird hunting with a scud missle and slightly overkill.
+If you see any opportunities for improvements or mistakes, please shoot me an 
+email. Thank you for reading and for your time.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“Questions give us no rest.”
+― Ayn Rand&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>Mike Hinkle</name></author><category term="rpi" /><category term="influxdb" /><category term="postgresql" /><category term="etl" /><category term="cronjob" /><summary type="html">Quick Recap</summary></entry><entry><title type="html">RPI3b+ (Headless) running PostgreSQL instance on localhost for longer term data retention (Part 1)</title><link href="http://localhost:4000/rpi/headless/postgresql/2021/07/10/rpi_headless_postgres.html" rel="alternate" type="text/html" title="RPI3b+ (Headless) running PostgreSQL instance on localhost for longer term data retention (Part 1)" /><published>2021-07-10T17:00:00+02:00</published><updated>2021-07-10T17:00:00+02:00</updated><id>http://localhost:4000/rpi/headless/postgresql/2021/07/10/rpi_headless_postgres</id><content type="html" xml:base="http://localhost:4000/rpi/headless/postgresql/2021/07/10/rpi_headless_postgres.html">&lt;h2 id=&quot;motivation&quot;&gt;Motivation&lt;/h2&gt;
 
 &lt;p&gt;I have been collecting my daughter’s pulse oximeter data for almost two years. She is
 24-hour ventilator dependent and my wife and I have had some close calls where she has stopped 
