@@ -2,6 +2,8 @@
 main:
    - title: "ABOUT"
      url: /about
+   - title: "RESUME"
+     url: /assets/my_resume.html
    - title: "SPO2-APP"
      url: https://dash-pulse-oximeter.herokuapp.com/
   # - title: "Sample Posts"

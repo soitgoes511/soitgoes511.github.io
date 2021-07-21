@@ -16,7 +16,7 @@
 <link rel="mask-icon" href="/assets/images/safari-pinned-tab.svg" color="#5bbad5">                                                                                                       
 <meta name="msapplication-TileColor" content="#da532c">                                                     
 <meta name="theme-color" content="#ffffff"> 
-<!-- begin _includes/seo.html --><title>Apache Airflow, dbt and PostgreSQL - A life that made sense</title>
+<!-- begin _includes/seo.html --><title>A simple use case for dbt and Airflow - A life that made sense</title>
 <meta name="description" content="My previous two posts involved installing a postgres server on a cheap, spare raspberry pi 3b+. The motivation was to save my time-series data for longer than 30-days since my free InfluxDB Cloud account, only has a 30-day retention policy.">
 
 
@@ -29,7 +29,7 @@
 <meta property="og:type" content="article">
 <meta property="og:locale" content="en_US">
 <meta property="og:site_name" content="A life that made sense">
-<meta property="og:title" content="Apache Airflow, dbt and PostgreSQL">
+<meta property="og:title" content="A simple use case for dbt and Airflow">
 <meta property="og:url" content="http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html">
 
 
@@ -140,6 +140,9 @@
         <ul class="visible-links">
 <li class="masthead__menu-item">
               <a href="/about">ABOUT</a>
+            </li>
+<li class="masthead__menu-item">
+              <a href="/assets/my_resume.html">RESUME</a>
             </li>
 <li class="masthead__menu-item">
               <a href="https://dash-pulse-oximeter.herokuapp.com/">SPO2-APP</a>
@@ -280,7 +283,7 @@
 
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="Apache Airflow, dbt and PostgreSQL">
+    <meta itemprop="headline" content="A simple use case for dbt and Airflow">
     <meta itemprop="description" content="My previous two posts involved installing a postgres server on a cheap, spare raspberry pi 3b+.The motivation was to save my time-series data for longer than 30-days since my free InfluxDB Cloudaccount, only has a 30-day retention policy.">
     <meta itemprop="datePublished" content="2021-07-20T17:00:00+02:00">
     
@@ -288,7 +291,7 @@
     <div class="page__inner-wrap">
       
         <header>
-          <h1 id="page-title" class="page__title" itemprop="headline">Apache Airflow, dbt and PostgreSQL
+          <h1 id="page-title" class="page__title" itemprop="headline">A simple use case for dbt and Airflow
 </h1>
           
 
@@ -369,7 +372,7 @@ database. Some other supported databases include: BigQuery, Redshift and Snowfla
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ dbt init health_metrics --adapter postgres
 Running with dbt=0.20.0
-Creating dbt configuration folder at /home/soitgoes/.dbt
+Creating dbt configuration folder at /home/pi/.dbt
 With sample profiles.yml for postgres
 
 Your new dbt project "health_metrics" was created! If this is your first time
@@ -626,7 +629,7 @@ who’s nodes are tasks. Those tasks are connected from one node to the next and
 overall graph contains no closed loop. This screenshot of my DAG taken from the
 Airflow webserver should clarify the <em>Graph</em> concept. My tasks are the nodes and the overall
 graph is the name of my DAG. Notice there is directionality illustrated by an arrow pointing
-from <strong>load_pm_from_influx</strong> <img class="emoji" title=":arrow_right:" alt=":arrow_right:" src="https://github.githubassets.com/images/icons/emoji/unicode/27a1.png" height="20" width="20"> <strong>moving_average_calc</strong>. Therefore, the moving average task will
+from <strong>load_pg_from_influx</strong> <img class="emoji" title=":arrow_right:" alt=":arrow_right:" src="https://github.githubassets.com/images/icons/emoji/unicode/27a1.png" height="20" width="20"> <strong>moving_average_calc</strong>. Therefore, the moving average task will
 be executed after the loading of data to postgres task is complete:</p>
 
 <p><img src="/assets/airflow_graph.jpg" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"></p>
@@ -667,11 +670,11 @@ should be familiar to those that have scheduled a cronjob before… I can use th
     <span class="n">influx_pg</span> <span class="o">&gt;&gt;</span> <span class="n">dbt_run</span>
 </code></pre></div></div>
 
-<p>Please note the task influx_pg pipes into dbt_run in the above script/DAG. This defines my
-graph directionality and order of execution. If I decide a some later point in time that
+<p>Please note the task variable influx_pg pipes into the dbt_run variable in the above script/DAG. This defines my
+graph directionality and order of execution. If I decide at some later point in time that
 I would like to materialize another view or table from the original influx_pg data, I can
 pipe into a list object (e.g. <strong>t1 » [t2, t3]</strong>). Like I said, what I have done so far
-is not very complex. Despite not being very complex, I was able to solve my scheduling
+is not very complex. Despite not being very complex, I was able to solve my scheduling dilemma
 in an elegant manner. If this were some critical data pipeline, I could send emails to myself
 or my team if my tasks fail. Airflow gives much more information and ability than a vanilla cronjob
 would to allow for troubleshooting efficiencies, bottlenecks or failures.</p>
@@ -681,7 +684,7 @@ overlayed onto the original heartrate data stored in my PostgreSQL database (ora
 
 <p><img src="/assets/ma_bpm.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"></p>
 
-<p>If someone reads this and spots an obvious mistake or has some additional insight or questions,
+<p>If someone reads this and spots an obvious mistake or has some additional insights or questions,
 please send me an email.</p>
 
 <blockquote>
@@ -707,7 +710,7 @@ please send me an email.</p>
       <section class="page__share">
   
 
-  <a href="https://twitter.com/intent/tweet?text=Apache+Airflow%2C+dbt+and+PostgreSQL%20http%3A%2F%2Flocalhost%3A4000%2Frpi%2Fpostgres%2Fdbt%2Fairflow%2F2021%2F07%2F20%2Fdbt_install_transform.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=A+simple+use+case+for+dbt+and+Airflow%20http%3A%2F%2Flocalhost%3A4000%2Frpi%2Fpostgres%2Fdbt%2Fairflow%2F2021%2F07%2F20%2Fdbt_install_transform.html" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
   <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Frpi%2Fpostgres%2Fdbt%2Fairflow%2F2021%2F07%2F20%2Fdbt_install_transform.html" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 

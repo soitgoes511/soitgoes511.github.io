@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-07-21T09:09:41+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>My family and I took a road less traveled. This blog will be a journal concerning our new life in France. I hope to share some fun engineering projects also along the way.</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">Apache Airflow, dbt and PostgreSQL</title><link href="http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html" rel="alternate" type="text/html" title="Apache Airflow, dbt and PostgreSQL" /><published>2021-07-20T17:00:00+02:00</published><updated>2021-07-20T17:00:00+02:00</updated><id>http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform</id><content type="html" xml:base="http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html">&lt;p&gt;My previous two posts involved installing a postgres server on a cheap, spare raspberry pi 3b+.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-07-21T14:15:22+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>My family and I took a road less traveled. This blog will be a journal concerning our new life in France. I hope to share some fun engineering projects also along the way.</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">A simple use case for dbt and Airflow</title><link href="http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html" rel="alternate" type="text/html" title="A simple use case for dbt and Airflow" /><published>2021-07-20T17:00:00+02:00</published><updated>2021-07-20T17:00:00+02:00</updated><id>http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform</id><content type="html" xml:base="http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html">&lt;p&gt;My previous two posts involved installing a postgres server on a cheap, spare raspberry pi 3b+.
 The motivation was to save my time-series data for longer than 30-days since my free InfluxDB Cloud
 account, only has a 30-day retention policy.&lt;/p&gt;
 
@@ -51,7 +51,7 @@ database. Some other supported databases include: BigQuery, Redshift and Snowfla
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ dbt init health_metrics --adapter postgres
 Running with dbt=0.20.0
-Creating dbt configuration folder at /home/soitgoes/.dbt
+Creating dbt configuration folder at /home/pi/.dbt
 With sample profiles.yml for postgres
 
 Your new dbt project &quot;health_metrics&quot; was created! If this is your first time
@@ -308,7 +308,7 @@ who’s nodes are tasks. Those tasks are connected from one node to the next and
 overall graph contains no closed loop. This screenshot of my DAG taken from the
 Airflow webserver should clarify the &lt;em&gt;Graph&lt;/em&gt; concept. My tasks are the nodes and the overall
 graph is the name of my DAG. Notice there is directionality illustrated by an arrow pointing
-from &lt;strong&gt;load_pm_from_influx&lt;/strong&gt; :arrow_right: &lt;strong&gt;moving_average_calc&lt;/strong&gt;. Therefore, the moving average task will
+from &lt;strong&gt;load_pg_from_influx&lt;/strong&gt; :arrow_right: &lt;strong&gt;moving_average_calc&lt;/strong&gt;. Therefore, the moving average task will
 be executed after the loading of data to postgres task is complete:&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;/assets/airflow_graph.jpg&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;&lt;/p&gt;
@@ -349,11 +349,11 @@ should be familiar to those that have scheduled a cronjob before… I can use th
     &lt;span class=&quot;n&quot;&gt;influx_pg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dbt_run&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Please note the task influx_pg pipes into dbt_run in the above script/DAG. This defines my
-graph directionality and order of execution. If I decide a some later point in time that
+&lt;p&gt;Please note the task variable influx_pg pipes into the dbt_run variable in the above script/DAG. This defines my
+graph directionality and order of execution. If I decide at some later point in time that
 I would like to materialize another view or table from the original influx_pg data, I can
 pipe into a list object (e.g. &lt;strong&gt;t1 » [t2, t3]&lt;/strong&gt;). Like I said, what I have done so far
-is not very complex. Despite not being very complex, I was able to solve my scheduling
+is not very complex. Despite not being very complex, I was able to solve my scheduling dilemma
 in an elegant manner. If this were some critical data pipeline, I could send emails to myself
 or my team if my tasks fail. Airflow gives much more information and ability than a vanilla cronjob
 would to allow for troubleshooting efficiencies, bottlenecks or failures.&lt;/p&gt;
@@ -363,7 +363,7 @@ overlayed onto the original heartrate data stored in my PostgreSQL database (ora
 
 &lt;p&gt;&lt;img src=&quot;/assets/ma_bpm.png&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;If someone reads this and spots an obvious mistake or has some additional insight or questions,
+&lt;p&gt;If someone reads this and spots an obvious mistake or has some additional insights or questions,
 please send me an email.&lt;/p&gt;
 
 &lt;blockquote&gt;
