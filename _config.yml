@@ -30,8 +30,7 @@ linkedin_username: mike-hinkle-054808a6
 remote_theme: "mmistakes/minimal-mistakes@4.23.0"
 minimal_mistakes_skin: "dark"
 google_verify: ssubl9UP5EI0ed8OjDk5qABCNio_oCWbUmWPJlyGsu8
-google:
-  google_site_verification: ssubl9UP5EI0ed8OjDk5qABCNio_oCWbUmWPJlyGsu8
+google_site_verification: ssubl9UP5EI0ed8OjDk5qABCNio_oCWbUmWPJlyGsu8
 # paginate: 3
 # paginate_path: "/blog/page:num/"
 defaults:
