@@ -15,6 +15,7 @@ gem "jekyll-paginate"
 gem "minimal-mistakes-jekyll"
 gem "jekyll-include-cache", group: :jekyll_plugins
 gem "github-pages", group: :jekyll_plugins
+gem "jekyll-sitemap"
 # gem "redcarpet"
 gem "kramdown"
 gem "rouge"
