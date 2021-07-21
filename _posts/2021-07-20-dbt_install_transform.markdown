@@ -316,7 +316,7 @@ who's nodes are tasks. Those tasks are connected from one node to the next and t
 overall graph contains no closed loop. This screenshot of my DAG taken from the
 Airflow webserver should clarify the _Graph_ concept. My tasks are the nodes and the overall
 graph is the name of my DAG. Notice there is directionality illustrated by an arrow pointing
-from **load_pm_from_influx** :arrow_right: **moving_average_calc**. Therefore, the moving average task will
+from **load_pg_from_influx** :arrow_right: **moving_average_calc**. Therefore, the moving average task will
 be executed after the loading of data to postgres task is complete:
  
 <img src="/assets/airflow_graph.jpg" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
