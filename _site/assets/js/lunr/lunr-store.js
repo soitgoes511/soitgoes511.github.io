@@ -28,4 +28,10 @@ var store = [{
         "tags": [],
         "url": "/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres.html",
         "teaser": null
+      },{
+        "title": "Apache Airflow, dbt and PostgreSQL",
+        "excerpt":"My previous two posts involved installing a postgres server on a cheap, spare raspberry pi 3b+. The motivation was to save my time-series data for longer than 30-days since my free InfluxDB Cloud account, only has a 30-day retention policy. I was successful in installing a fresh OS, configuring the...","categories": ["rpi","postgres","dbt","airflow"],
+        "tags": [],
+        "url": "/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html",
+        "teaser": null
       }]

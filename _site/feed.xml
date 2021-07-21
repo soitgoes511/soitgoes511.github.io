@@ -1,4 +1,375 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-07-12T23:36:24+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>My family and I took a road less traveled. This blog will be a journal concerning our new life in France. I hope to share some fun engineering projects also along the way.</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">Extract, transform &amp;amp; load: InfluxDB Cloud to Local PostgreSQL (Part 2)</title><link href="http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres.html" rel="alternate" type="text/html" title="Extract, transform &amp;amp; load: InfluxDB Cloud to Local PostgreSQL (Part 2)" /><published>2021-07-12T17:00:00+02:00</published><updated>2021-07-12T17:00:00+02:00</updated><id>http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres</id><content type="html" xml:base="http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres.html">&lt;h3 id=&quot;quick-recap&quot;&gt;Quick Recap&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-07-21T09:09:41+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>My family and I took a road less traveled. This blog will be a journal concerning our new life in France. I hope to share some fun engineering projects also along the way.</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">Apache Airflow, dbt and PostgreSQL</title><link href="http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html" rel="alternate" type="text/html" title="Apache Airflow, dbt and PostgreSQL" /><published>2021-07-20T17:00:00+02:00</published><updated>2021-07-20T17:00:00+02:00</updated><id>http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform</id><content type="html" xml:base="http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html">&lt;p&gt;My previous two posts involved installing a postgres server on a cheap, spare raspberry pi 3b+.
+The motivation was to save my time-series data for longer than 30-days since my free InfluxDB Cloud
+account, only has a 30-day retention policy.&lt;/p&gt;
+
+&lt;p&gt;I was successful in installing a fresh OS, configuring the &lt;strong&gt;rpi&lt;/strong&gt; to run headless, scanning the local
+ip’s to find the rpi, ssh’ing to the single board computer, installing a &lt;strong&gt;PostgreSQL&lt;/strong&gt; instance and
+finally writing a script to query my influxDB instance, transform the data and push the data to my
+postgresql database. I used a cronjob to execute the script with a comment about accomplishing
+the same task using &lt;strong&gt;Apache Airflow&lt;/strong&gt;. So today, I am back to offload the scheduling from the cron daemon
+to Airflow and I am also throwing a &lt;strong&gt;dbt&lt;/strong&gt; incremental materialization into the mix.&lt;/p&gt;
+
+&lt;h3 id=&quot;motivation-for-added-complexity&quot;&gt;Motivation for added complexity&lt;/h3&gt;
+
+&lt;p&gt;You might say that the cronjob was working just fine and if it isn’t broken, why fix it :wrench: ? I
+even commented during the writing that using Airflow felt like bird hunting with a scud missile. 
+Despite my comment, I have a simple and good reason to make use of Airflow.&lt;/p&gt;
+
+&lt;p&gt;The pulse oximeter data 
+I am collecting is very noisy. More so when my daughter moves, the sensor is not attached well or 
+the sensor could even be defective. Whatever the case may be, outliers are not uncommon. Here is
+a screenshot to illustrate my point. The orange trace below represents the mean over a five second
+rolling window of my daughter’s heartrate. So, these data have already been “smoothed” slightly
+considering I capture her &lt;strong&gt;heartrate&lt;/strong&gt;, &lt;strong&gt;specific oxygen&lt;/strong&gt; and &lt;strong&gt;perfusion index&lt;/strong&gt; all at a frequency of one 
+sample per second.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/bpm_five_sec_agg.png&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I would like to smooth the signal even more using something simple like a moving average. This
+would allow me to more easily spot trends. Since I look at my daughter’s trends regularly, I need
+the data to be relatively up-to-date. I also take snapshots from my cloud database on an
+hourly basis, so it would be nice to calculate a moving average for my metrics of interest at the
+same time and frequency the updates occur. In this spirit, I decided to use dbt (&lt;strong&gt;D&lt;/strong&gt;ata &lt;strong&gt;B&lt;/strong&gt;uild &lt;strong&gt;T&lt;/strong&gt;ool) to perform the
+transformation and materialization, and Airflow to ensure that this dbt model runs after and only
+after the data is loaded into postgresql from my cloud instance. So, let’s get started.&lt;/p&gt;
+
+&lt;h2 id=&quot;dbt-install-init-model-creation-and-test&quot;&gt;dbt: Install, init, model creation and test&lt;/h2&gt;
+
+&lt;p&gt;I will not delve into all of the fine details of dbt, the &lt;a href=&quot;https://docs.getdbt.com/docs/introduction&quot;&gt;documentation&lt;/a&gt;
+found online is excellent and I encourage you if you are interested in databases to check it out yourself.
+I will say that dbt will allow me to easily perform a transformation on data in my postgresql database using
+a simple query. After the transformation has been performed, dbt will handle the materialization for me.&lt;/p&gt;
+
+&lt;h3 id=&quot;dbt-install-and-initialization&quot;&gt;dbt: Install and initialization&lt;/h3&gt;
+
+&lt;p&gt;Dbt is a python module and can therefore be installed with pip. Using &lt;em&gt;pip&lt;/em&gt; I installed dbt-postgres
+on my rpi3b+: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;python3 -m pip install dbt-postgres&lt;/code&gt;. I specified PostgreSQL because I am
+transforming data on a postgres server and dbt will need the postgres adapter to interact with the
+database. Some other supported databases include: BigQuery, Redshift and Snowflake.&lt;/p&gt;
+
+&lt;p&gt;After the install was complete, I initialized a project called &lt;strong&gt;health_metrics&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ dbt init health_metrics --adapter postgres
+Running with dbt=0.20.0
+Creating dbt configuration folder at /home/soitgoes/.dbt
+With sample profiles.yml for postgres
+
+Your new dbt project &quot;health_metrics&quot; was created! If this is your first time
+using dbt, you'll need to set up your profiles.yml file (we've created a sample
+file for you to connect to postgres) -- this file will tell dbt how
+to connect to your database. You can find this file by running:
+
+  xdg-open /home/pi/.dbt
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack --
+There's a link to our Slack group in the GitHub Readme. Happy modeling!
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Next, I need to update the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;profiles.yml&lt;/code&gt; file as indicated by the message above
+seen after initilizing my dbt project. Below shows my updated &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;profiles.yml&lt;/code&gt; file
+with the database password excluded:&lt;/p&gt;
+
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  &lt;span class=&quot;na&quot;&gt;outputs&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+  
+    &lt;span class=&quot;na&quot;&gt;dev&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;postgres&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;threads&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;192.168.0.12&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5432&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;soitgoes511&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;pass&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;lt;PASSW_OF_DB&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;dbname&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;pulse_oximeter_historic&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;public&lt;/span&gt;
+      
+    &lt;span class=&quot;na&quot;&gt;prod&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;postgres&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;threads&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;1&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;host&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;192.168.0.12&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;port&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;5432&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;user&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;soitgoes511&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;pass&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&amp;lt;PASSW_OF_DB&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;dbname&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;pulse_oximeter_historic&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;schema&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;public&lt;/span&gt;
+    
+  &lt;span class=&quot;na&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;dev&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Once my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;profiles.yml&lt;/code&gt; configuration has been completed, I can save the file
+and move on to writing the actual model.&lt;/p&gt;
+
+&lt;h3 id=&quot;dbt-model-creation-and-test&quot;&gt;dbt: Model creation and test&lt;/h3&gt;
+
+&lt;p&gt;A model in it’s most basic form is an &lt;strong&gt;.sql&lt;/strong&gt; file containing a single SQL 
+&lt;strong&gt;SELECT&lt;/strong&gt; statement. Included in the same directory as the &lt;strong&gt;.sql&lt;/strong&gt; file is a
+file named &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;schema.yml&lt;/code&gt; containing the model name, the column names being 
+returned by the &lt;strong&gt;SELECT&lt;/strong&gt; statement, a brief description of each column and
+test assertions which can be used to validate your model is performing the way
+you expect it to. Further down the road, your model can be tested simply
+by executing &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dbt test&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;So, to the task at hand. I wanted to remove some noise and smooth my data
+and will start by calculating a simple moving average. My original data
+has been aggregated using the mean over a five second window before it is loaded 
+into my postgresql database. This means I should have 12 samples per minute.
+I have been looking at pulse oximeter data for years now and feel confident
+that a five minute window will remove most of the noise without losing too
+much information. I can always adjust later, or revert back to my 5 second
+aggregated data. No harm, no foul. So, 12 samples per minute for 5 minutes
+equates to 60 data points (I need this for my query below).&lt;/p&gt;
+
+&lt;p&gt;One more point to cover before getting to the actual query/model. Dbt supports
+templating, macros, references, etc.. The possible materializations include
+a table, view, incremental and ephemeral. &lt;strong&gt;Table&lt;/strong&gt; and &lt;strong&gt;View&lt;/strong&gt; are hopefully
+self-explanatory. If not, please refer to the documentation link I referenced
+earlier in this writing. I will be using &lt;strong&gt;incremental&lt;/strong&gt;. Incremental for the
+first execution will build a complete table. For later model runs,
+dbt will only build the new data onto the table assuming I have the &lt;strong&gt;is_incremental()&lt;/strong&gt;
+macro wrapping my filters used to specify the new data. Again, the dbt folks do a much better 
+job explaining this and that explanation can be found 
+&lt;a href=&quot;https://docs.getdbt.com/docs/building-a-dbt-project/building-models/configuring-incremental-models&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Finally, here is the first iteration of my moving average model which will build
+a table, incrementally (completely at first and can be rebuilt anew if
+the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;--full-refresh&lt;/code&gt; flag is used at runtime):&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;
+&lt;span class=&quot;err&quot;&gt;{{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;config&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;materialized&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'incremental'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;}}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt;
+  &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;spo2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;AVG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;spo2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OVER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;BY&lt;/span&gt;
+      &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ROWS&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;BETWEEN&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;59&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PRECEDING&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;CURRENT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ROW&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ma_spo2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;bpm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;AVG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bpm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OVER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;BY&lt;/span&gt;
+      &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ROWS&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;BETWEEN&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;59&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PRECEDING&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;CURRENT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ROW&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ma_bpm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;perf_index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;AVG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;perf_index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;OVER&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;BY&lt;/span&gt;
+      &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ROWS&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;BETWEEN&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;59&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PRECEDING&lt;/span&gt;
+      &lt;span class=&quot;k&quot;&gt;AND&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;CURRENT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ROW&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ma_perf&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;pox_five_second_mean&lt;/span&gt;
+
+&lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is_incremental&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;max&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;this&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;}}&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endif&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The contents of my &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;schema.yml&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;language-yaml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;na&quot;&gt;version&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;m&quot;&gt;2&lt;/span&gt;
+
+&lt;span class=&quot;na&quot;&gt;models&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;pulse_ox_moving_average&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;minute&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;moving&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;average&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;spo2,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;bpm&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;and&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;perf&quot;&lt;/span&gt;
+      &lt;span class=&quot;na&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;time&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;The&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;primary&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;table&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;tests&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;not_null&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;spo2&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;SPO2&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;sensor&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;aggregated&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;by&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;minutes&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;series&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;tests&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;not_null&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ma_spo2&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Minute&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;moving&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;average&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;SPO2,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;previous&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;59&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;rows&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;plus&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;current&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;tests&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;not_null&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;bpm&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;BPM&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;sensor&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;aggregated&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;by&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;minutes&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;series&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;tests&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;not_null&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ma_bpm&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Minute&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;moving&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;average&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;BPM,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;previous&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;59&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;rows&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;plus&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;current&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;tests&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;not_null&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;perf_index&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Perfusion&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Index&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;sensor&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;aggregated&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;by&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;minutes&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;from&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;series&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;tests&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;not_null&lt;/span&gt;
+          &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;ma_perf&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;description&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Minute&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;moving&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;average&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;of&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Perfusion&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Index,&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;previous&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;59&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;rows&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;plus&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt; &lt;/span&gt;&lt;span class=&quot;s&quot;&gt;current&quot;&lt;/span&gt;
+            &lt;span class=&quot;na&quot;&gt;tests&lt;/span&gt;&lt;span class=&quot;pi&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;pi&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;not_null&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And finally, let me run the model and see what happens:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;$ dbt run
+Running with dbt=0.20.0
+Found 1 model, 7 tests, 0 snapshots, 0 analyses, 147 macros, 0 operations, 0 seed files, 0 sources, 0 exposures
+
+22:45:55 | Concurrency: 1 threads (target='dev')
+22:45:55 |
+22:45:55 | 1 of 1 START incremental model public.pulse_ox_moving_average........ [RUN]
+22:45:56 | 1 of 1 OK created incremental model public.pulse_ox_moving_average... [INSERT 0 0 in 0.84s]
+22:45:56 |
+22:45:56 | Finished running 1 incremental model in 1.41s.
+
+Completed successfully
+
+Done. PASS=1 WARN=0 ERROR=0 SKIP=0 TOTAL=1
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Notice the relatively fast time of execution. That is because I have run this model before and there is no new
+data loaded to compute the moving average. The actual runtime is about 22 seconds, please bare in mind this is an
+oldish rpi3b+ and not a supercomputer. Also note, that if I had specified a &lt;strong&gt;table&lt;/strong&gt; for my materialization,
+the entire table would have been rebuilt and this would have taken even longer than 22 seconds. If I were
+using a pay-per-use cloud provider, that would most likely equate to money down the drain :money_with_wings: . Here is a sample of the
+result of my successful model materialization:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/ma_post_test.png&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Now that the model is working and has been tested, it is time to automate the model run at the top of each hour.
+Let’s move onto setting up Apache Airflow and creating a DAG (&lt;strong&gt;D&lt;/strong&gt;irected &lt;strong&gt;A&lt;/strong&gt;cyclic &lt;strong&gt;G&lt;/strong&gt;raph).&lt;/p&gt;
+
+&lt;h2 id=&quot;apache-airflow-install-setup-and-dag-creation&quot;&gt;Apache Airflow: Install, setup and DAG creation&lt;/h2&gt;
+
+&lt;p&gt;Airflow was created by Maxime Beauchemin and used at Airbnb in 2014 to programmatically schedule tasks. Since
+that time, Airflow has become a part of the Apache Software Foundation.&lt;/p&gt;
+
+&lt;p&gt;I decided to change from my simplistic cron schedular to Airflow to ensure that the moving average is not
+calculated until after the pulse oximeter data has been retrieved from my InfluxDB instance, shaped and
+loaded into the PostgreSQL database server running on my raspberry pi. I could have handled this with
+a cronjob in quite a few ways (e.g. Serializing the data extraction and loading with the moving average
+calculation and table creation in the same script or simply by skewing the timing of two different
+crons which is an error prone hack imho). While this is a simplistic use case, it still
+solves my script execution timing issue in an elegant manner (with some added complexity). :grin:&lt;/p&gt;
+
+&lt;h3 id=&quot;airflow-install-and-setup&quot;&gt;Airflow: Install and setup&lt;/h3&gt;
+
+&lt;p&gt;I used the following steps to install Airflow on my raspberry pi. Please be aware that these steps were
+taken directly from the Apache Airflow docs which can be found &lt;a href=&quot;https://airflow.apache.org/docs/apache-airflow/stable/start/local.html&quot;&gt;here&lt;/a&gt;.
+I have not altered nor improved these steps in any way and in no way am taking any credit for this:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# airflow needs a home, ~/airflow is the default,&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# but you can lay foundation somewhere else if you prefer&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# (optional)&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;AIRFLOW_HOME&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;~/airflow
+
+&lt;span class=&quot;nv&quot;&gt;AIRFLOW_VERSION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;2.1.2
+&lt;span class=&quot;nv&quot;&gt;PYTHON_VERSION&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;$(&lt;/span&gt;python &lt;span class=&quot;nt&quot;&gt;--version&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;cut&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot; &quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; 2 | &lt;span class=&quot;nb&quot;&gt;cut&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;.&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; 1-2&lt;span class=&quot;si&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# For example: 3.6&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;CONSTRAINT_URL&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;https://raw.githubusercontent.com/apache/airflow/constraints-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;AIRFLOW_VERSION&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;/constraints-&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;PYTHON_VERSION&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;.txt&quot;&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# For example: https://raw.githubusercontent.com/apache/airflow/constraints-2.1.2/constraints-3.6.txt&lt;/span&gt;
+pip &lt;span class=&quot;nb&quot;&gt;install&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;apache-airflow==&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;AIRFLOW_VERSION&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--constraint&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;${&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;CONSTRAINT_URL&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# initialize the database&lt;/span&gt;
+airflow db init
+
+airflow &lt;span class=&quot;nb&quot;&gt;users &lt;/span&gt;create &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--username&lt;/span&gt; admin &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--firstname&lt;/span&gt; Peter &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--lastname&lt;/span&gt; Parker &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--role&lt;/span&gt; Admin &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;--email&lt;/span&gt; spiderman@superhero.org
+
+&lt;span class=&quot;c&quot;&gt;# start the web server, default port is 8080&lt;/span&gt;
+airflow webserver &lt;span class=&quot;nt&quot;&gt;--port&lt;/span&gt; 8080
+
+&lt;span class=&quot;c&quot;&gt;# start the scheduler&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# open a new terminal or else run webserver with ``-D`` option to run it as a daemon&lt;/span&gt;
+airflow scheduler
+
+&lt;span class=&quot;c&quot;&gt;# visit localhost:8080 in the browser and use the admin account you just&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# created to login. Enable the example_bash_operator dag in the home page&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After the installation is complete, I ensured to make all necessary changes
+to &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;airflow.cfg&lt;/code&gt; located at ~/airflow/ (which in my case was /home/pi/airflow/).
+The primary setting I needed to know was where my DAGs where located. This setting
+is &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;dags_folder = /home/pi/airflow/dags&lt;/code&gt; in my case. This is where my DAG (&lt;strong&gt;.py&lt;/strong&gt; files
+will go). I also did not adjust the &lt;strong&gt;default_timezone&lt;/strong&gt;. I used &lt;strong&gt;utc&lt;/strong&gt; time as I did 
+for my PostgreSQL instance and as I would recommend anyone reading this should do.
+Timezones have caused me some real headaches over the years and I find the best practice
+to be, storing all data using UTC timestamps and then handling the timezones on the
+application end if necessary.&lt;/p&gt;
+
+&lt;h3 id=&quot;airflow-dag-creation&quot;&gt;Airflow: DAG creation&lt;/h3&gt;
+
+&lt;p&gt;A DAG is a Directed Acyclic Graph as I have already mentioned. Put simply, it is a graph
+who’s nodes are tasks. Those tasks are connected from one node to the next and the
+overall graph contains no closed loop. This screenshot of my DAG taken from the
+Airflow webserver should clarify the &lt;em&gt;Graph&lt;/em&gt; concept. My tasks are the nodes and the overall
+graph is the name of my DAG. Notice there is directionality illustrated by an arrow pointing
+from &lt;strong&gt;load_pm_from_influx&lt;/strong&gt; :arrow_right: &lt;strong&gt;moving_average_calc&lt;/strong&gt;. Therefore, the moving average task will
+be executed after the loading of data to postgres task is complete:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/airflow_graph.jpg&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Below is my DAG located in &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;/home/pi/airflow/dags/&lt;/code&gt;. I used two operators for the two
+different tasks:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;dbt_operator - (from pkg &lt;strong&gt;airflow-dbt&lt;/strong&gt; in PyPi) which makes it easy to execute my dbt model&lt;/li&gt;
+  &lt;li&gt;BashOperator - which allows me to execute commands in Bash shell&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I have set the &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;schedule_interval&lt;/code&gt; to run at the top of each hour, every hour of every day. This
+should be familiar to those that have scheduled a cronjob before… I can use the same syntax.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;airflow&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DAG&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;airflow_dbt.operators.dbt_operator&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DbtRunOperator&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;airflow.operators.bash&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BashOperator&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;airflow.utils.dates&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;days_ago&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;default_args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'dir'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'/home/pi/dbt_world/health_metrics'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'start_date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;days_ago&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DAG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dag_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'pulse_ox_data'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;default_args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;default_args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;schedule_interval&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'0 * * * *'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;influx_pg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BashOperator&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;task_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'load_pg_from_influx'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;bash_command&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'/usr/bin/python3 /home/pi/pg_loader/health_metrics_loader.py'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;dag&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dag&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;dbt_run&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DbtRunOperator&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;task_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'moving_average_calc'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;influx_pg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dbt_run&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Please note the task influx_pg pipes into dbt_run in the above script/DAG. This defines my
+graph directionality and order of execution. If I decide a some later point in time that
+I would like to materialize another view or table from the original influx_pg data, I can
+pipe into a list object (e.g. &lt;strong&gt;t1 » [t2, t3]&lt;/strong&gt;). Like I said, what I have done so far
+is not very complex. Despite not being very complex, I was able to solve my scheduling
+in an elegant manner. If this were some critical data pipeline, I could send emails to myself
+or my team if my tasks fail. Airflow gives much more information and ability than a vanilla cronjob
+would to allow for troubleshooting efficiencies, bottlenecks or failures.&lt;/p&gt;
+
+&lt;p&gt;Last but not least, here is a screenshot of the resulting moving average (blue) for my daughter’s heartrate
+overlayed onto the original heartrate data stored in my PostgreSQL database (orange):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/ma_bpm.png&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If someone reads this and spots an obvious mistake or has some additional insight or questions,
+please send me an email.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“I don’t know what is behind the curtain; only that I need to find out.”
+― Richard Paul Evans, Lost December&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>Mike Hinkle</name></author><category term="rpi" /><category term="postgres" /><category term="dbt" /><category term="airflow" /><summary type="html">My previous two posts involved installing a postgres server on a cheap, spare raspberry pi 3b+. The motivation was to save my time-series data for longer than 30-days since my free InfluxDB Cloud account, only has a 30-day retention policy.</summary></entry><entry><title type="html">Extract, transform &amp;amp; load: InfluxDB Cloud to Local PostgreSQL (Part 2)</title><link href="http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres.html" rel="alternate" type="text/html" title="Extract, transform &amp;amp; load: InfluxDB Cloud to Local PostgreSQL (Part 2)" /><published>2021-07-12T17:00:00+02:00</published><updated>2021-07-12T17:00:00+02:00</updated><id>http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres</id><content type="html" xml:base="http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres.html">&lt;h3 id=&quot;quick-recap&quot;&gt;Quick Recap&lt;/h3&gt;
 
 &lt;p&gt;During part 1, I walked through the following actions in the effort
 to keep my cloud storage data for a longer duration:&lt;/p&gt;
@@ -28,7 +399,7 @@ I will be using to perform the ETL operation.&lt;/p&gt;
 &lt;h4 id=&quot;why-postgres-rather-than-a-local-influxdb-instance&quot;&gt;Why postgres rather than a local influxdb instance?&lt;/h4&gt;
 
 &lt;p&gt;Using InfluxDB OSS, seemed like the most obvious choice. This was my initial intent. What
-stopped me short of doing this is the lack an InfluxDB version &amp;gt;=2.0 available for my
+stopped me short of doing this is the lack of an InfluxDB version &amp;gt;=2.0 available for my
 rpi3B+ architecture (armv7l). If I had a spare rpi4 lying around, this would have been
 my choice. I do have InfluxDB version 1.8.6-1 available in my repo:&lt;/p&gt;
 
@@ -48,8 +419,8 @@ aggregate the data. I take samples from my daughter’s pulse oximeter once a se
 resolution I store in the cloud. The start time is the starting timeframe of the query (now() - 10s) in this
 case. The stop time is/was now(). The time column is the actual time of the sensor read. The value
 column is the sensor reading itself and is paired with the field column. The field in time-series lingo is
-an un-indexed column. The measurement is analogous to the table name in a relational database which in this
-case in spo2 (not the best choice and I should have named it differently). Finally, UID is a tag or an
+an un-indexed column. The measurement column is analogous to the table name in a relational database which in this
+case is spo2 (not the best choice and I should have named it differently). Finally, UID is a tag or an
 indexed column. This is residual from me experimenting with multiple sensors and completely lacks
 any information or utility at this point-in-time.&lt;/p&gt;
 
@@ -64,11 +435,11 @@ and to handle any timezones on the application end while modeling.&lt;/p&gt;
 &lt;p&gt;So, a brief outline of what the script should do:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;Create a time constraint of one hour since I will be taking snapshots every hour of everyday&lt;/li&gt;
+  &lt;li&gt;Create a time range/constraint of one hour since I will be taking snapshots every hour of everyday&lt;/li&gt;
   &lt;li&gt;Query InfluxDB using those created time constraints&lt;/li&gt;
   &lt;li&gt;Handle as much of the transformation as I can during the query, e.g. Aggregate, Pivot and Drop columns&lt;/li&gt;
   &lt;li&gt;Save query return to pandas dataframe&lt;/li&gt;
-  &lt;li&gt;Drop final un-wanted columns, convert timestamp into datetime64 and make dttm index&lt;/li&gt;
+  &lt;li&gt;Drop final un-wanted columns, convert timestamp into datetime64 and make dttm an index&lt;/li&gt;
   &lt;li&gt;Push dataframe to postgresql instance, appending onto table if it exists&lt;/li&gt;
 &lt;/ol&gt;
 

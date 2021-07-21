@@ -343,7 +343,7 @@ I will be using to perform the ETL operation.</p>
 <h4 id="why-postgres-rather-than-a-local-influxdb-instance">Why postgres rather than a local influxdb instance?</h4>
 
 <p>Using InfluxDB OSS, seemed like the most obvious choice. This was my initial intent. What
-stopped me short of doing this is the lack an InfluxDB version &gt;=2.0 available for my
+stopped me short of doing this is the lack of an InfluxDB version &gt;=2.0 available for my
 rpi3B+ architecture (armv7l). If I had a spare rpi4 lying around, this would have been
 my choice. I do have InfluxDB version 1.8.6-1 available in my repo:</p>
 
@@ -363,8 +363,8 @@ aggregate the data. I take samples from my daughter’s pulse oximeter once a se
 resolution I store in the cloud. The start time is the starting timeframe of the query (now() - 10s) in this
 case. The stop time is/was now(). The time column is the actual time of the sensor read. The value
 column is the sensor reading itself and is paired with the field column. The field in time-series lingo is
-an un-indexed column. The measurement is analogous to the table name in a relational database which in this
-case in spo2 (not the best choice and I should have named it differently). Finally, UID is a tag or an
+an un-indexed column. The measurement column is analogous to the table name in a relational database which in this
+case is spo2 (not the best choice and I should have named it differently). Finally, UID is a tag or an
 indexed column. This is residual from me experimenting with multiple sensors and completely lacks
 any information or utility at this point-in-time.</p>
 
@@ -379,11 +379,11 @@ and to handle any timezones on the application end while modeling.</p>
 <p>So, a brief outline of what the script should do:</p>
 
 <ol>
-  <li>Create a time constraint of one hour since I will be taking snapshots every hour of everyday</li>
+  <li>Create a time range/constraint of one hour since I will be taking snapshots every hour of everyday</li>
   <li>Query InfluxDB using those created time constraints</li>
   <li>Handle as much of the transformation as I can during the query, e.g. Aggregate, Pivot and Drop columns</li>
   <li>Save query return to pandas dataframe</li>
-  <li>Drop final un-wanted columns, convert timestamp into datetime64 and make dttm index</li>
+  <li>Drop final un-wanted columns, convert timestamp into datetime64 and make dttm an index</li>
   <li>Push dataframe to postgresql instance, appending onto table if it exists</li>
 </ol>
 
@@ -543,7 +543,8 @@ email. Thank you for reading and for your time.</p>
 ">Previous</a>
     
     
-      <a href="#" class="pagination--pager disabled">Next</a>
+      <a href="/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html" class="pagination--pager" title="Apache Airflow, dbt and PostgreSQL
+">Next</a>
     
   </nav>
 
@@ -557,6 +558,46 @@ email. Thank you for reading and for your time.</p>
     <div class="page__related">
       <h4 class="page__related-title">You May Also Enjoy</h4>
       <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html" rel="permalink">Apache Airflow, dbt and PostgreSQL
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          12 minute read
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">My previous two posts involved installing a postgres server on a cheap, spare raspberry pi 3b+.
+The motivation was to save my time-series data for longer tha...</p>
+  </article>
+</div>
+
         
           
 
@@ -676,45 +717,6 @@ I have run Linux long enough to know that there could be unintended ...</p>
     <p class="archive__item-excerpt" itemprop="description">I have begun applying for jobs. Perhaps I am being un-realistic considering
 I am a beginner in the French language. I could not imagine finding a job in
 the ...</p>
-  </article>
-</div>
-
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title no_toc" itemprop="headline">
-      
-        <a href="/first/france/blog/careers/family/2021/06/21/new_start_in_france.html" rel="permalink">A new start in France
-</a>
-      
-    </h2>
-    
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          1 minute read
-        
-      </span>
-    
-  </p>
-
-
-    <p class="archive__item-excerpt" itemprop="description">I will keep this short and sweet. I left corporate life in America to move to my wife’s home country, France. I had worked in the semiconductor industry for ...</p>
   </article>
 </div>
 
