@@ -57,7 +57,7 @@ After the install was complete, I initialized a project called **health_metrics*
 
     $ dbt init health_metrics --adapter postgres
     Running with dbt=0.20.0
-    Creating dbt configuration folder at /home/soitgoes/.dbt
+    Creating dbt configuration folder at /home/pi/.dbt
     With sample profiles.yml for postgres
     
     Your new dbt project "health_metrics" was created! If this is your first time
@@ -356,11 +356,11 @@ with DAG(dag_id='pulse_ox_data', default_args=default_args, schedule_interval='0
     influx_pg >> dbt_run
 ```
 
-Please note the task influx_pg pipes into dbt_run in the above script/DAG. This defines my
-graph directionality and order of execution. If I decide a some later point in time that
+Please note the task variable influx_pg pipes into the dbt_run variable in the above script/DAG. This defines my
+graph directionality and order of execution. If I decide at some later point in time that
 I would like to materialize another view or table from the original influx_pg data, I can
 pipe into a list object (e.g. **t1 >> [t2, t3]**). Like I said, what I have done so far
-is not very complex. Despite not being very complex, I was able to solve my scheduling
+is not very complex. Despite not being very complex, I was able to solve my scheduling dilemma
 in an elegant manner. If this were some critical data pipeline, I could send emails to myself
 or my team if my tasks fail. Airflow gives much more information and ability than a vanilla cronjob
 would to allow for troubleshooting efficiencies, bottlenecks or failures.
@@ -370,7 +370,7 @@ overlayed onto the original heartrate data stored in my PostgreSQL database (ora
 
 <img src="/assets/ma_bpm.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
 
-If someone reads this and spots an obvious mistake or has some additional insight or questions,
+If someone reads this and spots an obvious mistake or has some additional insights or questions,
 please send me an email. 
 
 > “I don't know what is behind the curtain; only that I need to find out.”
