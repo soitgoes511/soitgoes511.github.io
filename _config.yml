@@ -17,9 +17,7 @@
 title: A life that made sense
 email: michael0745@protonmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  My family and I took a road less traveled. This blog will be a journal
-  concerning our new life in France. I hope to share some fun engineering
-  projects also along the way.
+  Lost in France
 baseurl: "" # the subpath of your site, e.g. /blog
 # url: "https://github.com/soitgoes511/soitgoes511.github.io.git" # the base hostname & protocol for your site, e.g. http://example.com
 url: "https://soitgoes511.github.io"
@@ -44,11 +42,12 @@ defaults:
       comments: true
       share: true
       related: true
+      show_date: true
 
 comments:
   provider: "utterances"
   utterances:
-    theme: "github-dark"
+    theme: "preferred-color-scheme" #"github-dark"
     issue_term: "pathname"
 
 author:
@@ -84,6 +83,8 @@ kramdown:
   syntax_highlighter: rouge
 timezone: Europe/Paris
 future: true
+# paginate: 3
+# paginate_path: /page:num/
 
 footer:
   links:

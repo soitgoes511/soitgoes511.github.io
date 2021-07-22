@@ -2,6 +2,7 @@
 layout: single
 title:  "Initial observations while settling in"
 date:   2021-06-26 15:00:00
+comments: false
 categories: france blog careers EE 
 ---
 I have begun applying for jobs. Perhaps I am being un-realistic considering

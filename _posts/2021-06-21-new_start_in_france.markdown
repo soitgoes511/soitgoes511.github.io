@@ -2,6 +2,7 @@
 layout: single
 title:  "A new start in France"
 date:   2021-06-21 14:01:00
+comments: false
 categories: first france blog careers family
 ---
 I will keep this short and sweet. I left corporate life in **America** to move to my wife's home country, **France**. I had worked in the _semiconductor industry_ for about 4 years as 
