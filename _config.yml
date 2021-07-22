@@ -30,6 +30,7 @@ linkedin_username: mike-hinkle-054808a6
 # theme: minimal-mistakes-jekyll
 remote_theme: "mmistakes/minimal-mistakes@4.23.0"
 minimal_mistakes_skin: "dark"
+repository: "soitgoes511/soitgoes511.github.io"
 defaults:
   # _posts
   - scope:
@@ -42,6 +43,12 @@ defaults:
       comments: true
       share: true
       related: true
+
+comments:
+  provider: "utterances"
+  utterances:
+    theme: "github-dark"
+    issue_term: "pathname"
 
 author:
   name: "Mike Hinkle"
