@@ -375,3 +375,11 @@ please send me an email.
 
 > “I don't know what is behind the curtain; only that I need to find out.”
 > ― Richard Paul Evans, Lost December
+
+<script src="https://utteranc.es/client.js"
+        repo="soitgoes511/soitgoes511.github.io"
+        issue-term="pathname"
+        theme="github-dark"
+        crossorigin="anonymous"
+        async>
+</script>
