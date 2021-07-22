@@ -31,6 +31,7 @@ linkedin_username: mike-hinkle-054808a6
 remote_theme: "mmistakes/minimal-mistakes@4.23.0"
 minimal_mistakes_skin: "dark"
 repository: "soitgoes511/soitgoes511.github.io"
+search: true
 defaults:
   # _posts
   - scope:
