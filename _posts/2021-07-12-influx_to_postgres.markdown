@@ -191,7 +191,7 @@ It looks like the script and the cronjob were a success:
 
 I will be revisiting this project to discuss various models when I have ample
 historical data. I might also redo the scheduling using Apache Airflow. I am hesitant
-since it seems like bird hunting with a scud missle and slightly overkill.
+since it seems like bird hunting with a scud missile and slightly overkill.
 If you see any opportunities for improvements or mistakes, please shoot me an 
 email. Thank you for reading and for your time.
 
