@@ -338,14 +338,14 @@ from airflow.utils.dates import days_ago
 from datetime import timedelta
 
 #
-# The default dir contains my models, the retries has been added
+# The default dir contains my dbt models, the retries has been added
 # to handle if the cloud provider is offline for maintenance (this happened).
 # Finally, I allow 30 minutes to attempt a re-execution of the DAG
 #
 default_args = {
     'dir': '/home/pi/dbt_world/health_metrics',
     'start_date': days_ago(0),
-    'retries: 1,
+    'retries': 1,
     'retry_delay': timedelta(minutes=30)
 }
 
