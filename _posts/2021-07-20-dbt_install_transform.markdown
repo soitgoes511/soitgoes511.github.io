@@ -335,10 +335,18 @@ from airflow import DAG
 from airflow_dbt.operators.dbt_operator import DbtRunOperator
 from airflow.operators.bash import BashOperator
 from airflow.utils.dates import days_ago
+from datetime import timedelta
 
+#
+# The default dir contains my models, the retries has been added
+# to handle if the cloud provider is offline for maintenance (this happened).
+# Finally, I allow 30 minutes to attempt a re-execution of the DAG
+#
 default_args = {
     'dir': '/home/pi/dbt_world/health_metrics',
-    'start_date': days_ago(0)
+    'start_date': days_ago(0),
+    'retries: 1,
+    'retry_delay': timedelta(minutes=30)
 }
 
 with DAG(dag_id='pulse_ox_data', default_args=default_args, schedule_interval='0 * * * *') as dag:
@@ -375,11 +383,3 @@ please send me an email.
 
 > “I don't know what is behind the curtain; only that I need to find out.”
 > ― Richard Paul Evans, Lost December
-
-<!-- <script src="https://utteranc.es/client.js"
-        repo="soitgoes511/soitgoes511.github.io"
-        issue-term="pathname"
-        theme="github-dark"
-        crossorigin="anonymous"
-        async>
-</script> -->

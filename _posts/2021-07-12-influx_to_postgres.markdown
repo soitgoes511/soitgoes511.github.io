@@ -130,28 +130,34 @@ df_current_sats = query_api.query_data_frame(
 client.__del__()
 
 #
+# Try and except to handle case when cloud provider is offline or
+# rpi unplugged (away from wifi).
+#
 # Drop don't care columns, rename time header and set time as index
 #
-df_current_sats.drop(labels=["table", "result"], axis=1, inplace=True)
-df_current_sats.rename(columns={"_time": "time"}, inplace=True)
-df_current_sats["time"] = pd.to_datetime(df_current_sats["time"])
-df_current_sats["time"] = df_current_sats["time"].astype("datetime64[us]")
-df_current_sats.set_index("time", inplace=True)
+try:
+    df_current_sats.drop(labels=["table", "result"], axis=1, inplace=True)
+    df_current_sats.rename(columns={"_time": "time"}, inplace=True)
+    df_current_sats["time"] = pd.to_datetime(df_current_sats["time"])
+    df_current_sats["time"] = df_current_sats["time"].astype("datetime64[us]")
+    df_current_sats.set_index("time", inplace=True)
+    
+    #
+    # Instantiate sqlalchemy connection object
+    #
+    engine = create_engine(PG_CONNECT)
 
-#
-# Instantiate sqlalchemy connection object
-#
-engine = create_engine(PG_CONNECT)
+    #
+    # Use pandas to write dataframe to postgres instance
+    #
+    df_current_sats.to_sql("pox_five_second_mean", engine, if_exists="append")
 
-#
-# Use pandas to write dataframe to postgres instance
-#
-df_current_sats.to_sql("pox_five_second_mean", engine, if_exists="append")
-
-#
-# Close sqlalchemy connection object
-#
-engine.dispose()
+    #
+    # Close sqlalchemy connection object
+    #
+    engine.dispose()
+except KeyError:
+    pass
 ```
 
 ### Scheduling considerations

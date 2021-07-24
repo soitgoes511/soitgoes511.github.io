@@ -17,7 +17,7 @@
 title: A life that made sense
 email: michael0745@protonmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-  Lost in France
+  Digital musings
 baseurl: "" # the subpath of your site, e.g. /blog
 # url: "https://github.com/soitgoes511/soitgoes511.github.io.git" # the base hostname & protocol for your site, e.g. http://example.com
 url: "https://soitgoes511.github.io"
