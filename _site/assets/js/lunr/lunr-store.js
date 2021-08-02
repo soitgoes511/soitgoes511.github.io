@@ -34,4 +34,10 @@ var store = [{
         "tags": [],
         "url": "/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html",
         "teaser": null
+      },{
+        "title": "Apache Superset: Test driving a new tool with familiar metrics",
+        "excerpt":"For years, I have been using a piece of software by the name of Spotfire, Tibco Spotfire to be more specific. The software falls into the category of what is referred to these days as BI or Business Intelligence software :chart_with_upwards_trend:. While I was never a huge proponent of Spotfire...","categories": ["superset","postgresql"],
+        "tags": [],
+        "url": "/superset/postgresql/2021/08/02/superset.html",
+        "teaser": null
       }]

@@ -1,4 +1,207 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-07-22T22:02:55+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>Coming to you from France</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">A simple use case for dbt and Airflow</title><link href="http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html" rel="alternate" type="text/html" title="A simple use case for dbt and Airflow" /><published>2021-07-20T17:00:00+02:00</published><updated>2021-07-20T17:00:00+02:00</updated><id>http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform</id><content type="html" xml:base="http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html">&lt;p&gt;My previous two posts involved installing a postgres server on a cheap, spare raspberry pi 3b+.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-08-02T22:34:39+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>Digital musings</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">Apache Superset: Test driving a new tool with familiar metrics</title><link href="http://localhost:4000/superset/postgresql/2021/08/02/superset.html" rel="alternate" type="text/html" title="Apache Superset: Test driving a new tool with familiar metrics" /><published>2021-08-02T17:00:00+02:00</published><updated>2021-08-02T17:00:00+02:00</updated><id>http://localhost:4000/superset/postgresql/2021/08/02/superset</id><content type="html" xml:base="http://localhost:4000/superset/postgresql/2021/08/02/superset.html">&lt;p&gt;For years, I have been using a piece of software by the name of &lt;em&gt;Spotfire&lt;/em&gt;, Tibco Spotfire to be more specific. The software
+falls into the category of what is referred to these days as &lt;strong&gt;BI&lt;/strong&gt; or &lt;em&gt;Business Intelligence&lt;/em&gt; software :chart_with_upwards_trend:. While I was never
+a huge proponent of Spotfire because there were limitations on what it could do, I was still pretty decent at embedding R &amp;amp; SQL,
+creating templates and ultimately deploying the dxp files to the web (via WebPlayer). Spotfire is proprietary and licensing can cost big money, so 
+I used it at work and work alone.&lt;/p&gt;
+
+&lt;p&gt;:books: I trained many engineers at my previous employer in SQL, R, Python, Linux, etc.. But, the request I received most
+often, was can I train them on getting the most out of Spotfire. In fact my final few months, I was giving Spotfire trainings
+to various groups multiple times a week. Given that these business intelligence tools are becoming common place at most
+companies and that they allow people who do not necessarily nerd out on application and web developement, the capability
+to create their own reports or data-driven applications with relative ease… Why not spend some time to explore a relatively 
+new Open Source BI tool by the name of Apache Superset?&lt;/p&gt;
+
+&lt;h2 id=&quot;superset-install-and-test-drive&quot;&gt;Superset: Install and test drive&lt;/h2&gt;
+
+&lt;h3 id=&quot;installation&quot;&gt;Installation&lt;/h3&gt;
+
+&lt;p&gt;According to the Apache Superset documentation found &lt;a href=&quot;https://superset.apache.org/&quot;&gt;here&lt;/a&gt;, there are two ways to install
+Superset (at least for Linux):&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Using docker-compose&lt;/li&gt;
+  &lt;li&gt;Using pip&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I began by testing the software using the &lt;strong&gt;docker-compose&lt;/strong&gt; install. The install was very straightforward and I was able
+to login using admin/admin as my username and password. After logging in I was able to connect to a local instance of PostgreSQL
+without any issue. Before getting too carried away, I decided to logout and stop and remove the containers before firing the
+containers immediately back up. I am happy I did beause I was greeted with an error and could not for the life of me, restart
+the containers. So, onto using pip in a virtual environment (option 2 above).&lt;/p&gt;
+
+&lt;p&gt;I used the following steps to install Superset with pip:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Installed OS dependencies: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;sudo apt-get install build-essential libssl-dev libffi-dev python3-dev python3-pip libsasl2-dev libldap2-dev&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Created an empty directory for my virtual environment and superset: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;mkdir superset&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Changed directories into that empty directory: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;cd superset&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Created the python virtual environment: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;python3 -m venv venv&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Activated the virtual environment: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;. venv/bin/activate&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Installed Apache Superset: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pip install apache-superset&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Created username and set password: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;superset fab create-admin&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Created roles and permissions: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;superset init&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Installed psycopg2 since I am connecting to a PostgreSQL database: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;pip install psycopg2&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Finally, started the flask development web server: &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;superset run -p 8088 --with-threads --reload --debugger&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;After performing the above steps, I was able to open my web browser on my localhost at port 8088 and login to
+Apache Superset. Connecting to my PostgreSQL database server was very easy. I selected &lt;em&gt;Data&lt;/em&gt; on the tap nav bar and
+&lt;em&gt;Databases&lt;/em&gt; from the dropdown. Once on the database page, I selected the &lt;em&gt;+ DATABASE&lt;/em&gt; button in the upper right hand
+side of the page opening this menu :point_down::&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/superset_add_db.png&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The display name can be anything you really want, I would suggest something that describes the type of data stored
+in the database you are connecting to. My connection string for my PostgreSQL database looks like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;postgresql+psycopg2://soitgoes511:XXXXXXXXXX@192.168.0.12:5432/pulse_oximeter_historic
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;If you believe you will ever upload CSV files for analysis, this is where you configure that. Go to &lt;em&gt;ADVANCED&lt;/em&gt; -&amp;gt; &lt;em&gt;Other&lt;/em&gt; -&amp;gt;
+toggle &lt;em&gt;Allow data upload&lt;/em&gt;. If you have selected this option and upload a CSV file, that CSV file will be loaded as a
+table into the database you just created the connection for.&lt;/p&gt;
+
+&lt;p&gt;After completing the above steps, I quickly faced an issue. Despite being able to connect to my database succesfully,
+when attempting a simple query, I was greeted with the below error:&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/psycopg2_error.png&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;
+  &lt;figcaption&gt;Error appearing on each query attempt in superset if dataset contained timestamp with tz offset.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;p&gt;There is still an open &lt;a href=&quot;https://github.com/apache/superset/issues/15768&quot;&gt;issue&lt;/a&gt; on Github concerning the error above.
+Long story short, the error is appearing due to a timestamped column and more specifically, a timestamped column
+containing an offset. To head off any headaches, if you see this error, check your &lt;strong&gt;psycopg2&lt;/strong&gt; version. Myself as
+well as at least one other individual had version 2.9.1 installed and downgrading to &lt;strong&gt;psycopg2==2.8.6&lt;/strong&gt; made the error
+go away. :heavy_check_mark:&lt;/p&gt;
+
+&lt;p&gt;Now that Apache Superset is installed, my database is connected and the error is gone, I can move forward with creating datasets,
+charts and dashboards.&lt;/p&gt;
+
+&lt;h4 id=&quot;creating-a-dataset&quot;&gt;Creating a dataset&lt;/h4&gt;
+&lt;p&gt;The entire spirit of business intelligence tools is to explore data, look for insights and hopefully solve some good problems. Once
+you have the story you would like to tell laid out on a dashboard, you can share this with your colleagues. On the job, I have
+made it a habit of trying to condense all of my biggest care abouts down to two or three views or dashboards. If there were certain
+data points co-workers or managers would ask for often, I made sure that was on one of my dashboards. This allowed me to identify
+issues, near real time, and be reactive. This also freed up my time to dig into new interesting problems. Some people like the mindless
+task of spending hours, manually compiling their data and reports, I prefer to automate it.&lt;/p&gt;
+
+&lt;p&gt;So, to create these dashboards, we need data. Superset will allow you to import CSV files or query the database we have already
+connected to. Since I enjoy SQL, and have some data I would like to review stored in my PostgreSQL db, I will walk through 
+querying my a PostgreSQL database in Superset via &lt;strong&gt;SQL Lab&lt;/strong&gt; and then saving that dataset and query.&lt;/p&gt;
+
+&lt;p&gt;The first step is to select &lt;em&gt;SQL Lab&lt;/em&gt; on the top nav bar, and from the dropdown, select &lt;em&gt;SQL Editor&lt;/em&gt;. You will see this, but
+without the query and return values:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/superset_sql_lab.png&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Please note, that you select the database connection you would like to use in the upper left hand corner (pulse_ox in my case).
+Once I entered the query seen below, I can hit &lt;strong&gt;ctrl+enter&lt;/strong&gt; to sanity check and review the data. Here is a closer look at my
+query shown in the screenshot:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;SELECT&lt;/span&gt; 
+  &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;at&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;TIME&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ZONE&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'CEST'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;ma_spo2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;ma_bpm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;ma_perf&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;FROM&lt;/span&gt; 
+  &lt;span class=&quot;n&quot;&gt;pulse_ox_moving_average&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;WHERE&lt;/span&gt; 
+  &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;NOW&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;INTERVAL&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'1 hour'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;ORDER&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;BY&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;DESC&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, before I save this query and the dataset, I will remove the &lt;strong&gt;WHERE&lt;/strong&gt; and &lt;strong&gt;ORDER BY&lt;/strong&gt; clauses. I do not want to filter
+the data in the dataset or underlying query but with a filter on the dashboard. I also do not want to order the dataset since
+all it will do is waste compute time and is unnecessary. Also note that I am converting my time to &lt;em&gt;Central European Summer Time&lt;/em&gt;.
+I have the timestamps stored as &lt;em&gt;UTC&lt;/em&gt; in my postgres instance and would like to review the traces in my local timezone.&lt;/p&gt;
+
+&lt;p&gt;To save the query for later use or fine-tuning, select the blue &lt;strong&gt;SAVE&lt;/strong&gt; button under the text box. To save the dataset and begin
+charting, select the blue &lt;strong&gt;EXPLORE&lt;/strong&gt; button directly above the return results. Once named and saved, a new &lt;strong&gt;EXPLORE&lt;/strong&gt; tab will
+be opened in the brower, and I can begin building my charts.&lt;/p&gt;
+
+&lt;h4 id=&quot;creating-charts-and-filters&quot;&gt;Creating charts and filters&lt;/h4&gt;
+
+&lt;p&gt;Creating charts is fairly straight forward. There are a multitude of chart types to choose from:
+&lt;img src=&quot;/assets/superset_chart_types.png&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I have not experimented with them all but I have with most. Since my data is time-series data, I will choose the time-series
+chart type (last chart in the above assortment). This chart type does not have the ability to use a left and a right y-axis,
+but I can create multiple traces on the same plot which share the same y-axis. Here is my first attempt of a chart:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/superset_explore_chart.png&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When creating a dashboard in Superset, you choose from your already created and available charts and/or filters. So, I will
+go ahead and create a simple time range filter and some more charts before I move forward with my dashboard. Here is a simple
+filter (found as a chart type):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/superset_filter.png&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I am even able to build forecasting into a chart using &lt;strong&gt;Prophet&lt;/strong&gt;. The component plots are not available, but designating
+my confidence interval, daily, weekly and yearly seasonality is available. To utilize this feature, you must install
+pystan and prophet:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;pip –no-cache-dir install pystan==2.19.1.1&lt;/li&gt;
+  &lt;li&gt;pip install prophet&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;As of this post, pystan &amp;gt;= version 3.0 will not work, hence me specifying version 2.19.1.1 above.&lt;/p&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/superset_bpm_prophet.jpg&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;
+  &lt;figcaption&gt;Prophet forecast of my daughters heart rate.
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h4 id=&quot;putting-it-all-together-into-a-dashboard&quot;&gt;Putting it all together into a dashboard&lt;/h4&gt;
+
+&lt;p&gt;Once all of the charts and filters have been created, it is time to construct a dashboard. Don’t fret if something needs
+tweaked further down the road, all you have to do is update the chart and the dashboard (assuming it contains the chart)
+will reflect the updates.&lt;/p&gt;
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/superset_pox_dash_pic1.jpg&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;
+  &lt;figcaption&gt;Moving average pulse oximetry metrics materialized with dbt and queried from postgres.&lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;figure&gt;
+  &lt;img src=&quot;/assets/prophet-models-health-superset.jpg&quot; alt=&quot;drawing&quot; style=&quot;max-width: 100%; height: auto; text-align: center;&quot; /&gt;
+  &lt;figcaption&gt;3-day hearth rate and temperature forecast with 90% confidence interval. Forecast generated using
+    Prophet and configured easily in Apache Superset.
+  &lt;/figcaption&gt;
+&lt;/figure&gt;
+
+&lt;h4 id=&quot;closing-comments&quot;&gt;Closing comments&lt;/h4&gt;
+
+&lt;p&gt;I mentioned Spotfire at the beginning of this post, so, after walking through creating datasets, charts and dashboards
+with Apache Superset I should mention a few glaring differences between the two BI tools.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Spotfire is proprietary and Superset is open source&lt;/li&gt;
+  &lt;li&gt;I commonly used R to wrangle and transform data in Spotfire as a &lt;strong&gt;Data Function&lt;/strong&gt;,
+ Superset allowed for only SQL (easier but limiting)&lt;/li&gt;
+  &lt;li&gt;Spotfire could run as a free standing desktop application on my PC or be deployed
+ to the web and accessed via Webplayer. Superset runs as a standalone server on some system.
+ I have seen individuals deploying Superset to Heroku.&lt;/li&gt;
+  &lt;li&gt;There were more chart types available for Superset but some of the charts I have had
+ difficulty using (&lt;strong&gt;Multiple Line Charts&lt;/strong&gt; specifically). Superset is still relatively new
+ and I have faith that some of the bugs will be worked out soon.&lt;/li&gt;
+  &lt;li&gt;Errors are easier to interpret (IMHO) in Superset than Spotfire. I don’t know how
+ many times I had some hidden whitespace character in my Spotfire Data Function that
+ was preventing my function from executing. The errors would yield zero valuable
+ insight.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are many facets of Apache Superset I did not delve into (users, roles, annotations and layers,
+deploying on a production server, etc…). The primary motivation for this post was to show
+that good business intelligence tools are available to use for free, and can help you gain
+insight into whatever data you are attempting to put under a microscope. Why not take advantage
+of them if the need arises?&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“There was nowhere to go but everywhere, so just keep on rolling under the stars.”
+― Jack Kerouac, On the Road: the Original Scroll&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>Mike Hinkle</name></author><category term="superset" /><category term="postgresql" /><summary type="html">For years, I have been using a piece of software by the name of Spotfire, Tibco Spotfire to be more specific. The software falls into the category of what is referred to these days as BI or Business Intelligence software :chart_with_upwards_trend:. While I was never a huge proponent of Spotfire because there were limitations on what it could do, I was still pretty decent at embedding R &amp;amp; SQL, creating templates and ultimately deploying the dxp files to the web (via WebPlayer). Spotfire is proprietary and licensing can cost big money, so I used it at work and work alone.</summary></entry><entry><title type="html">A simple use case for dbt and Airflow</title><link href="http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html" rel="alternate" type="text/html" title="A simple use case for dbt and Airflow" /><published>2021-07-20T17:00:00+02:00</published><updated>2021-07-20T17:00:00+02:00</updated><id>http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform</id><content type="html" xml:base="http://localhost:4000/rpi/postgres/dbt/airflow/2021/07/20/dbt_install_transform.html">&lt;p&gt;My previous two posts involved installing a postgres server on a cheap, spare raspberry pi 3b+.
 The motivation was to save my time-series data for longer than 30-days since my free InfluxDB Cloud
 account, only has a 30-day retention policy.&lt;/p&gt;
 
@@ -328,10 +531,18 @@ should be familiar to those that have scheduled a cronjob before… I can use th
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;airflow_dbt.operators.dbt_operator&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DbtRunOperator&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;airflow.operators.bash&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;BashOperator&lt;/span&gt;
 &lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;airflow.utils.dates&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;days_ago&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;datetime&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timedelta&lt;/span&gt;
 
-&lt;span class=&quot;n&quot;&gt;default_args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;#
+# The default dir contains my dbt models, the retries has been added
+# to handle if the cloud provider is offline for maintenance (this happened).
+# Finally, I allow 30 minutes to attempt a re-execution of the DAG
+#
+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;default_args&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;s&quot;&gt;'dir'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'/home/pi/dbt_world/health_metrics'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;s&quot;&gt;'start_date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;days_ago&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'start_date'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;days_ago&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'retries'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'retry_delay'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;timedelta&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;minutes&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DAG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dag_id&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'pulse_ox_data'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;default_args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;default_args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;schedule_interval&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'0 * * * *'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
@@ -369,15 +580,7 @@ please send me an email.&lt;/p&gt;
 &lt;blockquote&gt;
   &lt;p&gt;“I don’t know what is behind the curtain; only that I need to find out.”
 ― Richard Paul Evans, Lost December&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;!-- &lt;script src=&quot;https://utteranc.es/client.js&quot;
-        repo=&quot;soitgoes511/soitgoes511.github.io&quot;
-        issue-term=&quot;pathname&quot;
-        theme=&quot;github-dark&quot;
-        crossorigin=&quot;anonymous&quot;
-        async&gt;
-&lt;/script&gt; --&gt;</content><author><name>Mike Hinkle</name></author><category term="rpi" /><category term="postgres" /><category term="dbt" /><category term="airflow" /><summary type="html">My previous two posts involved installing a postgres server on a cheap, spare raspberry pi 3b+. The motivation was to save my time-series data for longer than 30-days since my free InfluxDB Cloud account, only has a 30-day retention policy.</summary></entry><entry><title type="html">Extract, transform &amp;amp; load: InfluxDB Cloud to Local PostgreSQL (Part 2)</title><link href="http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres.html" rel="alternate" type="text/html" title="Extract, transform &amp;amp; load: InfluxDB Cloud to Local PostgreSQL (Part 2)" /><published>2021-07-12T17:00:00+02:00</published><updated>2021-07-12T17:00:00+02:00</updated><id>http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres</id><content type="html" xml:base="http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres.html">&lt;h3 id=&quot;quick-recap&quot;&gt;Quick Recap&lt;/h3&gt;
+&lt;/blockquote&gt;</content><author><name>Mike Hinkle</name></author><category term="rpi" /><category term="postgres" /><category term="dbt" /><category term="airflow" /><summary type="html">My previous two posts involved installing a postgres server on a cheap, spare raspberry pi 3b+. The motivation was to save my time-series data for longer than 30-days since my free InfluxDB Cloud account, only has a 30-day retention policy.</summary></entry><entry><title type="html">Extract, transform &amp;amp; load: InfluxDB Cloud to Local PostgreSQL (Part 2)</title><link href="http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres.html" rel="alternate" type="text/html" title="Extract, transform &amp;amp; load: InfluxDB Cloud to Local PostgreSQL (Part 2)" /><published>2021-07-12T17:00:00+02:00</published><updated>2021-07-12T17:00:00+02:00</updated><id>http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres</id><content type="html" xml:base="http://localhost:4000/rpi/influxdb/postgresql/etl/cronjob/2021/07/12/influx_to_postgres.html">&lt;h3 id=&quot;quick-recap&quot;&gt;Quick Recap&lt;/h3&gt;
 
 &lt;p&gt;During part 1, I walked through the following actions in the effort
 to keep my cloud storage data for a longer duration:&lt;/p&gt;
@@ -506,28 +709,34 @@ to schedule the script to execute once per hour. More on that shortly.&lt;/p&gt;
 &lt;/span&gt;&lt;span class=&quot;n&quot;&gt;client&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;__del__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
 
 &lt;span class=&quot;c1&quot;&gt;#
+# Try and except to handle case when cloud provider is offline or
+# rpi unplugged (away from wifi).
+#
 # Drop don't care columns, rename time header and set time as index
 #
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;table&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;result&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;_time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;astype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;datetime64[us]&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;drop&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;labels&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;table&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;result&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;axis&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;columns&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;_time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;},&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_datetime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;].&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;astype&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;datetime64[us]&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;set_index&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;time&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;inplace&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    
+    &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# Instantiate sqlalchemy connection object
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;engine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;create_engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PG_CONNECT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-&lt;span class=&quot;c1&quot;&gt;#
-# Instantiate sqlalchemy connection object
-#
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;engine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;create_engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;PG_CONNECT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# Use pandas to write dataframe to postgres instance
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_sql&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pox_five_second_mean&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;if_exists&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;append&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
 
-&lt;span class=&quot;c1&quot;&gt;#
-# Use pandas to write dataframe to postgres instance
-#
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;df_current_sats&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;to_sql&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pox_five_second_mean&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;if_exists&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;append&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;#
-# Close sqlalchemy connection object
-#
-&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dispose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;# Close sqlalchemy connection object
+&lt;/span&gt;    &lt;span class=&quot;c1&quot;&gt;#
+&lt;/span&gt;    &lt;span class=&quot;n&quot;&gt;engine&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dispose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;KeyError&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;pass&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;h3 id=&quot;scheduling-considerations&quot;&gt;Scheduling considerations&lt;/h3&gt;
@@ -565,7 +774,7 @@ is collecting successfully.&lt;/p&gt;
 
 &lt;p&gt;I will be revisiting this project to discuss various models when I have ample
 historical data. I might also redo the scheduling using Apache Airflow. I am hesitant
-since it seems like bird hunting with a scud missle and slightly overkill.
+since it seems like bird hunting with a scud missile and slightly overkill.
 If you see any opportunities for improvements or mistakes, please shoot me an 
 email. Thank you for reading and for your time.&lt;/p&gt;
 
