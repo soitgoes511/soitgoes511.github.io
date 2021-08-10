@@ -35,6 +35,12 @@
 <loc>http://localhost:4000/</loc>
 </url>
 <url>
+<loc>http://localhost:4000/page2/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/page3/</loc>
+</url>
+<url>
 <loc>http://localhost:4000/assets/Hinkle_CV.pdf</loc>
 <lastmod>2021-07-21T14:15:22+02:00</lastmod>
 </url>
@@ -45,5 +51,9 @@
 <url>
 <loc>http://localhost:4000/google0bc5e233c2eb7357.html</loc>
 <lastmod>2021-07-21T22:58:36+02:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/yandex_62e29fabcd30ed3a.html</loc>
+<lastmod>2021-08-08T21:41:31+02:00</lastmod>
 </url>
 </urlset>

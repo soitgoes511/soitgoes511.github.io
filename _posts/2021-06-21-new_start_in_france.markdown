@@ -15,7 +15,7 @@ came to France so they could be loved. We are only here on this earth for a brie
 
 >"...life is worth much more than gold."
 
-This is my first blog entry. I promise that I will delve into some fun projects down the road. I am waiting until we purchase our house to nerd out on some **IOT and pub-sub messaging
+This is my first blog entry. I promise that I will delve into some fun projects down the road. I am waiting until we purchase our house to nerd out on some **IoT and pub-sub messaging
 systems**. If you read this, thank you. :grin:
 
 <div style="display: inline-block;">

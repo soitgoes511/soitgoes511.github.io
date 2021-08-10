@@ -72,9 +72,8 @@ plugins:
   - jekyll-include-cache
   - jemoji
   - jekyll-sitemap
-  #- jekyll-paginate
+  - jekyll-paginate
 
-# markdown: redcarpet
 markdown: kramdown
 highlighter: rouge
 
@@ -83,8 +82,8 @@ kramdown:
   syntax_highlighter: rouge
 timezone: Europe/Paris
 future: true
-# paginate: 3
-# paginate_path: /page:num/
+paginate: 3
+paginate_path: /page:num/
 
 footer:
   links:
