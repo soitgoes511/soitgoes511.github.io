@@ -1,4 +1,65 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-08-10T22:30:01+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>Digital musings</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">Apache Superset: Test driving a new tool with familiar metrics</title><link href="http://localhost:4000/superset/postgresql/2021/08/02/superset.html" rel="alternate" type="text/html" title="Apache Superset: Test driving a new tool with familiar metrics" /><published>2021-08-02T17:00:00+02:00</published><updated>2021-08-02T17:00:00+02:00</updated><id>http://localhost:4000/superset/postgresql/2021/08/02/superset</id><content type="html" xml:base="http://localhost:4000/superset/postgresql/2021/08/02/superset.html">&lt;p&gt;For years, I have been using a piece of software by the name of &lt;em&gt;Spotfire&lt;/em&gt;, Tibco Spotfire to be more specific. The software
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2021-09-01T22:38:42+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>Digital musings</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">French immigration for dummies: The process for the spouse of a French National</title><link href="http://localhost:4000/france/immigration/spouse/process/2021/09/10/french_immigration_dummies.html" rel="alternate" type="text/html" title="French immigration for dummies: The process for the spouse of a French National" /><published>2021-09-10T17:00:00+02:00</published><updated>2021-09-10T17:00:00+02:00</updated><id>http://localhost:4000/france/immigration/spouse/process/2021/09/10/french_immigration_dummies</id><content type="html" xml:base="http://localhost:4000/france/immigration/spouse/process/2021/09/10/french_immigration_dummies.html">&lt;p&gt;I am currently in the process of immigrating to France from the United States. 
+For me, this was a big leap of faith. I did not speak French (I am practicing daily now),
+I had no employment setup, and aside from my wife’s family here in Burgundy (most of
+which do not speak English) I have no friends on this side of the Atlantic. Typing this, my
+decision to relocate sounds less than intelligent. Be that as it may, we had personal reasons
+to make the move and neither my wife nor I have any regrets about moving. I will not delve
+into all of the rationalizations nor personal philosophies which led us down this path, the
+primary purpose of this write-up is to discuss what to expect if you or someone you know
+decides to take a similar leap. During the time of this writing, COVID-19 is still alive and
+well in the form of the delta variant which has made this whole adventure even more challenging.
+A few more items to mention before I delve into the process thus far. I need to disclose that
+despite my current lack of employment, I did have a great job in the US, so we are by no means 
+destitute. My wife is also from France and had lived here a majority of her life, so she is
+fluent in both French and English and also has a large family in France (part of the reason
+we moved), so we have a place to stay while settling in and purchasing our home. I felt
+this should be said so the reader of this post is armed with some context.&lt;/p&gt;
+
+&lt;h1 id=&quot;outline&quot;&gt;Outline&lt;/h1&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;#visa-application&quot;&gt;Visa application&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#vfs-appointment&quot;&gt;VFS appointment&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#upon-arrival-in-france&quot;&gt;Upon arrival in France&lt;/a&gt;
+    &lt;ol&gt;
+      &lt;li&gt;Registering with OFII and paying tax&lt;/li&gt;
+      &lt;li&gt;Request for Carte Vitale&lt;/li&gt;
+      &lt;li&gt;Generating Pass sanitaire from CDC card&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#ofii-appointment&quot;&gt;OFII appointment&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#extra-information&quot;&gt;Extra information&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h2 id=&quot;visa-application&quot;&gt;Visa application&lt;/h2&gt;
+
+&lt;p&gt;Testing testing Testing&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#outline&quot;&gt;Back to outline&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;vfs-appointment&quot;&gt;VFS appointment&lt;/h2&gt;
+
+&lt;p&gt;Another test for another section&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#outline&quot;&gt;Back to outline&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;upon-arrival-in-france&quot;&gt;Upon arrival in France&lt;/h2&gt;
+
+&lt;p&gt;Another test for another section&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#outline&quot;&gt;Back to outline&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;ofii-appointment&quot;&gt;OFII appointment&lt;/h2&gt;
+
+&lt;p&gt;Another test for another section&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#outline&quot;&gt;Back to outline&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;extra-information&quot;&gt;Extra information&lt;/h2&gt;
+
+&lt;p&gt;Another test for another section&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#outline&quot;&gt;Back to outline&lt;/a&gt;&lt;/p&gt;</content><author><name>Mike Hinkle</name></author><category term="france" /><category term="immigration" /><category term="spouse" /><category term="process" /><summary type="html">I am currently in the process of immigrating to France from the United States. For me, this was a big leap of faith. I did not speak French (I am practicing daily now), I had no employment setup, and aside from my wife’s family here in Burgundy (most of which do not speak English) I have no friends on this side of the Atlantic. Typing this, my decision to relocate sounds less than intelligent. Be that as it may, we had personal reasons to make the move and neither my wife nor I have any regrets about moving. I will not delve into all of the rationalizations nor personal philosophies which led us down this path, the primary purpose of this write-up is to discuss what to expect if you or someone you know decides to take a similar leap. During the time of this writing, COVID-19 is still alive and well in the form of the delta variant which has made this whole adventure even more challenging. A few more items to mention before I delve into the process thus far. I need to disclose that despite my current lack of employment, I did have a great job in the US, so we are by no means destitute. My wife is also from France and had lived here a majority of her life, so she is fluent in both French and English and also has a large family in France (part of the reason we moved), so we have a place to stay while settling in and purchasing our home. I felt this should be said so the reader of this post is armed with some context.</summary></entry><entry><title type="html">Apache Superset: Test driving a new tool with familiar metrics</title><link href="http://localhost:4000/superset/postgresql/2021/08/02/superset.html" rel="alternate" type="text/html" title="Apache Superset: Test driving a new tool with familiar metrics" /><published>2021-08-02T17:00:00+02:00</published><updated>2021-08-02T17:00:00+02:00</updated><id>http://localhost:4000/superset/postgresql/2021/08/02/superset</id><content type="html" xml:base="http://localhost:4000/superset/postgresql/2021/08/02/superset.html">&lt;p&gt;For years, I have been using a piece of software by the name of &lt;em&gt;Spotfire&lt;/em&gt;, Tibco Spotfire to be more specific. The software
 falls into the category of what is referred to these days as &lt;strong&gt;BI&lt;/strong&gt; or &lt;em&gt;Business Intelligence&lt;/em&gt; software :chart_with_upwards_trend:. While I was never
 a huge proponent of Spotfire because there were limitations on what it could do, I was still pretty decent at embedding R &amp;amp; SQL,
 creating templates and ultimately deploying the dxp files to the web (via WebPlayer). Spotfire is proprietary and licensing can cost big money, so 

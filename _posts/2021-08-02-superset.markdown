@@ -166,7 +166,7 @@ will reflect the updates.
 
 <figure>
   <img src="/assets/prophet-models-health-superset.jpg" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
-  <figcaption>3-day hearth rate and temperature forecast with 90% confidence interval. Forecast generated using
+  <figcaption>3-day heart rate and temperature forecast with 90% confidence interval. Forecast generated using
     Prophet and configured easily in Apache Superset.
   </figcaption>
 </figure>

@@ -40,4 +40,10 @@ var store = [{
         "tags": [],
         "url": "/superset/postgresql/2021/08/02/superset.html",
         "teaser": null
+      },{
+        "title": "French immigration for dummies: The process for the spouse of a French National",
+        "excerpt":"I am currently in the process of immigrating to France from the United States. For me, this was a big leap of faith. I did not speak French (I am practicing daily now), I had no employment setup, and aside from my wife’s family here in Burgundy (most of which...","categories": ["france","immigration","spouse","process"],
+        "tags": [],
+        "url": "/france/immigration/spouse/process/2021/09/10/french_immigration_dummies.html",
+        "teaser": null
       }]
