@@ -41,9 +41,9 @@ var store = [{
         "url": "/superset/postgresql/2021/08/02/superset.html",
         "teaser": null
       },{
-        "title": "Testing update",
-        "excerpt":"This is only a test.  ","categories": ["update"],
+        "title": "Remote work: Most likely an unpopular opinion",
+        "excerpt":" ","categories": ["remote","work,","teletravail"],
         "tags": [],
-        "url": "/update/2022/12/04/testing_system_upgrade.html",
+        "url": "/remote/work,/teletravail/2022/12/05/remote_work.html",
         "teaser": null
       }]

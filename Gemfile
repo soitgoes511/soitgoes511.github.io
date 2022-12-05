@@ -16,6 +16,7 @@ gem "jekyll-include-cache", group: :jekyll_plugins
 gem "github-pages", group: :jekyll_plugins
 gem "jekyll-sitemap"
 # gem "redcarpet"
+gem "kramdown-parser-gfm"
 gem "kramdown"
 gem "rouge"
 # If you want to use GitHub Pages, remove the "gem "jekyll"" above and
