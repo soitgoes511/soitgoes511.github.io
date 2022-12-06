@@ -35,7 +35,7 @@ on the receiving end of remote work are unique, but I doubt this is the case.
 ### In the beginning
 
 When the stay-at-home orders were initially issued, my employer was deemed an essential
-entity and therfore continued to operate 24 hours a day, 7 days a week. My son was about 
+entity and therefore continued to operate 24 hours a day, 7 days a week. My son was about 
 to be born and I was fortunate to be provided with paternity leave as a father. 
 Of course I took every bit of the time off and then some. Most of my time off was to 
 help my wife with the kids (especially my son who seemed to not sleep) but I also did 
