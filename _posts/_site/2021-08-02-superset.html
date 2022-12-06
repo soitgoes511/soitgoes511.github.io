@@ -1,0 +1,205 @@
+<p>For years, I have been using a piece of software by the name of <em>Spotfire</em>, Tibco Spotfire to be more specific. The software
+falls into the category of what is referred to these days as <strong>BI</strong> or <em>Business Intelligence</em> software :chart_with_upwards_trend:. While I was never
+a huge proponent of Spotfire because there were limitations on what it could do, I was still pretty decent at embedding R &amp; SQL,
+creating templates and ultimately deploying the dxp files to the web (via WebPlayer). Spotfire is proprietary and licensing can cost big money, so 
+I used it at work and work alone.</p>
+
+<p>:books: I trained many engineers at my previous employer in SQL, R, Python, Linux, etc.. But, the request I received most
+often, was can I train them on getting the most out of Spotfire. In fact my final few months, I was giving Spotfire trainings
+to various groups multiple times a week. Given that these business intelligence tools are becoming common place at most
+companies and that they allow people who do not necessarily nerd out on application and web developement, the capability
+to create their own reports or data-driven applications with relative ease… Why not spend some time to explore a relatively 
+new Open Source BI tool by the name of Apache Superset?</p>
+
+<h2 id="superset-install-and-test-drive">Superset: Install and test drive</h2>
+
+<h3 id="installation">Installation</h3>
+
+<p>According to the Apache Superset documentation found <a href="https://superset.apache.org/">here</a>, there are two ways to install
+Superset (at least for Linux):</p>
+
+<ol>
+  <li>Using docker-compose</li>
+  <li>Using pip</li>
+</ol>
+
+<p>I began by testing the software using the <strong>docker-compose</strong> install. The install was very straightforward and I was able
+to login using admin/admin as my username and password. After logging in I was able to connect to a local instance of PostgreSQL
+without any issue. Before getting too carried away, I decided to logout and stop and remove the containers before firing the
+containers immediately back up. I am happy I did beause I was greeted with an error and could not for the life of me, restart
+the containers. So, onto using pip in a virtual environment (option 2 above).</p>
+
+<p>I used the following steps to install Superset with pip:</p>
+
+<ol>
+  <li>Installed OS dependencies: <code class="language-plaintext highlighter-rouge">sudo apt-get install build-essential libssl-dev libffi-dev python3-dev python3-pip libsasl2-dev libldap2-dev</code></li>
+  <li>Created an empty directory for my virtual environment and superset: <code class="language-plaintext highlighter-rouge">mkdir superset</code></li>
+  <li>Changed directories into that empty directory: <code class="language-plaintext highlighter-rouge">cd superset</code></li>
+  <li>Created the python virtual environment: <code class="language-plaintext highlighter-rouge">python3 -m venv venv</code></li>
+  <li>Activated the virtual environment: <code class="language-plaintext highlighter-rouge">. venv/bin/activate</code></li>
+  <li>Installed Apache Superset: <code class="language-plaintext highlighter-rouge">pip install apache-superset</code></li>
+  <li>Created username and set password: <code class="language-plaintext highlighter-rouge">superset fab create-admin</code></li>
+  <li>Created roles and permissions: <code class="language-plaintext highlighter-rouge">superset init</code></li>
+  <li>Installed psycopg2 since I am connecting to a PostgreSQL database: <code class="language-plaintext highlighter-rouge">pip install psycopg2</code></li>
+  <li>Finally, started the flask development web server: <code class="language-plaintext highlighter-rouge">superset run -p 8088 --with-threads --reload --debugger</code></li>
+</ol>
+
+<p>After performing the above steps, I was able to open my web browser on my localhost at port 8088 and login to
+Apache Superset. Connecting to my PostgreSQL database server was very easy. I selected <em>Data</em> on the tap nav bar and
+<em>Databases</em> from the dropdown. Once on the database page, I selected the <em>+ DATABASE</em> button in the upper right hand
+side of the page opening this menu :point_down::</p>
+
+<p><img src="/assets/superset_add_db.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;" /></p>
+
+<p>The display name can be anything you really want, I would suggest something that describes the type of data stored
+in the database you are connecting to. My connection string for my PostgreSQL database looks like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>postgresql+psycopg2://soitgoes511:XXXXXXXXXX@192.168.0.12:5432/pulse_oximeter_historic
+</code></pre></div></div>
+
+<p>If you believe you will ever upload CSV files for analysis, this is where you configure that. Go to <em>ADVANCED</em> -&gt; <em>Other</em> -&gt;
+toggle <em>Allow data upload</em>. If you have selected this option and upload a CSV file, that CSV file will be loaded as a
+table into the database you just created the connection for.</p>
+
+<p>After completing the above steps, I quickly faced an issue. Despite being able to connect to my database succesfully,
+when attempting a simple query, I was greeted with the below error:</p>
+
+<figure>
+  <img src="/assets/psycopg2_error.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;" />
+  <figcaption>Error appearing on each query attempt in superset if dataset contained timestamp with tz offset.</figcaption>
+</figure>
+
+<p>There is still an open <a href="https://github.com/apache/superset/issues/15768">issue</a> on Github concerning the error above.
+Long story short, the error is appearing due to a timestamped column and more specifically, a timestamped column
+containing an offset. To head off any headaches, if you see this error, check your <strong>psycopg2</strong> version. Myself as
+well as at least one other individual had version 2.9.1 installed and downgrading to <strong>psycopg2==2.8.6</strong> made the error
+go away. :heavy_check_mark:</p>
+
+<p>Now that Apache Superset is installed, my database is connected and the error is gone, I can move forward with creating datasets,
+charts and dashboards.</p>
+
+<h4 id="creating-a-dataset">Creating a dataset</h4>
+<p>The entire spirit of business intelligence tools is to explore data, look for insights and hopefully solve some good problems. Once
+you have the story you would like to tell laid out on a dashboard, you can share this with your colleagues. On the job, I have
+made it a habit of trying to condense all of my biggest care abouts down to two or three views or dashboards. If there were certain
+data points co-workers or managers would ask for often, I made sure that was on one of my dashboards. This allowed me to identify
+issues, near real time, and be reactive. This also freed up my time to dig into new interesting problems. Some people like the mindless
+task of spending hours, manually compiling their data and reports, I prefer to automate it.</p>
+
+<p>So, to create these dashboards, we need data. Superset will allow you to import CSV files or query the database we have already
+connected to. Since I enjoy SQL, and have some data I would like to review stored in my PostgreSQL db, I will walk through 
+querying my a PostgreSQL database in Superset via <strong>SQL Lab</strong> and then saving that dataset and query.</p>
+
+<p>The first step is to select <em>SQL Lab</em> on the top nav bar, and from the dropdown, select <em>SQL Editor</em>. You will see this, but
+without the query and return values:</p>
+
+<p><img src="/assets/superset_sql_lab.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;" /></p>
+
+<p>Please note, that you select the database connection you would like to use in the upper left hand corner (pulse_ox in my case).
+Once I entered the query seen below, I can hit <strong>ctrl+enter</strong> to sanity check and review the data. Here is a closer look at my
+query shown in the screenshot:</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SELECT</span> 
+  <span class="p">(</span><span class="nb">time</span> <span class="k">at</span> <span class="nb">TIME</span> <span class="k">ZONE</span> <span class="s1">'CEST'</span><span class="p">)</span> <span class="k">AS</span> <span class="nv">"time"</span><span class="p">,</span>
+  <span class="n">ma_spo2</span><span class="p">,</span>
+  <span class="n">ma_bpm</span><span class="p">,</span>
+  <span class="n">ma_perf</span>
+<span class="k">FROM</span> 
+  <span class="n">pulse_ox_moving_average</span>
+<span class="k">WHERE</span> 
+  <span class="nb">time</span> <span class="o">&gt;=</span> <span class="p">(</span><span class="n">NOW</span><span class="p">()</span> <span class="o">-</span> <span class="n">INTERVAL</span> <span class="s1">'1 hour'</span><span class="p">)</span>
+<span class="k">ORDER</span> <span class="k">BY</span> <span class="nb">time</span> <span class="k">DESC</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Now, before I save this query and the dataset, I will remove the <strong>WHERE</strong> and <strong>ORDER BY</strong> clauses. I do not want to filter
+the data in the dataset or underlying query but with a filter on the dashboard. I also do not want to order the dataset since
+all it will do is waste compute time and is unnecessary. Also note that I am converting my time to <em>Central European Summer Time</em>.
+I have the timestamps stored as <em>UTC</em> in my postgres instance and would like to review the traces in my local timezone.</p>
+
+<p>To save the query for later use or fine-tuning, select the blue <strong>SAVE</strong> button under the text box. To save the dataset and begin
+charting, select the blue <strong>EXPLORE</strong> button directly above the return results. Once named and saved, a new <strong>EXPLORE</strong> tab will
+be opened in the brower, and I can begin building my charts.</p>
+
+<h4 id="creating-charts-and-filters">Creating charts and filters</h4>
+
+<p>Creating charts is fairly straight forward. There are a multitude of chart types to choose from:
+<img src="/assets/superset_chart_types.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;" /></p>
+
+<p>I have not experimented with them all but I have with most. Since my data is time-series data, I will choose the time-series
+chart type (last chart in the above assortment). This chart type does not have the ability to use a left and a right y-axis,
+but I can create multiple traces on the same plot which share the same y-axis. Here is my first attempt of a chart:</p>
+
+<p><img src="/assets/superset_explore_chart.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;" /></p>
+
+<p>When creating a dashboard in Superset, you choose from your already created and available charts and/or filters. So, I will
+go ahead and create a simple time range filter and some more charts before I move forward with my dashboard. Here is a simple
+filter (found as a chart type):</p>
+
+<p><img src="/assets/superset_filter.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;" /></p>
+
+<p>I am even able to build forecasting into a chart using <strong>Prophet</strong>. The component plots are not available, but designating
+my confidence interval, daily, weekly and yearly seasonality is available. To utilize this feature, you must install
+pystan and prophet:</p>
+
+<ol>
+  <li>pip –no-cache-dir install pystan==2.19.1.1</li>
+  <li>pip install prophet</li>
+</ol>
+
+<p>As of this post, pystan &gt;= version 3.0 will not work, hence me specifying version 2.19.1.1 above.</p>
+
+<figure>
+  <img src="/assets/superset_bpm_prophet.jpg" alt="drawing" style="max-width: 100%; height: auto; text-align: center;" />
+  <figcaption>Prophet forecast of my daughters heart rate.
+  </figcaption>
+</figure>
+
+<h4 id="putting-it-all-together-into-a-dashboard">Putting it all together into a dashboard</h4>
+
+<p>Once all of the charts and filters have been created, it is time to construct a dashboard. Don’t fret if something needs
+tweaked further down the road, all you have to do is update the chart and the dashboard (assuming it contains the chart)
+will reflect the updates.</p>
+<figure>
+  <img src="/assets/superset_pox_dash_pic1.jpg" alt="drawing" style="max-width: 100%; height: auto; text-align: center;" />
+  <figcaption>Moving average pulse oximetry metrics materialized with dbt and queried from postgres.</figcaption>
+</figure>
+
+<figure>
+  <img src="/assets/prophet-models-health-superset.jpg" alt="drawing" style="max-width: 100%; height: auto; text-align: center;" />
+  <figcaption>3-day heart rate and temperature forecast with 90% confidence interval. Forecast generated using
+    Prophet and configured easily in Apache Superset.
+  </figcaption>
+</figure>
+
+<h4 id="closing-comments">Closing comments</h4>
+
+<p>I mentioned Spotfire at the beginning of this post, so, after walking through creating datasets, charts and dashboards
+with Apache Superset I should mention a few glaring differences between the two BI tools.</p>
+
+<ul>
+  <li>Spotfire is proprietary and Superset is open source</li>
+  <li>I commonly used R to wrangle and transform data in Spotfire as a <strong>Data Function</strong>,
+ Superset allowed for only SQL (easier but limiting)</li>
+  <li>Spotfire could run as a free standing desktop application on my PC or be deployed
+ to the web and accessed via Webplayer. Superset runs as a standalone server on some system.
+ I have seen individuals deploying Superset to Heroku.</li>
+  <li>There were more chart types available for Superset but some of the charts I have had
+ difficulty using (<strong>Multiple Line Charts</strong> specifically). Superset is still relatively new
+ and I have faith that some of the bugs will be worked out soon.</li>
+  <li>Errors are easier to interpret (IMHO) in Superset than Spotfire. I don’t know how
+ many times I had some hidden whitespace character in my Spotfire Data Function that
+ was preventing my function from executing. The errors would yield zero valuable
+ insight.</li>
+</ul>
+
+<p>There are many facets of Apache Superset I did not delve into (users, roles, annotations and layers,
+deploying on a production server, etc…). The primary motivation for this post was to show
+that good business intelligence tools are available to use for free, and can help you gain
+insight into whatever data you are attempting to put under a microscope. Why not take advantage
+of them if the need arises?</p>
+
+<blockquote>
+  <p>“There was nowhere to go but everywhere, so just keep on rolling under the stars.”
+― Jack Kerouac, On the Road: the Original Scroll</p>
+</blockquote>
+
