@@ -47,7 +47,31 @@ return to work. I was an engineer but my position also placed me in direct super
 work remotely. While the offer was tempting, I do not believe I would have, nor should have been
 respected by my direct reports. If they had to be onsite, I should be onsite. And so I went...
 
-### Terrible messaging
+### Insult to injury
 
-More tomorrow on our almost daily 'Your safety is our number one priority', messaging.
-This post is longer than I intended, but so be it.
+I had two offices on different floors. Prior to the pandemic, I would frequently occupy
+the office which would allow me to focus on my work with the fewest amount of interruptions.
+I promise that I was not shirking my responsibilities, but aside from my day-to-day
+duties I also worked on many projects which required some quiet and my undivided attention.
+Now, with the pandemic in full swing, I did not have to play hide-and-seek to focus
+on my work, everything was quiet... in fact too quiet.
+
+Since I had been out for over a month (I _had_ been in frequent contact with my team by phone
+and via email), I spent my first day or two checking in on my team. How were they doing?
+How were their families? How has work been? This final question illicited the most responses
+and complaints. It seems that practically no one from management had been onsite since the stay 
+at home order was issued (about one month). The only form of communication was coming in the
+form of an email sent every few days from HR and upper management to the building. These emails
+would announce the latest butcher's bill of COVID positive individuals in the building. 
+Accompanying these numbers was always a message to remind everyone that their safety was the
+companies number one priority. This message seemed to be the root of most ill feelings
+amongst those of us onsite (myself included). The same individuals ensuring that the factory doors 
+stayed open, that money continued to roll in and that our earnings and stock continued to grow. 
+Given the backdrop of everything happening, the messaging did feel disengenuous. To this day I
+shudder thinking about those emails. If this was really the case, everyone would be home, right?
+But, I digress. This post is not about distasteful emails but remote work and apparently most, if not 
+all of management, including engineering was doing just that.. working remotely.
+
+### Of course they will respond to my emails, they are working remotely. Right?
+
+More will be added to this tomorrow.
