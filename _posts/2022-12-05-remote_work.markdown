@@ -34,7 +34,7 @@ on the receiving end of remote work are unique, but I doubt this is the case.
 
 ### In the beginning
 
-<img src="/assets/dylan_birth.jpg" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
+<img src="/assets/dylan_birth2.jpg" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
 
 When the stay-at-home orders were initially issued, my employer was deemed an essential
 entity and therefore continued to operate 24 hours a day, 7 days a week. My son was about 
