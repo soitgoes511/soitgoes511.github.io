@@ -34,6 +34,8 @@ on the receiving end of remote work are unique, but I doubt this is the case.
 
 ### In the beginning
 
+<img src="/assets/dylan_birth.jpg" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
+
 When the stay-at-home orders were initially issued, my employer was deemed an essential
 entity and therefore continued to operate 24 hours a day, 7 days a week. My son was about 
 to be born and I was fortunate to be provided with paternity leave as a father. 
@@ -46,6 +48,8 @@ return to work. I was an engineer but my position also placed me in direct super
 15 people who were required to be onsite. Due to my position, HR gave me the option to
 work remotely. While the offer was tempting, I do not believe I would have, nor should have been
 respected by my direct reports. If they had to be onsite, I should be onsite. And so I went...
+
+<img src="/assets/jh_dashboard.jpg" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
 
 ### Insult to injury
 
