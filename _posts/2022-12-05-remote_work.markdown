@@ -78,7 +78,7 @@ all of management, including engineering was doing just that.. working remotely.
 
 ### Radio silence
 
-Initially, the quite was a welcome reprieve from the typical chaos which permeated our factory.
+Initially, the quiet was a welcome reprieve from the typical chaos which permeated our factory.
 I had a number of ideas in my time away from work that I wanted to bring to life and the
 silence allowed me to do just that. I quickly noticed that when I did need to send an email to
 a colleague, that responses were not as punctual as they seemed to have been before the stay-at-home.
