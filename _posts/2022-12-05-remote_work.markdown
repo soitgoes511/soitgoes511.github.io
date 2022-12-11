@@ -76,6 +76,40 @@ shudder thinking about those emails. If this was really the case, everyone would
 But, I digress. This post is not about distasteful emails but remote work and apparently most, if not 
 all of management, including engineering was doing just that.. working remotely.
 
-### Of course they will respond to my emails, they are working remotely. Right?
+### Radio silence
 
-More will be added to this tomorrow.
+Initially, the quite was a welcome reprieve from the typical chaos which permeated our factory.
+I had a number of ideas in my time away from work that I wanted to bring to life and the
+silence allowed me to do just that. I quickly noticed that when I did need to send an email to
+a colleague, that responses were not as punctual as they seemed to have been before the stay-at-home.
+Maybe it was just me? At the time, I asked myself this question (I am not the most patient 
+individual in the world), but today I am convinced otherwise. The more and more I needed an answer 
+from planning, product engineering, from other engineers, the more I came to the realization that people 
+could not really be on their computers, logged in doing real *work*, all day. They just couldn't. 
+Many of my requests were critical to customers receiving their semiconductors on time. As an example,
+our planning department had the capability of flagging wafer lots as a priority. A wafer lot with a priority
+flag of zero was the highest priority, then priority one and finally priority two. Typically, priority
+wafer lots were closely monitored and if placed on hold for more than 30 minutes, phones would begin to
+ring asking why the lot was not being processed. We had rules on the books about this very topic. I was
+at the very end of our factory flow in the probe and test area, so I spoke frequently with planning and
+would field their phone almost calls every morning. These phone calls stopped coming in almost completely.
+One morning I returned after a long weekend to find a priority zero lot had been on hold for longer than 
+72 hours and no one seemed to care. No emails, no phone calls, nothing... The 30 minute rule which was
+sacrosanct was being violated and nothing... Radio silence.
+
+I could share a laundry list of examples similar to this, but I will not. I assure you that there
+were many many more. Needless to say that if I could feel the lack of support from all of leadership
+in my company, so could my direct reports. After a few months of this radio silence, my wife and I
+decided to take the children and relocate to France. My wife is French, so this was not a random choice.
+Other factors in our decision were, my wife has a large family in France (our daughter is severely handicapped
+so the family support is a great help), the area of France we were moving to (now live in) is much safer
+than Dallas, Texas for my children to grow up in, and finally, I realized that my work was just that, work.
+I was payed very well, I was given the tools to create great things and was left alone for the most part
+to be autonomous, but it really didn't feel like anyone cared anymore. So, after some introspection I decided
+that money isn't everything and why not take the plunge and move. I will find another job where people
+are engaged and passionate about what they do. So we sold the house, shipped our belongings across
+the Atlantic and moved.
+
+### No more momentum
+
+This section has yet to be completed.

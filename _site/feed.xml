@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-08T22:19:58+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>Digital musings</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">Remote work: An unpopular opinion</title><link href="http://localhost:4000/remote/work,/teletravail/2022/12/05/remote_work.html" rel="alternate" type="text/html" title="Remote work: An unpopular opinion" /><published>2022-12-05T09:00:00+01:00</published><updated>2022-12-05T09:00:00+01:00</updated><id>http://localhost:4000/remote/work,/teletravail/2022/12/05/remote_work</id><content type="html" xml:base="http://localhost:4000/remote/work,/teletravail/2022/12/05/remote_work.html">&lt;h3 id=&quot;a-quick-message-to-the-reader&quot;&gt;A quick message to the reader&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-11T22:31:44+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>Digital musings</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">Remote work: An unpopular opinion</title><link href="http://localhost:4000/remote/work,/teletravail/2022/12/05/remote_work.html" rel="alternate" type="text/html" title="Remote work: An unpopular opinion" /><published>2022-12-05T09:00:00+01:00</published><updated>2022-12-05T09:00:00+01:00</updated><id>http://localhost:4000/remote/work,/teletravail/2022/12/05/remote_work</id><content type="html" xml:base="http://localhost:4000/remote/work,/teletravail/2022/12/05/remote_work.html">&lt;h3 id=&quot;a-quick-message-to-the-reader&quot;&gt;A quick message to the reader&lt;/h3&gt;
 
 &lt;p&gt;This post is the product of working the past two long years, at two large companies, in 
 two different countries and in two different sectors. If you expect to learn something
@@ -68,9 +68,43 @@ shudder thinking about those emails. If this was really the case, everyone would
 But, I digress. This post is not about distasteful emails but remote work and apparently most, if not 
 all of management, including engineering was doing just that.. working remotely.&lt;/p&gt;
 
-&lt;h3 id=&quot;of-course-they-will-respond-to-my-emails-they-are-working-remotely-right&quot;&gt;Of course they will respond to my emails, they are working remotely. Right?&lt;/h3&gt;
+&lt;h3 id=&quot;radio-silence&quot;&gt;Radio silence&lt;/h3&gt;
 
-&lt;p&gt;More will be added to this tomorrow.&lt;/p&gt;</content><author><name>Mike Hinkle</name></author><category term="remote" /><category term="work," /><category term="teletravail" /><summary type="html">A quick message to the reader</summary></entry><entry><title type="html">Apache Superset: Test driving a new tool with familiar metrics</title><link href="http://localhost:4000/superset/postgresql/2021/08/02/superset.html" rel="alternate" type="text/html" title="Apache Superset: Test driving a new tool with familiar metrics" /><published>2021-08-02T17:00:00+02:00</published><updated>2021-08-02T17:00:00+02:00</updated><id>http://localhost:4000/superset/postgresql/2021/08/02/superset</id><content type="html" xml:base="http://localhost:4000/superset/postgresql/2021/08/02/superset.html">&lt;p&gt;For years, I have been using a piece of software by the name of &lt;em&gt;Spotfire&lt;/em&gt;, Tibco Spotfire to be more specific. The software
+&lt;p&gt;Initially, the quite was a welcome reprieve from the typical chaos which permeated our factory.
+I had a number of ideas in my time away from work that I wanted to bring to life and the
+silence allowed me to do just that. I quickly noticed that when I did need to send an email to
+a colleague, that responses were not as punctual as they seemed to have been before the stay-at-home.
+Maybe it was just me? At the time, I asked myself this question (I am not the most patient 
+individual in the world), but today I am convinced otherwise. The more and more I needed an answer 
+from planning, product engineering, from other engineers, the more I came to the realization that people 
+could not really be on their computers, logged in doing real &lt;em&gt;work&lt;/em&gt;, all day. They just couldn’t. 
+Many of my requests were critical to customers receiving their semiconductors on time. As an example,
+our planning department had the capability of flagging wafer lots as a priority. A wafer lot with a priority
+flag of zero was the highest priority, then priority one and finally priority two. Typically, priority
+wafer lots were closely monitored and if placed on hold for more than 30 minutes, phones would begin to
+ring asking why the lot was not being processed. We had rules on the books about this very topic. I was
+at the very end of our factory flow in the probe and test area, so I spoke frequently with planning and
+would field their phone almost calls every morning. These phone calls stopped coming in almost completely.
+One morning I returned after a long weekend to find a priority zero lot had been on hold for longer than 
+72 hours and no one seemed to care. No emails, no phone calls, nothing… The 30 minute rule which was
+sacrosanct was being violated and nothing… Radio silence.&lt;/p&gt;
+
+&lt;p&gt;I could share a laundry list of examples similar to this, but I will not. I assure you that there
+were many many more. Needless to say that if I could feel the lack of support from all of leadership
+in my company, so could my direct reports. After a few months of this radio silence, my wife and I
+decided to take the children and relocate to France. My wife is French, so this was not a random choice.
+Other factors in our decision were, my wife has a large family in France (our daughter is severely handicapped
+so the family support is a great help), the area of France we were moving to (now live in) is much safer
+than Dallas, Texas for my children to grow up in, and finally, I realized that my work was just that, work.
+I was payed very well, I was given the tools to create great things and was left alone for the most part
+to be autonomous, but it really didn’t feel like anyone cared anymore. So, after some introspection I decided
+that money isn’t everything and why not take the plunge and move. I will find another job where people
+are engaged and passionate about what they do. So we sold the house, shipped our belongings across
+the Atlantic and moved.&lt;/p&gt;
+
+&lt;h3 id=&quot;no-more-momentum&quot;&gt;No more momentum&lt;/h3&gt;
+
+&lt;p&gt;This section has yet to be completed.&lt;/p&gt;</content><author><name>Mike Hinkle</name></author><category term="remote" /><category term="work," /><category term="teletravail" /><summary type="html">A quick message to the reader</summary></entry><entry><title type="html">Apache Superset: Test driving a new tool with familiar metrics</title><link href="http://localhost:4000/superset/postgresql/2021/08/02/superset.html" rel="alternate" type="text/html" title="Apache Superset: Test driving a new tool with familiar metrics" /><published>2021-08-02T17:00:00+02:00</published><updated>2021-08-02T17:00:00+02:00</updated><id>http://localhost:4000/superset/postgresql/2021/08/02/superset</id><content type="html" xml:base="http://localhost:4000/superset/postgresql/2021/08/02/superset.html">&lt;p&gt;For years, I have been using a piece of software by the name of &lt;em&gt;Spotfire&lt;/em&gt;, Tibco Spotfire to be more specific. The software
 falls into the category of what is referred to these days as &lt;strong&gt;BI&lt;/strong&gt; or &lt;em&gt;Business Intelligence&lt;/em&gt; software :chart_with_upwards_trend:. While I was never
 a huge proponent of Spotfire because there were limitations on what it could do, I was still pretty decent at embedding R &amp;amp; SQL,
 creating templates and ultimately deploying the dxp files to the web (via WebPlayer). Spotfire is proprietary and licensing can cost big money, so 
