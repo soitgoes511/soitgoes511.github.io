@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-11T22:45:06+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>Digital musings</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">Remote work: An unpopular opinion</title><link href="http://localhost:4000/remote/work,/teletravail/2022/12/05/remote_work.html" rel="alternate" type="text/html" title="Remote work: An unpopular opinion" /><published>2022-12-05T09:00:00+01:00</published><updated>2022-12-05T09:00:00+01:00</updated><id>http://localhost:4000/remote/work,/teletravail/2022/12/05/remote_work</id><content type="html" xml:base="http://localhost:4000/remote/work,/teletravail/2022/12/05/remote_work.html">&lt;h3 id=&quot;a-quick-message-to-the-reader&quot;&gt;A quick message to the reader&lt;/h3&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2022-12-12T22:19:44+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">A life that made sense</title><subtitle>Digital musings</subtitle><author><name>Mike Hinkle</name></author><entry><title type="html">Has the world lost its momentum?</title><link href="http://localhost:4000/remote/work,/teletravail/2022/12/05/remote_work.html" rel="alternate" type="text/html" title="Has the world lost its momentum?" /><published>2022-12-05T09:00:00+01:00</published><updated>2022-12-05T09:00:00+01:00</updated><id>http://localhost:4000/remote/work,/teletravail/2022/12/05/remote_work</id><content type="html" xml:base="http://localhost:4000/remote/work,/teletravail/2022/12/05/remote_work.html">&lt;h3 id=&quot;a-quick-message-to-the-reader&quot;&gt;A quick message to the reader&lt;/h3&gt;
 
 &lt;p&gt;This post is the product of working the past two long years, at two large companies, in 
 two different countries and in two different sectors. If you expect to learn something
@@ -84,7 +84,7 @@ flag of zero was the highest priority, then priority one and finally priority tw
 wafer lots were closely monitored and if placed on hold for more than 30 minutes, phones would begin to
 ring asking why the lot was not being processed. We had rules on the books about this very topic. I was
 at the very end of our factory flow in the probe and test area, so I spoke frequently with planning and
-would field their phone almost calls every morning. These phone calls stopped coming in almost completely.
+would field their phone calls almost every morning. These phone calls stopped coming in almost completely.
 One morning I returned after a long weekend to find a priority zero lot had been on hold for longer than 
 72 hours and no one seemed to care. No emails, no phone calls, nothing… The 30 minute rule which was
 sacrosanct was being violated and nothing… Radio silence.&lt;/p&gt;
@@ -95,7 +95,7 @@ in my company, so could my direct reports. After a few months of this radio sile
 decided to take the children and relocate to France. My wife is French, so this was not a random choice.
 Other factors in our decision were, my wife has a large family in France (our daughter is severely handicapped
 so the family support is a great help), the area of France we were moving to (now live in) is much safer
-than Dallas, Texas for my children to grow up in, and finally, I realized that my work was just that, work.
+than Dallas, Texas (where we were living) for my children to grow up, and finally, I realized that my work was just that, work.
 I was payed very well, I was given the tools to create great things and was left alone for the most part
 to be autonomous, but it really didn’t feel like anyone cared anymore. So, after some introspection I decided
 that money isn’t everything and why not take the plunge and move. I will find another job where people
@@ -104,7 +104,42 @@ the Atlantic and moved.&lt;/p&gt;
 
 &lt;h3 id=&quot;no-more-momentum&quot;&gt;No more momentum&lt;/h3&gt;
 
-&lt;p&gt;This section has yet to be completed.&lt;/p&gt;</content><author><name>Mike Hinkle</name></author><category term="remote" /><category term="work," /><category term="teletravail" /><summary type="html">A quick message to the reader</summary></entry><entry><title type="html">Apache Superset: Test driving a new tool with familiar metrics</title><link href="http://localhost:4000/superset/postgresql/2021/08/02/superset.html" rel="alternate" type="text/html" title="Apache Superset: Test driving a new tool with familiar metrics" /><published>2021-08-02T17:00:00+02:00</published><updated>2021-08-02T17:00:00+02:00</updated><id>http://localhost:4000/superset/postgresql/2021/08/02/superset</id><content type="html" xml:base="http://localhost:4000/superset/postgresql/2021/08/02/superset.html">&lt;p&gt;For years, I have been using a piece of software by the name of &lt;em&gt;Spotfire&lt;/em&gt;, Tibco Spotfire to be more specific. The software
+&lt;p&gt;Fast forward a year and a half. I have found a job doing technical things in a manufacturing environment
+which I enjoy (always different problems and so much to be improved). I have a great team who has looked past
+my rudimentary but steadily improving French (I admit my improvement is slower than I would like).
+By all accounts, everything is better than I could have hoped. So why am I writing this now? I am writing
+this because the lack of engagement, enthusiasm and passion which I felt before leaving my last place of
+employee, seems to have followed me across the Atlantic and contaminated europe. Email replies or messaging frequently draw slow responses.
+My manager requested access for me to a specific system from someone whose primary duty is to grant that
+access and approximately one month came and went before I could access the system. It is so ridiculous
+that all I can do is laugh. I feel like the world was hobbling slowly forward before the pandemic and the worldwide
+closures completely stopped what little momentum we had.&lt;/p&gt;
+
+&lt;h3 id=&quot;first-step-towards-a-solution&quot;&gt;First step towards a solution&lt;/h3&gt;
+
+&lt;p&gt;After much thought on the subject, I have become convinced that the first tangible step employers can take
+to restore that momentum is forcing their employees back onsite. I know this is an unpopular belief, but can
+we all honestly say that our businesses (or interactions with businesses) right now are functioning better than they were before the pandemic?
+Perhaps some institutions or companies are, but by and large I would argue that they were not. Even as a consumer it has been
+a struggle dealing with everyone from our old gas company, to the architect we hired to make a simple drawing.
+Everything seems to be difficult and no one seems like they want to do their job. It feels like I have to
+beg people to do their job so I can pay them and then follow up that begging with three emails and a phone
+call to keep the pressure on.&lt;/p&gt;
+
+&lt;p&gt;(will continue post tomorrow)&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“No man is an island entire of itself; every man 
+is a piece of the continent, a part of the main; 
+if a clod be washed away by the sea, Europe 
+is the less, as well as if a promontory were, as 
+well as any manner of thy friends or of thine 
+own were; any man’s death diminishes me, 
+because I am involved in mankind. 
+And therefore never send to know for whom 
+the bell tolls; it tolls for thee.”
+-John Donne: No Man is an Island&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name>Mike Hinkle</name></author><category term="remote" /><category term="work," /><category term="teletravail" /><summary type="html">A quick message to the reader</summary></entry><entry><title type="html">Apache Superset: Test driving a new tool with familiar metrics</title><link href="http://localhost:4000/superset/postgresql/2021/08/02/superset.html" rel="alternate" type="text/html" title="Apache Superset: Test driving a new tool with familiar metrics" /><published>2021-08-02T17:00:00+02:00</published><updated>2021-08-02T17:00:00+02:00</updated><id>http://localhost:4000/superset/postgresql/2021/08/02/superset</id><content type="html" xml:base="http://localhost:4000/superset/postgresql/2021/08/02/superset.html">&lt;p&gt;For years, I have been using a piece of software by the name of &lt;em&gt;Spotfire&lt;/em&gt;, Tibco Spotfire to be more specific. The software
 falls into the category of what is referred to these days as &lt;strong&gt;BI&lt;/strong&gt; or &lt;em&gt;Business Intelligence&lt;/em&gt; software :chart_with_upwards_trend:. While I was never
 a huge proponent of Spotfire because there were limitations on what it could do, I was still pretty decent at embedding R &amp;amp; SQL,
 creating templates and ultimately deploying the dxp files to the web (via WebPlayer). Spotfire is proprietary and licensing can cost big money, so 

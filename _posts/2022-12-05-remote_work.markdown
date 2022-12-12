@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "Remote work: An unpopular opinion"
+title:  "Has the world lost its momentum?"
 date:   2022-12-05 08:00:00
 comments: true
 categories: remote work, teletravail
@@ -92,7 +92,7 @@ flag of zero was the highest priority, then priority one and finally priority tw
 wafer lots were closely monitored and if placed on hold for more than 30 minutes, phones would begin to
 ring asking why the lot was not being processed. We had rules on the books about this very topic. I was
 at the very end of our factory flow in the probe and test area, so I spoke frequently with planning and
-would field their phone almost calls every morning. These phone calls stopped coming in almost completely.
+would field their phone calls almost every morning. These phone calls stopped coming in almost completely.
 One morning I returned after a long weekend to find a priority zero lot had been on hold for longer than 
 72 hours and no one seemed to care. No emails, no phone calls, nothing... The 30 minute rule which was
 sacrosanct was being violated and nothing... Radio silence.
@@ -103,7 +103,7 @@ in my company, so could my direct reports. After a few months of this radio sile
 decided to take the children and relocate to France. My wife is French, so this was not a random choice.
 Other factors in our decision were, my wife has a large family in France (our daughter is severely handicapped
 so the family support is a great help), the area of France we were moving to (now live in) is much safer
-than Dallas, Texas for my children to grow up in, and finally, I realized that my work was just that, work.
+than Dallas, Texas (where we were living) for my children to grow up, and finally, I realized that my work was just that, work.
 I was payed very well, I was given the tools to create great things and was left alone for the most part
 to be autonomous, but it really didn't feel like anyone cared anymore. So, after some introspection I decided
 that money isn't everything and why not take the plunge and move. I will find another job where people
@@ -112,4 +112,38 @@ the Atlantic and moved.
 
 ### No more momentum
 
-This section has yet to be completed.
+Fast forward a year and a half. I have found a job doing technical things in a manufacturing environment
+which I enjoy (always different problems and so much to be improved). I have a great team who has looked past
+my rudimentary but steadily improving French (I admit my improvement is slower than I would like).
+By all accounts, everything is better than I could have hoped. So why am I writing this now? I am writing
+this because the lack of engagement, enthusiasm and passion which I felt before leaving my last place of
+employee, seems to have followed me across the Atlantic and contaminated europe. Email replies or messaging frequently draw slow responses.
+My manager requested access for me to a specific system from someone whose primary duty is to grant that
+access and approximately one month came and went before I could access the system. It is so ridiculous
+that all I can do is laugh. I feel like the world was hobbling slowly forward before the pandemic and the worldwide
+closures completely stopped what little momentum we had. 
+
+### First step towards a solution
+
+After much thought on the subject, I have become convinced that the first tangible step employers can take
+to restore that momentum is forcing their employees back onsite. I know this is an unpopular belief, but can
+we all honestly say that our businesses (or interactions with businesses) right now are functioning better than they were before the pandemic?
+Perhaps some institutions or companies are, but by and large I would argue that they were not. Even as a consumer it has been
+a struggle dealing with everyone from our old gas company, to the architect we hired to make a simple drawing.
+Everything seems to be difficult and no one seems like they want to do their job. It feels like I have to
+beg people to do their job so I can pay them and then follow up that begging with three emails and a phone
+call to keep the pressure on. 
+
+(will continue post tomorrow)
+
+> "No man is an island entire of itself; every man 
+> is a piece of the continent, a part of the main; 
+> if a clod be washed away by the sea, Europe 
+> is the less, as well as if a promontory were, as 
+> well as any manner of thy friends or of thine 
+> own were; any man's death diminishes me, 
+> because I am involved in mankind. 
+> And therefore never send to know for whom 
+> the bell tolls; it tolls for thee."
+> -John Donne: No Man is an Island 
+		 

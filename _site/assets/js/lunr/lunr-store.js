@@ -41,7 +41,7 @@ var store = [{
         "url": "/superset/postgresql/2021/08/02/superset.html",
         "teaser": null
       },{
-        "title": "Remote work: An unpopular opinion",
+        "title": "Has the world lost its momentum?",
         "excerpt":"A quick message to the reader This post is the product of working the past two long years, at two large companies, in two different countries and in two different sectors. If you expect to learn something profound reading this, I can almost assure you that you will not. My...","categories": ["remote","work,","teletravail"],
         "tags": [],
         "url": "/remote/work,/teletravail/2022/12/05/remote_work.html",
