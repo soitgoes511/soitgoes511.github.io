@@ -69,11 +69,11 @@ form of an email sent every few days from HR and upper management to the buildin
 would announce the latest butcher's bill of COVID positive individuals in the building. 
 Accompanying these numbers was always a message to remind everyone that their safety was the
 companies number one priority. This message seemed to be the root of most ill feelings
-amongst those the people onsite (myself included).  
-Given the backdrop of everything happening, the messaging did feel disengenuous. To this day I
-shudder thinking about those emails. If this was really the case, everyone would be home, right?
-But, I digress. This post is not about distasteful emails but remote work and apparently most, if not 
-all of management, including engineering was doing just that.. working remotely.
+amongst those the people onsite (myself included). Given the backdrop of everything happening, 
+the messaging did feel disengenuous. To this day I shudder thinking about those emails. If 
+this was really the case, everyone would be home, right? But, I digress. This post is not about 
+distasteful emails but remote work and apparently most, if not all of management, including 
+engineering was doing just that.. working remotely.
 
 ### Radio silence
 
@@ -147,4 +147,4 @@ I have grown tired of waiting.
 > And therefore never send to know for whom 
 > the bell tolls; it tolls for thee."
 
-> -John Donne: No Man is an Island 
+-John Donne: No Man is an Island 
