@@ -6,7 +6,7 @@ comments: true
 categories: remote work, teletravail
 ---
 
-### A quick message to the reader
+## A quick message to the reader
 
 This post is the product of working the past two long years, at two large companies, in 
 two different countries and in two different sectors. If you expect to learn something
@@ -17,7 +17,7 @@ as it is today, they will most certainly attribute our fall, at least in part, t
 media and remote work. Today I will focus on the latter of the two topics as it is a subject
 near and dear to my heart.
 
-### The context
+## The context
 
 I thought COVID-19 would be over within a few weeks. God was I wrong. Despite
 the fact that I am not wearing a mask this week (I did have to wear one in a meeting
@@ -32,7 +32,7 @@ I really do not know. I can only speak to how it has felt working onsite for the
 few years while many of my colleagues opted to work remotely. Maybe my experiences, being
 on the receiving end of remote work are unique, but I doubt this is the case.
 
-### In the beginning
+## In the beginning
 
 <img src="/assets/dylan_birth2.jpg" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
 
@@ -51,7 +51,7 @@ respected by my direct reports. If they had to be onsite, I should be onsite. An
 
 <img src="/assets/jh_dashboard.jpg" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
 
-### Insult to injury
+## Insult to injury
 
 I had two offices on different floors. Prior to the pandemic, I would frequently occupy
 the office which would allow me to focus on my work with the fewest amount of interruptions.
@@ -75,7 +75,7 @@ this was really the case, everyone would be home, right? But, I digress. This po
 distasteful emails but remote work and apparently most, if not all of management, including 
 engineering was doing just that.. working remotely.
 
-### Radio silence
+## Radio silence
 
 Initially, the quiet was a welcome reprieve from the typical chaos which permeated our factory.
 I had a number of ideas in my time away from work that I wanted to bring to life and the
@@ -109,7 +109,7 @@ that money isn't everything and why not take the plunge and move. I will find an
 are engaged and passionate about what they do. So we sold the house, shipped our belongings across
 the Atlantic and moved.
 
-### No more momentum
+## No more momentum
 
 Fast forward a year and a half. I have found a job doing technical things in a manufacturing environment
 which I enjoy (always different problems and so much to be improved). I have a great team who has looked past
@@ -124,7 +124,7 @@ closures completely stopped what little momentum we had. I deal with many suppli
 and I experience this lack of engagement everywhere I look with almost every company I deal with. These
 are not one off observations, this seems to be how the world works now. 
 
-### First step towards a solution
+## First step towards a solution
 
 After much thought on the subject, I have become convinced that the first tangible step employers can take
 to restore that momentum is by forcing their employees back onsite. I know this is an unpopular belief, but can
