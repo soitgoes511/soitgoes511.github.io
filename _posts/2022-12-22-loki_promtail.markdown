@@ -1,6 +1,6 @@
 ---
 layout: single
-title:  "An untapped data source: Loki and Promtail"
+title:  "An untapped data source: Loki and Promtail (under construction)"
 date:   2022-12-22 08:00:00
 comments: true
 categories: Loki, Promtail, Grafana, data, log
