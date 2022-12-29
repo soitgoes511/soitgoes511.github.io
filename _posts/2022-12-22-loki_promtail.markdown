@@ -31,11 +31,11 @@ in general.
 
 Loki is a log aggregation system, inspired by Prometheus, which was started in 2018 by Grafana labs. I will be using
 the local install (non-Docker on bare metal), version 2.7.1. I am not going to run through the install process. In short, the
-Loki install came with a single binary included. A configuration file is required to indicate the desired location for stored
-date, the listening port number, etc.. The installation process is relatively straightforward and the only issues encountered
-were due to proper permissions. I have included my configuration file which I am using for my test drive below. 
+Loki archive came with a single binary included. A configuration file is required to indicate the desired location for stored
+data, the listening port number, etc.. The installation process is relatively straightforward and the only issues encountered
+were due to improper permissions. I have included my configuration file which I am using for my test drive below. 
 
-### Sample Loki configuration file
+### Loki configuration file used
 
 ```yaml
 auth_enabled: false
@@ -83,7 +83,7 @@ analytics:
 ```
 
 I have also created a service file to start the Loki daemon quickly without the need to remember how to source the
-configuration file. I am including this as a reference for myself and any reader who stumbles upon this post.
+configuration file. I am including this as a reference for myself and any reader who stumbles upon this post who uses systemd.
 
 ```conf
 [Unit]
@@ -101,11 +101,68 @@ WantedBy=multi-user.target
 
 So, now that I have Loki downloaded, configured and running, I need to start sending some log streams to the Loki api. To
 accomplish this task I will be using Promtail. The next section will briefly cover Promtail and also include the configuration
-file used as well as the Promtail service file.
+and service file.
 
 ## Promtail
 
-(section under construction)
+Promtail should be installed on any system containing logs. Promtail runs as a background service and will monitor the log 
+files and extract any newly appended log entries from those log files. Once extracted the log entries will be labled and pushed 
+to the Loki server which is actively listening (at port 3100 according to the configuration file above).
+
+### Promtail configuration file used
+
+```yaml
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://localhost:3100/loki/api/v1/push
+
+scrape_configs:
+- job_name: system
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: varlogs
+      __path__: /var/log/*log
+- job_name: apache
+  static_configs:
+  - targets:
+     - localhost
+    labels:
+      job: apache
+      __path__: /var/log/apache2/access.log
+```
+
+...and the service file used to start the Promtail service daemon on my systemd system:
+
+```conf
+[Unit]
+Description=Promtail service
+After=network.target
+
+[Service]
+Type=simple
+User=promtail
+ExecStart=/usr/local/bin/promtail-linux-amd64 -config.file /usr/local/bin/promtail-local-config.yaml
+
+[Install]
+WantedBy=multi-user.target
+```
+
+I would like to mention now that the Promtail configuration file can be used to create labels (think of a label as something
+you might want to group by during aggregation) before the log stream is sent to the Loki listener. Reading some of the 
+documentation initially, I was under the impression that this was how Loki *should* be used. As such, the simple configuration
+file shown above was loaded with pipelines containing some serious regular expressions to pre-process the logs. After much
+frustration and after reading a multitude of Grafana community posts, I have come to the realisation that *creating Labels is
+best handled at query time*. Too many labels leads to issues concerning series cardinality. It is also painful to test regex by
+continuously stopping and restarting the Promtail daemon (I am not a regex pro in all the flavors of regex that are used today, 
+Loki and Promtail understand _Go RE2 regex strings_). I will discuss these points more later in the post.
 
 ### Grafana log panel output: apache2 access.log
 
