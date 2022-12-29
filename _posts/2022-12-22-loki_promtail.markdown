@@ -17,7 +17,7 @@ I am also well aware that databases are not the only place that data can be extr
 2. Flat files (excel, csv, json)
 3. Logs
 
-I am familiar wth all the sources names in this list with the exception of logs. Have I looked at or seen logs? Of course
+I am familiar wth all the sources named in this list with the exception of logs. Have I looked at or seen logs? Of course
 I have. I still refer to my *dmesg* log if I have a file system or device mounting issue. I have used numerous
 apache/httpd logs to troubleshoot *WSGI* applications. But, both of these cases have never merited me learning to use something
 like a log aggregator. Until now. For the first time in my professional career, I have found the need to extract log data
@@ -28,6 +28,12 @@ for this post, but I will be using various sytems logs to better understand the 
 in general.
 
 ## Grafana Loki
+
+Loki is a log aggregation system, inspired by Prometheus, which was started in 2018 by Grafana labs. I will be using
+the local install (non-Docker on bare metal), version 2.7.1. I am not going to run through the install process. In short, the
+Loki install came with a single binary included. A configuration file is required to indicate the desired location for stored
+date, the listening port number, etc.. The installation process is relatively straightforward and the only issues encountered
+were due to proper permissions. I have included my configuration file which I am using for my test drive below. 
 
 ### Sample Loki configuration file
 
@@ -75,6 +81,31 @@ ruler:
 analytics:
   reporting_enabled: false
 ```
+
+I have also created a service file to start the Loki daemon quickly without the need to remember how to source the
+configuration file. I am including this as a reference for myself and any reader who stumbles upon this post.
+
+```conf
+[Unit]
+Description=Loki service
+After=network.target
+
+[Service]
+Type=simple
+User=loki
+ExecStart=/usr/local/bin/loki-linux-amd64 -config.file /usr/local/bin/loki-local-config.yaml
+
+[Install]
+WantedBy=multi-user.target
+```
+
+So, now that I have Loki downloaded, configured and running, I need to start sending some log streams to the Loki api. To
+accomplish this task I will be using Promtail. The next section will briefly cover Promtail and also include the configuration
+file used as well as the Promtail service file.
+
+## Promtail
+
+(section under construction)
 
 ### Grafana log panel output: apache2 access.log
 
