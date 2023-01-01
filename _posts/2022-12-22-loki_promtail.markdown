@@ -188,4 +188,30 @@ Next I will:
 
 <img src="/assets/loki_grafana_log_panel.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
 
+I chose the apache access log for testing because it is relatively straightforward. The log entries are recorded in a single line 
+rather than on multiple lines. The various data fields expected are also repeated on each and every line of the log. Let's take
+a look at a single log line and take a closer look at the fields:
+
+```conf
+127.0.0.1 - - [01/Jan/2023:21:33:40 +0100] "GET /grafana_local/api/search?dashboardUIDs=alP6m1c4k&limit=30 HTTP/1.1" 200 525 "http://localhost/grafana_local/?orgId=1" "Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0"
+```
+
+1. 127.0.0.1: Is the client making a request to the server
+2. - : Identity of the client making request (often just a hyphen)
+3. - : User ID of person requesting resource
+4. [01/Jan/2023:21:33:40 +0100]: Date and time of request
+5. "GET /grafana_local/api/search?dashboardUIDs=alP6m1c4k&limit=30 HTTP/1.1": Request type and resource being requested
+6. 200: HTTP response status code
+7. 525: Size of object returned to client
+8. "http://localhost/grafana_local/?orgId=1": This is the HTTP referer, which represents the address from which the request for the resource originated
+9. "Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0": This is the User Agent, which identifies information about the browser that the client is using to access the resource
+
+Now, let us discuss the various fields returned by Loki with no transformations performed as of yet (output of Grafana table panel screenshot shown above). There are five columns:
+
+1. Column 1: Labels appended by Promtail in key-value pairs (currently filename & job)
+2. Column 2: The timestamp of when the log line was scraped by Promtail (**I could use the timestamp from the logfile itself by using the timestamp stage in the Promtail config pipeline, I chose not to for simplicity**)
+3. Column 3: The log line in its' entirety as seen in the apache access log
+4. Column 4: tsNs is the datetime stamp converted to epoch time with nanosecond precision
+5. Column 5: Unique id prepended with the epoch datetime stamp
+
 (POST CURRENTLY UNDER CONSTRUCTION AND NOT COMPLETE)
