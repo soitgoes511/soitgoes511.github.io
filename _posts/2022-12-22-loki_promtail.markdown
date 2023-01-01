@@ -197,8 +197,8 @@ a look at a single log line and take a closer look at the fields:
 ```
 
 1. 127.0.0.1: Is the client making a request to the server
-2. - : Identity of the client making request (often just a hyphen)
-3. - : User ID of person requesting resource
+2. \- : Identity of the client making request (often just a hyphen)
+3. \- : User ID of person requesting resource
 4. [01/Jan/2023:21:33:40 +0100]: Date and time of request
 5. "GET /grafana_local/api/search?dashboardUIDs=alP6m1c4k&limit=30 HTTP/1.1": Request type and resource being requested
 6. 200: HTTP response status code
