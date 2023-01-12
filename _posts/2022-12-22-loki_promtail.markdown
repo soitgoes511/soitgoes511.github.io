@@ -13,9 +13,9 @@ InfluxDB, etc.. etc.. I enjoy the challenge of writing complex queries and disco
 I believe that most individuals in a business setting should be familiar with SQL (though this is far from reality). 
 I am also well aware that databases are not the only place that data can be extracted. Some other data sources include:
 
-1. Web scraping
-2. Flat files (excel, csv, json)
-3. Logs
+- Web scraping
+- Flat files (excel, csv, json)
+- Logs
 
 I am familiar wth all the sources named in this list with the exception of logs. Have I looked at or seen logs? Of course
 I have. I still refer to my **dmesg** log if I have a file system or device mounting issue. I have used numerous
@@ -194,23 +194,23 @@ a look at a single log line and take a closer look at the fields:
 
     127.0.0.1 - - [01/Jan/2023:21:33:40 +0100] "GET /grafana_local/api/search?dashboardUIDs=alP6m1c4k&limit=30 HTTP/1.1" 200 525 "http://localhost/grafana_local/?orgId=1" "Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0"
 
-1. 127.0.0.1: Is the client making a request to the server
-2. \- : Identity of the client making request (often just a hyphen)
-3. \- : User ID of person requesting resource
-4. \[01/Jan/2023:21:33:40 +0100\]: Date and time of request
-5. "GET /grafana_local/api/search?dashboardUIDs=alP6m1c4k&limit=30 HTTP/1.1": Request type and resource being requested
-6. 200: HTTP response status code
-7. 525: Size of object returned to client
-8. "http://localhost/grafana_local/?orgId=1": This is the HTTP referer, which represents the address from which the request for the resource originated
-9. "Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0": This is the User Agent, which identifies information about the browser that the client is using to access the resource
+- 127.0.0.1: Is the client making a request to the server
+- \- : Identity of the client making request (often just a hyphen)
+- \- : User ID of person requesting resource
+- \[01/Jan/2023:21:33:40 +0100\]: Date and time of request
+- "GET /grafana_local/api/search?dashboardUIDs=alP6m1c4k&limit=30 HTTP/1.1": Request type and resource being requested
+- 200: HTTP response status code
+- 525: Size of object returned to client
+- "http://localhost/grafana_local/?orgId=1": This is the HTTP referer, which represents the address from which the request for the resource originated
+- "Mozilla/5.0 (X11; Linux x86_64; rv:108.0) Gecko/20100101 Firefox/108.0": This is the User Agent, which identifies information about the browser that the client is using to access the resource
 
 Now, let us discuss the various fields returned by Loki with no transformations performed as of yet (output of Grafana table panel screenshot shown above). There are five columns:
 
-1. Column 1: Labels appended by Promtail in key-value pairs (currently filename & job)
-2. Column 2: The timestamp of when the log line was scraped by Promtail (**I could use the timestamp from the log line itself by using the timestamp stage in the Promtail config pipeline, I chose not to for simplicity**. I will include an example of this at the end of the post)
-3. Column 3: The log line in its' entirety as seen in the apache access log
-4. Column 4: tsNs is the datetime stamp converted to epoch time with nanosecond precision
-5. Column 5: Unique id prepended with the epoch datetime stamp
+- **Column 1**: Labels appended by Promtail in key-value pairs (currently filename & job)
+- **Column 2**: The timestamp of when the log line was scraped by Promtail (**I could use the timestamp from the log line itself by using the timestamp stage in the Promtail config pipeline, I chose not to for simplicity**. I will include an example of this at the end of the post)
+- **Column 3**: The log line in its' entirety as seen in the apache access log
+- **Column 4**: tsNs is the datetime stamp converted to epoch time with nanosecond precision
+- **Column 5**: Unique id prepended with the epoch datetime stamp
 
 Viewing the log entries in Grafana is great and all, but now the real fun begins. I would like to answer some basic questions about 
 the data in the logs using Grafana Loki's query language, LogQL. Yes, yes.. another, different query language, I know. Apparently,
@@ -247,11 +247,11 @@ Moving onto creating labels. I mentioned that from my limited experience, creati
 best path forward vs over-complicating the Promtail config file(s). There are multiple ways to do this and your choice 
 will most likely be made based on the shape and format of your log files. Some of these ways include:
 
-1. Regex
-2. Pattern parsing
-3. JSON
-4. Logfmt
-5. Line format expressions
+- Regex
+- Pattern parsing
+- JSON
+- Logfmt
+- Line format expressions
 
 Due to the repeated structure of my access.log, I will be using the Pattern parser to create labels. I personally find this
 easier than using regex. Here is an example of creating a label out of every field containing data in my log:
@@ -275,8 +275,35 @@ is not very interesting in this case, but on a high traffic server it might be).
 
 <img src="/assets/loki_countby_ip.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
 
-Or I can see what types of resources, visitors to the server are using...
+...or I can see what types of resources the visitors to the server are using...
 
 <img src="/assets/loki_countby_referer.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
 
-(POST CURRENTLY UNDER CONSTRUCTION AND NOT COMPLETE)
+## Closing comments
+
+The primary complications I have experienced to-date with Grafana Loki have been:
+
+- Difficulties querying long term data (greater than one month is current default)
+    - The max_query_length: 0h found in the Loki config will override this behavior
+- Struggling with overcomplicating the Promtail configuration
+    - I have opted to create the primary data transformation pipeline at query time rather than in the config
+	- Here is what **ChatGPT** says about the topic:
+
+<img src="/assets/chatgpt-loki.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
+
+- The interval calculation is confusing when Grafana calculates the step interval
+    - This is most noticeable when using the Bar Chart panel type in Grafana
+    - Resolution can also be toggled to varying ratios. For me, the behavior is not consistent and is unpredicatable
+    - Aggregating by 5m, does not necessarily generate a bar at 5m intervals
+- There is a one hour offset on some of my bar charts despite my time-series charts and raw log table time stamp showing correctly
+- The tooltip on random panels will show me the incorrect tooltip / hint on hover
+
+In summary, there are still random bugs which I have attempted to tweak out of existence (not entirely successfully).
+I believe Loki will bring added benefit to my work, and I also know that I still have a lot to learn to take
+full advantage of the data sources' capabilities. I have promised to give a working example of extracting the
+log timestamp to use for analysis (rather than the time Promtail grep'd the log) as a bonus. Please find
+a working config below that does just that:
+
+### Promtail config: timestamp extraction
+
+(Will complete tomorrow)
