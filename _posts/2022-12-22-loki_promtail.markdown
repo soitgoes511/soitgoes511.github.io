@@ -346,6 +346,7 @@ scrape_configs:
       job: apache
       __path__: /var/log/apache2/access.log
 ```
+
 ..and that is all for now. If you made it this far, thank you for suffering through the post. Please let me know if 
 you find a mistake in anything I have written.
 
