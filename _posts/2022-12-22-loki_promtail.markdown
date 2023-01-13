@@ -1,9 +1,9 @@
 ---
 layout: single
-title:  "An untapped data source: Loki and Promtail (under construction)"
+title:  "An untapped data source: Grafana Loki and Promtail"
 date:   2022-12-22 08:00:00
 comments: true
-categories: Loki, Promtail, Grafana, data, log
+categories: Loki, Promtail, Grafana, data, logs, log
 ---
 
 ## Motivation
@@ -291,19 +291,64 @@ The primary complications I have experienced to-date with Grafana Loki have been
 
 <img src="/assets/chatgpt-loki.png" alt="drawing" style="max-width: 100%; height: auto; text-align: center;"/>
 
-- The interval calculation is confusing when Grafana calculates the step interval
-    - This is most noticeable when using the Bar Chart panel type in Grafana
+- The interval calculation is confusing when Grafana calculates the step interval for the Bar Chart Panel
     - Resolution can also be toggled to varying ratios. For me, the behavior is not consistent and is unpredicatable
     - Aggregating by 5m, does not necessarily generate a bar at 5m intervals
-- There is a one hour offset on some of my bar charts despite my time-series charts and raw log table time stamp showing correctly
-- The tooltip on random panels will show me the incorrect tooltip / hint on hover
+    - I defaulted to using the Bar graph from the __Time Series Panel__ and am not surprised by the results
+    - My aversion to the Bar Chart panel is most likely due to my own errors and ignorance
 
-In summary, there are still random bugs which I have attempted to tweak out of existence (not entirely successfully).
-I believe Loki will bring added benefit to my work, and I also know that I still have a lot to learn to take
-full advantage of the data sources' capabilities. I have promised to give a working example of extracting the
-log timestamp to use for analysis (rather than the time Promtail grep'd the log) as a bonus. Please find
+In summary, I am excited to bring Loki into my current observability stack at work as a new data source. I also know that I still have a lot 
+to learn to take full advantage of Grafana Loki's capabilities. I have promised to give a working example of extracting the
+log timestamp to use for analysis (rather than the time Promtail grep'd the log line) as a bonus. Please find
 a working config below that does just that:
 
 ### Promtail config: timestamp extraction
 
-(Will complete tomorrow)
+Below is a working configuration file to extract and use the timestamp within the apache access log. Even if the timestamp
+being extracted does not exactly meet a specific standard (RFC3339, RFC822Z, etc..), you can use the reference date and time as shown below in the
+sample configuration to work around this inconvenience. Therefore, use January, 2nd of 2006, etc.. to define the custom format.
+
+```yaml
+server:
+  http_listen_port: 9080
+  grpc_listen_port: 0
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://localhost:3100/loki/api/v1/push
+
+scrape_configs:
+- job_name: system
+  static_configs:
+  - targets:
+      - localhost
+    labels:
+      job: varlogs
+      __path__: /var/log/*log
+- job_name: apache
+  pipeline_stages:
+  - match:
+      selector: '{job="apache"}'
+      action: keep
+      stages:
+      - regex:
+          expression: "\\[(?P<timestamp>[\\w:/]+\\s[+\\-]\\d{4})\\]"
+      - timestamp:
+          source: timestamp
+          format: "02/Jan/2006:15:04:05 -0700"
+          location: "Europe/Paris"
+  static_configs:
+  - targets:
+     - localhost
+    labels:
+      job: apache
+      __path__: /var/log/apache2/access.log
+```
+..and that is all for now. If you made it this far, thank you for suffering through the post. Please let me know if 
+you find a mistake in anything I have written.
+
+> There is no subject so old that something new cannot be said about it.
+
+Fyodor Dostoevsky
