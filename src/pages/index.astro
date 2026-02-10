@@ -4,7 +4,23 @@ import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 3);
+
+const projects = [
+	{
+		title: "Residence Tracker",
+		flag: "🇫🇷",
+		description: "A tool to help track French residence permit applications and offline capability.",
+		link: "/residence-tracker/index.html",
+		external: true
+	},
+	// {
+	// 	title: "Another Project",
+	// 	flag: "🚀",
+	// 	description: "Description of your cool project.",
+	// 	link: "https://example.com",
+	// 	external: true
+	// }
+];
 ---
 
 <Layout title="Mike Hinkle | Digital musings">
@@ -17,7 +33,7 @@ const posts = (await getCollection('blog'))
 			/>
 			<div class="flex-1 text-center md:text-left">
 				<h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight">
-					Hi, I'm <span class="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">Mike Hinkle</span>
+					<span class="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">Mike Hinkle</span>
 				</h1>
 				<p class="text-xl text-slate-300 leading-relaxed mb-6">
 					Ex-semiconductor engineer, fascinated with <strong class="text-blue-400">big data, analytics, data visualization, dashboarding & observability</strong>. 
@@ -71,13 +87,17 @@ const posts = (await getCollection('blog'))
 			Featured Projects
 		</h2>
 		<div class="grid md:grid-cols-2 gap-6">
-			<a href="/residence-tracker/index.html" target="_blank" class="block p-6 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl border border-slate-700/50 hover:border-teal-500/30 transition group relative overflow-hidden">
-				<div class="absolute inset-0 bg-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-				<h3 class="text-xl font-bold mb-2 group-hover:text-teal-400 transition-colors">Residence Tracker 🇫🇷</h3>
-				<p class="text-slate-400 text-sm">
-					A tool to help track French residence permit applications and offline capability.
-				</p>
-			</a>
+			{projects.map((project) => (
+				<a href={project.link} target={project.external ? "_blank" : "_self"} rel={project.external ? "noopener noreferrer" : ""} class="block p-6 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl border border-slate-700/50 hover:border-teal-500/30 transition group relative overflow-hidden">
+					<div class="absolute inset-0 bg-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+					<h3 class="text-xl font-bold mb-2 group-hover:text-teal-400 transition-colors">
+						{project.title} {project.flag}
+					</h3>
+					<p class="text-slate-400 text-sm">
+						{project.description}
+					</p>
+				</a>
+			))}
 		</div>
 	</section>
 </Layout>

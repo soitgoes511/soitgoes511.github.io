@@ -1,69 +1,78 @@
-# Mike Hinkle's Personal Site & Blog
+# User Manual: soitgoes511.github.io
 
-This is the source code for [soitgoes511.github.io](https://soitgoes511.github.io), a modern personal website built with [Astro](https://astro.build) and [Tailwind CSS](https://tailwindcss.com).
+This document is your "Cheat Sheet" for managing your site. It is designed to be copy-paste ready so you don't have to relearn how the site works every time you want to post.
 
-## 🚀 Getting Started
+## 📝 How to Add a New Blog Post
 
-To run this project locally, you'll need [Node.js](https://nodejs.org) installed (v18+ recommended).
-
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/soitgoes511/soitgoes511.github.io.git
-    cd soitgoes511.github.io
-    ```
-
-2.  **Install dependencies:**
-    ```bash
-    npm install
-    ```
-
-3.  **Start the development server:**
-    ```bash
-    npm run dev
-    ```
-    The site will be available at `http://localhost:4321`.
-
-## 📝 How to Add New Blog Posts
-
-Adding a new post is as simple as creating a Markdown file.
-
-1.  Create a new file in `src/content/blog/`.
-2.  Name it anything you like, e.g., `my-new-post.md` or keep the date prefix `2026-02-10-new-post.md`.
-3.  Add the required frontmatter at the top:
+1.  **Create a file:** Go to `src/content/blog/` and create a new file ending in `.md`.
+    *   *Tip: You can name it whatever you want, e.g., `my-new-post.md`.*
+2.  **Paste this template:**
     ```markdown
     ---
-    title: "My Awesome New Post"
+    title: "Your Post Title Here"
     date: 2026-02-10
     categories: tech personal
     ---
     
-    Start writing your content here...
+    Start writing your content here in Markdown...
+    
+    ## Subheader
+    *   List item 1
+    *   List item 2
     ```
-4.  The post will automatically appear on the blog index and recent posts section.
+3.  **Commit & Push:** As soon as you push to `main`, it will automatically be published.
 
-## 🇫🇷 Residence Tracker
+## 🎨 How to Edit the Homepage
 
-The legacy `residence-tracker` application has been preserved and is served as a static asset.
--   **URL:** `/residence-tracker/index.html`
--   **Source Location:** `public/residence-tracker/`
+All homepage content is located in **`src/pages/index.astro`**.
 
-To update it, simply modify the files in `public/residence-tracker/`. No build step is required for this part, as Astro copies it directly to the output.
+### Editing Your Bio
+Look for this section around line 22:
+```html
+<p class="text-xl text-slate-300 leading-relaxed mb-6">
+    Ex-semiconductor engineer...
+</p>
+```
+Simply change the text inside the `<p>` tags.
 
-## 📦 Deployment
+### Adding a "Featured Project"
+I have made this easy for you. At the top of `src/pages/index.astro` (around line 7), you will see a list of projects. 
 
-This site is configured to deploy automatically to **GitHub Pages** using GitHub Actions.
+**To add a new one, just uncomment or copy-paste this block:**
 
-1.  Go to your repository **Settings** > **Pages**.
-2.  Under **Build and deployment**, select **GitHub Actions** as the source.
-3.  Push your changes to the `main` branch.
-4.  The `.github/workflows/deploy.yml` workflow will automatically build and deploy the site.
+```javascript
+/* src/pages/index.astro */
+const projects = [
+    {
+        title: "Residence Tracker",
+        flag: "🇫🇷",
+        description: "A tool to help...",
+        link: "/residence-tracker/index.html",
+        external: true
+    },
+    // COPY AND PASTE THIS BLOCK BELOW:
+    {
+        title: "New Cool Project",
+        flag: "🚀",
+        description: "A short description of what it does.",
+        link: "https://google.com",
+        external: true // Set to false if it's an internal page
+    }
+];
+```
 
-## 🛠 Tech Stack
+## 🇫🇷 Updating "Residence Tracker"
+The residence tracker app lives in the **`public/residence-tracker/`** folder.
+*   It is served exactly as is.
+*   You can edit `index.html`, `app_offline.js`, etc., directly in that folder.
+*   No build steps are required for this part—Astro just copies it to the final site.
 
--   **Framework:** Astro 5
--   **Styling:** Tailwind CSS v4
--   **Content:** Markdown / MDX
--   **Deployment:** GitHub Pages
+## 💻 Running Locally (Optional)
+If you want to preview changes before pushing:
 
----
-*Note: A backup of your old Jekyll site is available in `legacy-backup.zip`.*
+1.  Open a terminal in the project folder.
+2.  Run:
+    ```bash
+    npm run dev
+    ```
+3.  Open `http://localhost:4321` in your browser.
