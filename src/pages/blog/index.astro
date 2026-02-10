@@ -1,0 +1,61 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const allCategories = [...new Set(posts.flatMap(post => 
+	post.data.categories ? post.data.categories.split(' ') : []
+))];
+---
+
+<Layout title="Blog | Mike Hinkle" description="My digital musings and technical adventures">
+	<section class="mb-12 text-center">
+		<h1 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-br from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+			Blog
+		</h1>
+		<p class="text-slate-400 max-w-2xl mx-auto">
+			Thoughts on engineering, life in France, and technology.
+		</p>
+	</section>
+
+	<div class="grid gap-8">
+		{posts.map((post) => (
+			<article class="p-8 bg-slate-800/40 rounded-2xl border border-slate-700/50 hover:bg-slate-800/60 transition group hover:shadow-2xl hover:shadow-blue-500/10 relative overflow-hidden">
+				<div class="absolute inset-0 bg-gradient-to-r from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+				<a href={`/blog/${post.slug}`} class="relative z-10">
+					<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-2 mb-4">
+						<h2 class="text-2xl font-bold group-hover:text-blue-400 transition-colors">
+							{post.data.title}
+						</h2>
+						<time datetime={post.data.date.toISOString()} class="text-xs text-slate-500 font-mono bg-slate-900 px-3 py-1 rounded-full whitespace-nowrap">
+							{post.data.date.toLocaleDateString(undefined, {
+								year: 'numeric',
+								month: 'short',
+								day: 'numeric'
+							})}
+						</time>
+					</div>
+					<div class="mb-4">
+						{post.data.categories && (
+							<div class="flex gap-2 flex-wrap">
+								{post.data.categories.split(' ').map((tag: string) => (
+									<span class="text-xs px-2 py-1 bg-slate-700 rounded text-slate-300">
+										#{tag}
+									</span>
+								))}
+							</div>
+						)}
+					</div>
+					<p class="text-slate-400 line-clamp-3 leading-relaxed">
+						{post.body}
+					</p>
+					<span class="inline-block mt-4 text-sm font-medium text-blue-400 hover:text-blue-300 transition-colors">
+						Read more →
+					</span>
+				</a>
+			</article>
+		))}
+	</div>
+</Layout>

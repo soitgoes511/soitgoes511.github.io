@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+---
+
+<Layout title="Mike Hinkle | Digital musings">
+	<section class="mb-16">
+		<div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
+			<img 
+				src="/assets/my_pic.png" 
+				alt="Mike Hinkle" 
+				class="w-32 h-32 md:w-48 md:h-48 rounded-full border-4 border-slate-700 shadow-xl object-cover"
+			/>
+			<div class="flex-1 text-center md:text-left">
+				<h1 class="text-4xl md:text-6xl font-extrabold mb-4 tracking-tight">
+					Hi, I'm <span class="bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent">Mike Hinkle</span>
+				</h1>
+				<p class="text-xl text-slate-300 leading-relaxed mb-6">
+					Ex-semiconductor engineer, fascinated with <strong class="text-blue-400">big data, analytics, data visualization, dashboarding & observability</strong>. 
+					I am a father, husband, lifelong learner & tech nerd.
+				</p>
+				<div class="flex flex-wrap justify-center md:justify-start gap-4">
+					<a href="/blog" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition shadow-lg hover:shadow-blue-500/20">
+						Read my Blog
+					</a>
+					<a href="/residence-tracker/index.html" class="px-6 py-3 bg-slate-800 hover:bg-slate-700 text-white font-semibold rounded-lg transition border border-slate-700">
+						Residence Tracker
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="mb-16">
+		<h2 class="text-3xl font-bold mb-8 flex items-center gap-4">
+			<span class="bg-blue-500 w-2 h-8 rounded-full"></span>
+			Recent Posts
+		</h2>
+		<div class="grid gap-6">
+			{posts.map((post) => (
+				<a href={`/blog/${post.slug}`} class="group block p-6 bg-slate-800/50 hover:bg-slate-800 rounded-2xl border border-slate-700/50 hover:border-blue-500/30 transition shadow-lg hover:shadow-xl hover:-translate-y-1">
+					<div class="flex justify-between items-start mb-2">
+						<h3 class="text-xl font-bold group-hover:text-blue-400 transition-colors">
+							{post.data.title}
+						</h3>
+						<span class="text-xs font-mono text-slate-500 bg-slate-900 px-2 py-1 rounded">
+							{post.data.date.toLocaleDateString()}
+						</span>
+					</div>
+					<p class="text-slate-400 line-clamp-2 text-sm">
+						{post.body.substring(0, 150)}...
+					</p>
+				</a>
+			))}
+		</div>
+		<div class="mt-8 text-center">
+			<a href="/blog" class="text-blue-400 hover:text-blue-300 font-medium inline-flex items-center gap-2 group">
+				View all posts 
+				<span class="group-hover:translate-x-1 transition-transform">→</span>
+			</a>
+		</div>
+	</section>
+
+	<section>
+		<h2 class="text-3xl font-bold mb-8 flex items-center gap-4">
+			<span class="bg-teal-500 w-2 h-8 rounded-full"></span>
+			Featured Projects
+		</h2>
+		<div class="grid md:grid-cols-2 gap-6">
+			<a href="/residence-tracker/index.html" target="_blank" class="block p-6 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl border border-slate-700/50 hover:border-teal-500/30 transition group relative overflow-hidden">
+				<div class="absolute inset-0 bg-teal-500/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+				<h3 class="text-xl font-bold mb-2 group-hover:text-teal-400 transition-colors">Residence Tracker 🇫🇷</h3>
+				<p class="text-slate-400 text-sm">
+					A tool to help track French residence permit applications and offline capability.
+				</p>
+			</a>
+		</div>
+	</section>
+</Layout>
