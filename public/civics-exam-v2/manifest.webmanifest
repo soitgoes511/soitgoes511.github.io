@@ -1,0 +1,27 @@
+{
+  "name": "Simulateur d'examen civique V2",
+  "short_name": "Civique FR3",
+  "id": "/civics-exam-v2/?app_id=civique-fr-v3-20260304",
+  "description": "Entrainement local a l'examen civique (CSP/CR), avec mode simulation et mode entrainement.",
+  "lang": "fr-FR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#fef7ec",
+  "theme_color": "#123f61",
+  "icons": [
+    {
+      "src": "./icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
