@@ -1,6 +1,7 @@
 import { EXAM_RULES, QUESTION_BANK } from "./question-bank.js";
 
 const STORAGE_KEY = "civics_exam_local_history_v1";
+const STORAGE_KEY_CYCLE = "civics_exam_cycle_v1";
 
 const ui = {
   setupPanel: document.getElementById("setupPanel"),
@@ -77,7 +78,9 @@ function startSessionFromForm() {
   const pool = QUESTION_BANK.filter((q) => q.tracks.includes(state.track));
   const knowledgePool = pool.filter((q) => q.type === "knowledge");
   const situationPool = pool.filter((q) => q.type === "situation");
-  const gradedPool = pool.filter((q) => q.type === "knowledge" || q.type === "situation");
+  const gradedPool = pool.filter(
+    (q) => q.type === "knowledge" || q.type === "knowledge_suggested" || q.type === "situation"
+  );
   const officialPromptPool = pool.filter((q) => q.type === "knowledge_open");
 
   let picked = [];
@@ -86,8 +89,16 @@ function startSessionFromForm() {
   if (state.mode === "exam") {
     const rules = EXAM_RULES[state.track];
     picked = [
-      ...sample(knowledgePool, rules.knowledgeCount),
-      ...sample(situationPool, rules.situationCount),
+      ...pickFromCycle(
+        knowledgePool,
+        rules.knowledgeCount,
+        `${state.track}:exam:knowledge`
+      ),
+      ...pickFromCycle(
+        situationPool,
+        rules.situationCount,
+        `${state.track}:exam:situation`
+      ),
     ];
     shuffleInPlace(picked);
     state.remainingSec = rules.durationMinutes * 60;
@@ -96,15 +107,23 @@ function startSessionFromForm() {
     ui.timerBox.textContent = formatTime(state.remainingSec);
     state.timerId = setInterval(tickTimer, 1000);
   } else if (state.mode === "practice") {
-    const asked = clamp(Number(ui.practiceCountInput.value) || 20, 10, 50);
-    picked = sample(gradedPool, Math.min(asked, gradedPool.length));
+    const asked = clamp(Number(ui.practiceCountInput.value) || 20, 10, 300);
+    picked = pickFromCycle(
+      gradedPool,
+      Math.min(asked, gradedPool.length),
+      `${state.track}:practice:graded`
+    );
     state.remainingSec = 0;
-    sessionLabel = `${EXAM_RULES[state.track].label} - Entrainement corrige`;
+    sessionLabel = `${EXAM_RULES[state.track].label} - Entrainement corrige (QCM)`;
     ui.timerBox.classList.add("hidden");
   } else {
-    const asked = clamp(Number(ui.practiceCountInput.value) || 20, 10, 50);
+    const asked = clamp(Number(ui.practiceCountInput.value) || 20, 10, 300);
     const promptPool = officialPromptPool.length ? officialPromptPool : gradedPool;
-    picked = sample(promptPool, Math.min(asked, promptPool.length));
+    picked = pickFromCycle(
+      promptPool,
+      Math.min(asked, promptPool.length),
+      `${state.track}:official:prompts`
+    );
     state.remainingSec = 0;
     sessionLabel = `${EXAM_RULES[state.track].label} - Questions officielles (sans correction)`;
     ui.timerBox.classList.add("hidden");
@@ -409,10 +428,56 @@ function clearTimer() {
   }
 }
 
-function sample(list, count) {
-  const copy = [...list];
-  shuffleInPlace(copy);
-  return copy.slice(0, count);
+function pickFromCycle(list, count, cycleKey) {
+  if (!list.length || count <= 0) return [];
+
+  const byId = new Map(list.map((q) => [q.id, q]));
+  const ids = list.map((q) => q.id);
+  const store = getCycleStore();
+  let queue = Array.isArray(store[cycleKey]) ? store[cycleKey].filter((id) => byId.has(id)) : [];
+
+  if (!queue.length) {
+    queue = [...ids];
+    shuffleInPlace(queue);
+  }
+
+  const selected = [];
+  const seen = new Set();
+
+  while (selected.length < count) {
+    if (!queue.length) {
+      queue = [...ids];
+      shuffleInPlace(queue);
+    }
+
+    const nextId = queue.shift();
+    if (!nextId || seen.has(nextId)) continue;
+
+    const q = byId.get(nextId);
+    if (!q) continue;
+
+    selected.push(q);
+    seen.add(nextId);
+  }
+
+  store[cycleKey] = queue;
+  saveCycleStore(store);
+  return selected;
+}
+
+function getCycleStore() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_CYCLE);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function saveCycleStore(store) {
+  localStorage.setItem(STORAGE_KEY_CYCLE, JSON.stringify(store));
 }
 
 function shuffleQuestionOptions(question) {
@@ -450,6 +515,7 @@ function clamp(value, min, max) {
 
 function getTypeLabel(type) {
   if (type === "knowledge") return "Connaissances";
+  if (type === "knowledge_suggested") return "Connaissances (QCM suggere)";
   if (type === "knowledge_open") return "Connaissances officielles";
   return "Mise en situation";
 }
