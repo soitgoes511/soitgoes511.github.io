@@ -4391,6 +4391,24 @@ const SUGGESTED_QCM_BANK = [
     "tracks": [
       "cr"
     ],
+    "theme": "Histoire, geographie et culture",
+    "source": "suggested_leqcm_cr",
+    "question": "Qu'est-ce que la Marseillaise ?",
+    "options": [
+      "L'hymne national francais.",
+      "L'hymne de l'Union europeenne.",
+      "Une chanson populaire.",
+      "La devise de la France."
+    ],
+    "answer": 0,
+    "explanation": "La Marseillaise est l'hymne national de la France. Elle a ete ecrite par Rouget de Lisle en 1792. L'hymne europeen est l'Ode a la Joie."
+  },
+  {
+    "id": "A185",
+    "type": "knowledge_suggested",
+    "tracks": [
+      "cr"
+    ],
     "theme": "Principes et valeurs",
     "source": "suggested_leqcm_cr",
     "question": "Sur quel document peut-on voir Marianne ?",
@@ -4404,7 +4422,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Marianne est un symbole de la Republique. Son visage figure sur les timbres et sa statue est dans les mairies. Elle n'est pas sur les billets en euros (c'est de l'architecture)."
   },
   {
-    "id": "A185",
+    "id": "A186",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4422,7 +4440,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La loi interdit toute discrimination a l'embauche. Un employeur ne peut pas refuser d'embaucher une personne en raison de son sexe ou de son origine."
   },
   {
-    "id": "A186",
+    "id": "A187",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4440,7 +4458,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'egalite, dans la devise republicaine, signifie que tous les citoyens sont egaux devant la loi, qu'ils ont les memes droits et les memes devoirs."
   },
   {
-    "id": "A187",
+    "id": "A188",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4458,7 +4476,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La langue francaise est la langue officielle de la Republique et est utilisee dans toutes les administrations, l'education et la vie publique."
   },
   {
-    "id": "A188",
+    "id": "A189",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4476,7 +4494,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Les symboles officiels de la Republique francaise incluent le drapeau tricolore, Marianne et la Marseillaise."
   },
   {
-    "id": "A189",
+    "id": "A190",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4494,7 +4512,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "C'est interdit. La liberte d'expression a des limites. Le racisme, le sexisme ou les moqueries sur le handicap ne sont pas des opinions, ce sont des delits sanctionnes par la justice."
   },
   {
-    "id": "A190",
+    "id": "A191",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4512,7 +4530,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La France est une republique semi-presidentielle. Cela signifie qu'elle a un President elu par les citoyens et un Premier ministre qui dirige le gouvernement."
   },
   {
-    "id": "A191",
+    "id": "A192",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4530,7 +4548,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le principe de laicite a l'ecole garantit que l'enseignement est neutre et que tous les eleves, quelles que soient leurs croyances, sont traites de maniere egale."
   },
   {
-    "id": "A192",
+    "id": "A193",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4548,7 +4566,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Oui, une personne a le droit de ne pas croire en une religion, c'est le principe de la liberte de conscience, garanti par la laicite."
   },
   {
-    "id": "A193",
+    "id": "A194",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4566,7 +4584,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La laicite garantit la liberte de conscience, c'est-a-dire le droit de croire ou de ne pas croire. En revanche, elle interdit d'imposer ses croyances et exige le respect des lois de la Republique."
   },
   {
-    "id": "A194",
+    "id": "A195",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4584,7 +4602,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Les agents de l'Etat (enseignants, directeurs) doivent etre neutres. Les eleves ne peuvent porter que des signes discrets (loi de 2004). Seuls les parents, en tant qu'usagers, conservent leur liberte religieuse."
   },
   {
-    "id": "A195",
+    "id": "A196",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4602,7 +4620,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La neutralite de l'Etat, dans le cadre de la laicite, signifie que l'Etat ne privilegie aucune religion et garantit la liberte de culte pour tous."
   },
   {
-    "id": "A196",
+    "id": "A197",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4620,7 +4638,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La mairie gere les etapes importantes de la vie citoyenne : la naissance, le mariage et le droit de vote."
   },
   {
-    "id": "A197",
+    "id": "A198",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4638,7 +4656,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Tous les agents publics travaillant dans une prefecture doivent respecter le principe de neutralite religieuse dans l'exercice de leurs fonctions."
   },
   {
-    "id": "A198",
+    "id": "A199",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4656,7 +4674,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'agent public ne doit pas montrer ses opinions religieuses pour garantir un traitement egal a chaque citoyen."
   },
   {
-    "id": "A199",
+    "id": "A200",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4674,7 +4692,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le principe de laicite garantit la liberte de conscience pour tous, la separation des Eglises et de l'Etat, et la neutralite de l'Etat en matiere religieuse."
   },
   {
-    "id": "A200",
+    "id": "A201",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4692,7 +4710,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Oui, le droit de changer de religion est garanti par la liberte de conscience et fait partie des libertes fondamentales."
   },
   {
-    "id": "A201",
+    "id": "A202",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4710,7 +4728,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La laicite represente l'organisation d'une societe ou l'Etat est neutre vis-a-vis des religions, garantissant la liberte de croire ou de ne pas croire."
   },
   {
-    "id": "A202",
+    "id": "A203",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4728,7 +4746,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "A l'ecole publique, il est interdit de porter des signes religieux tres visibles (comme le voile, la kippa ou une grande croix). On a cependant le droit de croire et d'etudier l'histoire des religions."
   },
   {
-    "id": "A203",
+    "id": "A204",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4746,7 +4764,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La France est une Republique laique (pas religieuse) et indivisible (c'est un seul Etat unitaire, pas une federation de regions autonomes)."
   },
   {
-    "id": "A204",
+    "id": "A205",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4764,7 +4782,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'Etat de droit est un systeme politique ou les gouvernants, comme les gouvernes, sont soumis aux lois et ou les droits fondamentaux sont garantis."
   },
   {
-    "id": "A205",
+    "id": "A206",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4782,7 +4800,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le President n'est pas au-dessus des lois. Cependant, la Constitution le protege temporairement (immunite) : les poursuites sont suspendues durant son mandat et reprennent a la fin de celui-ci."
   },
   {
-    "id": "A206",
+    "id": "A207",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4800,7 +4818,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Dans une democratie, la loi est consideree comme l'expression de la volonte generale, c'est-a-dire du peuple."
   },
   {
-    "id": "A207",
+    "id": "A208",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4818,7 +4836,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le mandat du conseil municipal et du maire est de 6 ans."
   },
   {
-    "id": "A208",
+    "id": "A209",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4836,7 +4854,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'Etat de droit garantit que tout le monde, y compris l'Etat et le gouvernement, doit respecter la loi. Il protege ainsi les libertes des citoyens."
   },
   {
-    "id": "A209",
+    "id": "A210",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4854,7 +4872,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "C'est possible grce au vote par 'procuration'. C'est un document officiel qu'il faut faire avant l'lection (au commissariat ou la gendarmerie). Une simple lettre ou la carte d'identit ne suffisent pas."
   },
   {
-    "id": "A210",
+    "id": "A211",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4872,7 +4890,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le vote n'est pas obligatoire en France, mais c'est un droit et un devoir civique important pour le fonctionnement de la democratie."
   },
   {
-    "id": "A211",
+    "id": "A212",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4890,7 +4908,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Non. En France, le President est elu pour 5 ans. Pour rester au pouvoir, il doit obligatoirement se presenter a une nouvelle election et la gagner."
   },
   {
-    "id": "A212",
+    "id": "A213",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4908,7 +4926,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le Premier ministre dirige l'action du Gouvernement et assure l'execution des lois."
   },
   {
-    "id": "A213",
+    "id": "A214",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4926,7 +4944,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La France est un Etat unitaire. Cela signifie que les lois sont les memes pour tout le territoire, meme si les regions et les villes ont un pouvoir de decision (decentralisation)."
   },
   {
-    "id": "A214",
+    "id": "A215",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4944,7 +4962,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le pouvoir legislatif appartient au Parlement (Assemblee nationale et Senat). Son role principal est de voter les lois."
   },
   {
-    "id": "A215",
+    "id": "A216",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4962,7 +4980,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Separer les pouvoirs (executif, legislatif et judiciaire) permet d'eviter qu'une seule personne ou institution ait tout le pouvoir. Cela protege la liberte des citoyens."
   },
   {
-    "id": "A216",
+    "id": "A217",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4980,7 +4998,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le Gouvernement applique les lois votees par le Parlement et dirige l'administration (les services de l'Etat)."
   },
   {
-    "id": "A217",
+    "id": "A218",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -4998,7 +5016,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Un ministre qui ne respecte pas la loi peut perdre son poste (etre demis) et etre juge par un tribunal, comme tout citoyen."
   },
   {
-    "id": "A218",
+    "id": "A219",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5016,7 +5034,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Pour voter, il faut avoir la nationalite francaise et avoir 18 ans. Payer des impots ou habiter en France ne suffit pas (sauf pour les citoyens europeens aux elections locales)."
   },
   {
-    "id": "A219",
+    "id": "A220",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5034,7 +5052,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La France separe les pouvoirs pour garantir la democratie : le legislatif (faire les lois), l'executif (appliquer les lois) et le judiciaire (juger)."
   },
   {
-    "id": "A220",
+    "id": "A221",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5052,7 +5070,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Non, le president de la Republique a des pouvoirs importants, mais ils sont encadres par la Constitution et le principe de separation des pouvoirs."
   },
   {
-    "id": "A221",
+    "id": "A222",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5070,7 +5088,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le prefet represente l'Etat. Il veille au respect des lois et a la securite des citoyens dans son departement."
   },
   {
-    "id": "A222",
+    "id": "A223",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5088,7 +5106,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Pour pouvoir voter en France, il faut etre majeur et de nationalite francaise, et etre inscrit sur les listes electorales."
   },
   {
-    "id": "A223",
+    "id": "A224",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5106,7 +5124,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le Maire dirige la commune, assiste par le conseil municipal."
   },
   {
-    "id": "A224",
+    "id": "A225",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5124,7 +5142,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La France est une Republique democratique et laique. Ce n'est pas une monarchie (comme l'Espagne ou le Royaume-Uni) ni une federation (comme l'Allemagne ou les USA)."
   },
   {
-    "id": "A225",
+    "id": "A226",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5142,7 +5160,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'Hotel de Matignon est la residence officielle et le lieu de travail du Premier ministre et du Gouvernement francais."
   },
   {
-    "id": "A226",
+    "id": "A227",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5160,7 +5178,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le President de la Republique est le Chef de l'Etat. Il represente la France et commande les armees. Le vote des lois appartient au Parlement."
   },
   {
-    "id": "A227",
+    "id": "A228",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5178,7 +5196,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le Premier ministre dirige l'action du Gouvernement, il est responsable de la mise en uvre des lois et de la politique nationale."
   },
   {
-    "id": "A228",
+    "id": "A229",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5196,7 +5214,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le Premier ministre est le chef du Gouvernement en France."
   },
   {
-    "id": "A229",
+    "id": "A230",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5214,7 +5232,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Il y a 18 regions en France : 13 en metropole et 5 en outre-mer (Guadeloupe, Martinique, Guyane, La Reunion, Mayotte)."
   },
   {
-    "id": "A230",
+    "id": "A231",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5232,7 +5250,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le Defenseur des droits est une autorite independante chargee de defendre les droits et libertes des citoyens face aux administrations."
   },
   {
-    "id": "A231",
+    "id": "A232",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5250,7 +5268,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'euro est devenu la monnaie utilisee par les Francais le 1er janvier 2002 avec l'arrivee des billets et des pieces."
   },
   {
-    "id": "A232",
+    "id": "A233",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5268,7 +5286,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le dpartement est une collectivit territoriale dont les comptences principales concernent les routes dpartementales, l'action sociale (aide aux personnes ges, handicapes, enfants) et les collges."
   },
   {
-    "id": "A233",
+    "id": "A234",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5286,7 +5304,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Les communes sont responsables des services de proximite essentiels pour les citoyens, tels que l'etat civil, l'urbanisme, la gestion des ecoles primaires, les cimetieres, etc."
   },
   {
-    "id": "A234",
+    "id": "A235",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5304,7 +5322,25 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La France compte environ 35 000 communes."
   },
   {
-    "id": "A235",
+    "id": "A236",
+    "type": "knowledge_suggested",
+    "tracks": [
+      "cr"
+    ],
+    "theme": "Histoire, geographie et culture",
+    "source": "suggested_leqcm_cr",
+    "question": "Quel traite concerne la construction de l'Union europeenne ?",
+    "options": [
+      "Le Traite de Versailles.",
+      "Le Traite de Maastricht.",
+      "L'Edit de Nantes.",
+      "Le Code Civil."
+    ],
+    "answer": 1,
+    "explanation": "C'est le Traite de Maastricht (1992). Il a cree l'Union europeenne et prepare l'arrivee de l'Euro. Le Traite de Versailles marque la fin de la Premiere Guerre mondiale."
+  },
+  {
+    "id": "A237",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5322,7 +5358,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le Royaume-Uni a quitte l'Union europeenne en 2020, un evenement connu sous le nom de 'Brexit'."
   },
   {
-    "id": "A236",
+    "id": "A238",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5340,7 +5376,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La devise de l'Union europeenne est \"Unie dans la diversite\"."
   },
   {
-    "id": "A237",
+    "id": "A239",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5358,7 +5394,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'hymne de l'Union europeenne est l'Ode a la Joie, tiree de la Neuvieme Symphonie de Beethoven."
   },
   {
-    "id": "A238",
+    "id": "A240",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5376,7 +5412,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le drapeau europeen est compose de douze etoiles jaunes disposees en cercle sur fond bleu."
   },
   {
-    "id": "A239",
+    "id": "A241",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5394,7 +5430,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le drapeau europeen est de couleur bleue, avec douze etoiles jaunes formant un cercle."
   },
   {
-    "id": "A240",
+    "id": "A242",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5412,7 +5448,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le Traite de Maastricht, qui a fonde l'Union europeenne, a ete signe en 1992."
   },
   {
-    "id": "A241",
+    "id": "A243",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5430,7 +5466,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le siege officiel du Parlement europeen se situe a Strasbourg, en France."
   },
   {
-    "id": "A242",
+    "id": "A244",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5448,7 +5484,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le siege de la Commission europeenne est a Bruxelles."
   },
   {
-    "id": "A243",
+    "id": "A245",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5466,7 +5502,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La Norvege n'est pas membre de l'Union europeenne, bien qu'elle participe a l'espace economique europeen."
   },
   {
-    "id": "A244",
+    "id": "A246",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5484,7 +5520,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La journee de l'Europe est celebree le 9 mai, commemorant la declaration Schuman de 1950 qui a pose les bases de la construction europeenne."
   },
   {
-    "id": "A245",
+    "id": "A247",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5502,7 +5538,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Les elections europeennes sont organisees tous les 5 ans pour elire les deputes du Parlement europeen."
   },
   {
-    "id": "A246",
+    "id": "A248",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5520,7 +5556,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Il n'est pas necessaire d'etre Francais. Pour voter aux elections europeennes en France, il faut avoir la nationalite d'un pays de l'UE (comme l'Italie ou l'Espagne), habiter en France et etre inscrit sur la liste electorale."
   },
   {
-    "id": "A247",
+    "id": "A249",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5538,7 +5574,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "C'est l'Allemagne. Elle a fonde la construction europeenne en 1957 avec 5 autres pays : la France, l'Italie, la Belgique, les Pays-Bas et le Luxembourg."
   },
   {
-    "id": "A248",
+    "id": "A250",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5556,7 +5592,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La PMA (Procreation Medicalement Assistee) est une aide medicale pour avoir un enfant. Elle permet aux couples de femmes et aux femmes celibataires de fonder une famille."
   },
   {
-    "id": "A249",
+    "id": "A251",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5574,7 +5610,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'Etat peut limiter certains droits pour des raisons importantes comme la securite, la sante publique ou pour proteger les droits des autres citoyens."
   },
   {
-    "id": "A250",
+    "id": "A252",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5592,7 +5628,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le droit de se marier est un droit civil en France. Le mariage est un contrat entre deux personnes majeures, independamment de leur sexe."
   },
   {
-    "id": "A251",
+    "id": "A253",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5610,7 +5646,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Oui, le divorce est possible en France et est encadre par la loi, avec differentes procedures possibles selon la situation des epoux."
   },
   {
-    "id": "A252",
+    "id": "A254",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5628,7 +5664,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'article 1er de la Declaration des Droits de l'homme et du Citoyen de 1789 stipule : \"Les hommes naissent et demeurent libres et egaux en droits.\""
   },
   {
-    "id": "A253",
+    "id": "A255",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5646,7 +5682,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Oui, le recours a l'interruption volontaire de grossesse (IVG) est autorise en France, sous certaines conditions medicales et de delai."
   },
   {
-    "id": "A254",
+    "id": "A256",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5664,7 +5700,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La Constitution est le texte fondateur d'un Etat ; elle definit l'organisation des pouvoirs publics, les droits et libertes fondamentaux des citoyens."
   },
   {
-    "id": "A255",
+    "id": "A257",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5682,7 +5718,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Ce principe garantit le droit de publier et de diffuser des informations, des opinions et des analyses sans censure prealable, tout en respectant les lois."
   },
   {
-    "id": "A256",
+    "id": "A258",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5700,7 +5736,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Elle fait partie de la Constitution francaise. Elle declare que chacun a le droit de vivre dans un environnement sain, mais aussi le devoir de le proteger."
   },
   {
-    "id": "A257",
+    "id": "A259",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5718,7 +5754,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La dignite humaine signifie que chaque personne, sans distinction, possede une valeur intrinseque qui doit etre respectee et protegee."
   },
   {
-    "id": "A258",
+    "id": "A260",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5736,7 +5772,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le droit de manifester est le droit de se rassembler publiquement pour exprimer des opinions, des revendications ou des protestations, dans le respect de la loi."
   },
   {
-    "id": "A259",
+    "id": "A261",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5754,7 +5790,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "PMA est l'acronyme de Procreation Medicalement Assistee, qui designe les techniques medicales permettant de concevoir un enfant."
   },
   {
-    "id": "A260",
+    "id": "A262",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5772,7 +5808,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La Constitution est le texte le plus fondamental et le plus difficile a modifier, necessitant des procedures specifiques et souvent un referendum ou un vote du Congres."
   },
   {
-    "id": "A261",
+    "id": "A263",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5790,7 +5826,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La liberte de conscience est le droit de choisir ses convictions religieuses ou philosophiques, ou de ne pas avoir de religion."
   },
   {
-    "id": "A262",
+    "id": "A264",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5808,7 +5844,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le droit de greve est le droit des salaries de cesser collectivement leur travail pour appuyer des revendications professionnelles, dans un cadre legal."
   },
   {
-    "id": "A263",
+    "id": "A265",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5826,7 +5862,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "C'est la loi la plus importante de France (la loi supreme). Elle definit comment fonctionne l'Etat (President, Gouvernement) et protege les droits des citoyens."
   },
   {
-    "id": "A264",
+    "id": "A266",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5844,7 +5880,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Toute femme enceinte, qu'elle soit majeure ou mineure, peut demander a avorter en France, dans le respect des procedures legales et des delais etablis."
   },
   {
-    "id": "A265",
+    "id": "A267",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5862,7 +5898,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Oui, une femme majeure de nationalite francaise a le droit de voter a toutes les elections, a condition d'etre inscrite sur les listes electorales."
   },
   {
-    "id": "A266",
+    "id": "A268",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5880,7 +5916,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La loi s'applique aussi sur Internet : les injures, la diffamation et le partage de contenus haineux sont interdits et punis."
   },
   {
-    "id": "A267",
+    "id": "A269",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5898,7 +5934,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Jeter un megot par terre est une infraction, car cela pollue l'environnement et peut entrainer une amende."
   },
   {
-    "id": "A268",
+    "id": "A270",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5916,7 +5952,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Oui, l'Etat peut legalement limiter certains droits et libertes, mais uniquement lorsque la loi le prevoit et pour des motifs d'interet general (securite, sante publique, etc.)."
   },
   {
-    "id": "A269",
+    "id": "A271",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5934,7 +5970,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Trier ses dechets, reduire sa consommation d'eau et privilegier les transports en commun sont des actions concretes pour respecter l'environnement."
   },
   {
-    "id": "A270",
+    "id": "A272",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5952,7 +5988,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Payer ses impots est une obligation legale pour les citoyens afin de financer les services publics."
   },
   {
-    "id": "A271",
+    "id": "A273",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5970,7 +6006,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La liberte d'expression est un droit, mais elle est limitee par la loi : il est interdit de tenir des propos racistes, de pratiquer l'insulte ou la diffamation."
   },
   {
-    "id": "A272",
+    "id": "A274",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -5988,7 +6024,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le tri permet de transformer les materiaux (verre, papier, plastique) pour fabriquer de nouveaux objets. Cela protege la nature et limite le gaspillage."
   },
   {
-    "id": "A273",
+    "id": "A275",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6006,7 +6042,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Une victime de violences doit porter plainte aupres des forces de l'ordre et peut chercher du soutien aupres d'associations specialisees et des services de sante."
   },
   {
-    "id": "A274",
+    "id": "A276",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6024,7 +6060,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "En France, on doit respecter les forces de l'ordre. Si l'on n'est pas d'accord, on peut contester plus tard devant un tribunal, mais on ne doit pas desobeir sur le moment."
   },
   {
-    "id": "A275",
+    "id": "A277",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6042,7 +6078,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le role de la police est d'assurer la securite publique, de maintenir l'ordre, de prevenir la criminalite et de faire respecter la loi."
   },
   {
-    "id": "A276",
+    "id": "A278",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6060,7 +6096,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Appeler les secours (pompiers, SAMU) pour une personne en danger est un acte d'assistance a personne en danger."
   },
   {
-    "id": "A277",
+    "id": "A279",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6078,7 +6114,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le port du masque, meme s'il limite une liberte individuelle, peut etre rendu obligatoire pour proteger la sante publique et donc l'interet general."
   },
   {
-    "id": "A278",
+    "id": "A280",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6096,7 +6132,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "En France, tout citoyen a le devoir d'aider une personne en danger. Il faut porter secours si c'est possible sans risque et alerter immediatement la police ou les pompiers."
   },
   {
-    "id": "A279",
+    "id": "A281",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6114,7 +6150,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Toutes les personnes qui vivent sur le territoire francais, qu'elles soient francaises ou etrangeres, doivent obligatoirement respecter les lois de la Republique."
   },
   {
-    "id": "A280",
+    "id": "A282",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6132,7 +6168,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "EEn France, le crime est l'infraction la plus grave (comme le meurtre). Le vol ou l'insulte sont des delits, et l'exces de vitesse est une contravention."
   },
   {
-    "id": "A281",
+    "id": "A283",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6150,7 +6186,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le vol est un delit (puni de prison). L'assassinat est un crime (tres grave). Le stationnement et le tapage nocturne sont des contraventions (amendes)."
   },
   {
-    "id": "A282",
+    "id": "A284",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6168,7 +6204,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Ce sont la Police nationale (en ville) et la Gendarmerie (a la campagne) qui assurent la securite et font respecter l'ordre public."
   },
   {
-    "id": "A283",
+    "id": "A285",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6186,7 +6222,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le tri des dechets permet leur recyclage. Cela aide a reduire la pollution et a proteger l'environnement."
   },
   {
-    "id": "A284",
+    "id": "A286",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6204,7 +6240,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Louis XIV est surnomme le 'Roi Soleil'. Son regne est l'un des plus longs de l'histoire de France."
   },
   {
-    "id": "A285",
+    "id": "A287",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6222,7 +6258,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Louis XVI a ete guillotine en 1793, pendant la Revolution francaise. Il a ete juge et condamne avant son execution."
   },
   {
-    "id": "A286",
+    "id": "A288",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6240,7 +6276,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Napoleon Bonaparte est devenu empereur des Francais en 1804. C'est le debut du Premier Empire."
   },
   {
-    "id": "A287",
+    "id": "A289",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6258,7 +6294,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "C'est Charles de Gaulle. Il a fonde la Ve Republique (le regime actuel). Les trois autres personnages (Louis XIV, Francois Ier, Henri IV) etaient des Rois de France."
   },
   {
-    "id": "A288",
+    "id": "A290",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6276,7 +6312,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'appel a la resistance lance par le General de Gaulle depuis Londres date du 18 juin 1940, suite a l'appel du Marechal Petain a cesser les combats."
   },
   {
-    "id": "A289",
+    "id": "A291",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6294,7 +6330,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'etude de la Shoah permet de comprendre le genocide des Juifs pendant la Seconde Guerre mondiale. C'est important pour lutter contre le racisme et l'antisemitisme aujourd'hui."
   },
   {
-    "id": "A290",
+    "id": "A292",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6312,7 +6348,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'Algerie a ete une colonie francaise pendant 132 ans (de 1830 a 1962). La France n'a jamais colonise le Japon, la Russie ou l'Allemagne."
   },
   {
-    "id": "A291",
+    "id": "A293",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6330,7 +6366,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "C'est depuis 1962, grce un rfrendum du Gnral de Gaulle. Avant cette date, les Franais ne votaient pas directement pour le prsident."
   },
   {
-    "id": "A292",
+    "id": "A294",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6348,7 +6384,25 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "En 1951, la CECA est creee. C'est la premiere etape de l'Europe : six pays decident de partager leur production de charbon et d'acier pour garantir la paix."
   },
   {
-    "id": "A293",
+    "id": "A295",
+    "type": "knowledge_suggested",
+    "tracks": [
+      "cr"
+    ],
+    "theme": "Histoire, geographie et culture",
+    "source": "suggested_leqcm_cr",
+    "question": "Durant le mandat de quel president la peine de mort a-t-elle ete abolie ?",
+    "options": [
+      "Charles de Gaulle",
+      "Francois Mitterrand",
+      "Emmanuel Macron",
+      "Napoleon Bonaparte"
+    ],
+    "answer": 1,
+    "explanation": "C'est Franois Mitterrand (en 1981, grce son ministre Robert Badinter). De Gaulle tait prsident avant, et Emmanuel Macron est prsident bien aprs."
+  },
+  {
+    "id": "A296",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6366,7 +6420,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "En 1792, la France supprime la monarchie (le roi) et proclame la Premiere Republique. C'est un moment tres important de l'histoire de France."
   },
   {
-    "id": "A294",
+    "id": "A297",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6384,7 +6438,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Jean Moulin fut un resistant emblematique, envoye par le General de Gaulle pour unifier les mouvements de Resistance en France occupee. Petain et Laval collaboraient avec l'occupant."
   },
   {
-    "id": "A295",
+    "id": "A298",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6402,7 +6456,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "En 1944, les femmes francaises ont obtenu le droit de vote et d'eligibilite, une avancee majeure pour leur participation a la vie politique du pays."
   },
   {
-    "id": "A296",
+    "id": "A299",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6420,7 +6474,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'ONU a ete fondee en 1945 par 51 pays dans le but de maintenir la paix et la securite internationales, de developper des relations amicales entre les nations et de promouvoir le progres social."
   },
   {
-    "id": "A297",
+    "id": "A300",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6438,7 +6492,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La peine de mort a ete abolie en France par la loi du 9 octobre 1981, sous la presidence de Francois Mitterrand."
   },
   {
-    "id": "A298",
+    "id": "A301",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6456,7 +6510,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'euro est devenu la monnaie officielle utilisee par les Francais le 1er janvier 2002, en remplacement du franc."
   },
   {
-    "id": "A299",
+    "id": "A302",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6474,7 +6528,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La Premiere Guerre mondiale a eclate en juillet 1914, suite a l'assassinat de l'archiduc Francois-Ferdinand."
   },
   {
-    "id": "A300",
+    "id": "A303",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6492,7 +6546,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le debarquement allie majeur de juin 1944, qui a marque un tournant dans la liberation de la France, a eu lieu sur les plages de Normandie."
   },
   {
-    "id": "A301",
+    "id": "A304",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6510,7 +6564,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Apres 1945, la France a accorde l'independance a de nombreux pays, principalement sur le continent africain (comme l'Algerie, le Maroc ou le Senegal)."
   },
   {
-    "id": "A302",
+    "id": "A305",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6528,7 +6582,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le 8 mai celebre la fin de la Seconde Guerre mondiale en Europe et la victoire des Allies sur l'Allemagne nazie."
   },
   {
-    "id": "A303",
+    "id": "A306",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6546,7 +6600,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La France metropolitaine est bordee par l'ocean Atlantique a l'ouest, la Manche au nord, et la mer Mediterranee au sud."
   },
   {
-    "id": "A304",
+    "id": "A307",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6564,7 +6618,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La France partage des frontieres terrestres avec plusieurs pays, dont la Suisse. Le Portugal est voisin de l'Espagne, l'Irlande est une ile, et le Royaume-Uni est separe par la Manche."
   },
   {
-    "id": "A305",
+    "id": "A308",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6582,7 +6636,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Marseille est un grand port maritime francais, situe sur la mer Mediterranee. C'est le plus grand port de France."
   },
   {
-    "id": "A306",
+    "id": "A309",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6600,7 +6654,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La Manche est la mer qui separe la France de l'Angleterre (Grande-Bretagne)."
   },
   {
-    "id": "A307",
+    "id": "A310",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6618,7 +6672,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La France d'outre-mer designe les territoires qui appartiennent a la France mais qui ne sont pas sur le continent europeen (comme la Guadeloupe, la Martinique ou la Reunion)."
   },
   {
-    "id": "A308",
+    "id": "A311",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6636,7 +6690,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Les Pyrenees forment une chaine de montagnes naturelle qui marque la frontiere entre la France et l'Espagne."
   },
   {
-    "id": "A309",
+    "id": "A312",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6654,7 +6708,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "C'est La Reunion. Madagascar est bien dans l'ocean Indien mais c'est un pays independant. La Corse et la Sardaigne sont en Mediterranee."
   },
   {
-    "id": "A310",
+    "id": "A313",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6672,7 +6726,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Selon l'INSEE, la France comptait environ 68,4 millions d'habitants au 1er janvier 2025. La reponse la plus proche est donc 70 millions. C'est le deuxieme pays le plus peuple de l'UE."
   },
   {
-    "id": "A311",
+    "id": "A314",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6690,7 +6744,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La Seine est le fleuve emblematique qui traverse la capitale francaise, Paris, et la divise en deux parties : la Rive Gauche et la Rive Droite."
   },
   {
-    "id": "A312",
+    "id": "A315",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6708,7 +6762,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La France partage des frontieres terrestres avec l'Italie (par les Alpes). La Pologne est a l'est de l'Allemagne, le Maroc est en Afrique du Nord et le Portugal est a l'ouest de l'Espagne."
   },
   {
-    "id": "A313",
+    "id": "A316",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6726,7 +6780,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Au nord-est, la France metropolitaine partage une frontiere terrestre avec l'Allemagne. L'Espagne est au sud-ouest, le Royaume-Uni est separe par la Manche, et la Suisse est au sud-est."
   },
   {
-    "id": "A314",
+    "id": "A317",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6744,7 +6798,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'activite economique et les emplois sont surtout concentres dans les grandes villes (comme Paris, Lyon ou Marseille) et dans les zones industrielles."
   },
   {
-    "id": "A315",
+    "id": "A318",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6762,7 +6816,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La France est la premiere destination touristique mondiale, attirant le plus grand nombre de visiteurs internationaux chaque annee."
   },
   {
-    "id": "A316",
+    "id": "A319",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6780,7 +6834,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La plupart des Francais vivent dans les grandes villes ou autour des villes car c'est la que l'on trouve le plus de travail et de services (ecoles, transports, hopitaux)."
   },
   {
-    "id": "A317",
+    "id": "A320",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6798,7 +6852,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'Ile-de-France, qui englobe Paris et sa region, est la region la plus peuplee de France en raison de sa forte concentration de population et d'activites economiques."
   },
   {
-    "id": "A318",
+    "id": "A321",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6816,7 +6870,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Lyon est l'une des plus grandes metropoles francaises, tant en termes de population que d'influence economique et culturelle."
   },
   {
-    "id": "A319",
+    "id": "A322",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6834,7 +6888,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Paris est le dpartement qui attire le plus de touristes en France, grce ses monuments, ses muses, sa vie culturelle et son patrimoine exceptionnel."
   },
   {
-    "id": "A320",
+    "id": "A323",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6852,7 +6906,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Chaque annee en septembre, les Journees Europeennes du Patrimoine permettent de visiter gratuitement de nombreux monuments et musees partout en France."
   },
   {
-    "id": "A321",
+    "id": "A324",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6870,7 +6924,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "On estime qu'environ 300 millions de personnes parlent francais dans le monde, en faisant l'une des langues les plus parlees et la seule parlee sur les cinq continents."
   },
   {
-    "id": "A322",
+    "id": "A325",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6888,7 +6942,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Marguerite Yourcenar etait une grande ecrivaine francaise. Elle a ete la premiere femme elue a l'Academie francaise en 1980."
   },
   {
-    "id": "A323",
+    "id": "A326",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6906,7 +6960,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Claude Monet est un peintre francais, pionnier de la peinture impressionniste. Dali etait espagnol, Van Gogh neerlandais et Picasso espagnol."
   },
   {
-    "id": "A324",
+    "id": "A327",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6924,7 +6978,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le musee du Louvre, le musee d'Orsay et le Centre Pompidou sont trois des plus grands et des plus celebres musees situes a Paris."
   },
   {
-    "id": "A325",
+    "id": "A328",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6942,7 +6996,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Auguste Rodin est un sculpteur francais renomme, connu pour ses uvres comme 'Le Penseur' et 'La Porte de l'Enfer'."
   },
   {
-    "id": "A326",
+    "id": "A329",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6960,7 +7014,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le francais est la cinquieme langue la plus parlee au monde, apres le mandarin, l'anglais, l'espagnol et l'hindi."
   },
   {
-    "id": "A327",
+    "id": "A330",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6978,7 +7032,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La cathdrale Notre-Dame de Paris a subi un grave incendie en avril 2019, qui a caus d'importants dgts sa structure et sa toiture."
   },
   {
-    "id": "A328",
+    "id": "A331",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -6996,7 +7050,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Simone de Beauvoir etait une philosophe, romanciere et essayiste francaise, figure majeure du feminisme du XXe siecle. Edith Piaf etait chanteuse, Brigitte Bardot actrice et Marie Curie scientifique."
   },
   {
-    "id": "A329",
+    "id": "A332",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7014,7 +7068,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Claude Debussy est un grand compositeur francais. Il est celebre pour sa musique originale et moderne pour son epoque. Les autres artistes cites ne sont pas francais."
   },
   {
-    "id": "A330",
+    "id": "A333",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7032,7 +7086,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Auguste Renoir etait un peintre francais celebre, figure du mouvement impressionniste."
   },
   {
-    "id": "A331",
+    "id": "A334",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7050,7 +7104,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le 14 juillet est la fete nationale francaise, commemorant la prise de la Bastille en 1789 et la Fete de la Federation en 1790."
   },
   {
-    "id": "A332",
+    "id": "A335",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7068,7 +7122,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "En France, seul le mariage civil (a la mairie) est reconnu par la loi. Le mariage religieux est symbolique et doit obligatoirement avoir lieu apres la mairie. Le PACS est une union officielle, mais ce n'est pas un mariage."
   },
   {
-    "id": "A333",
+    "id": "A336",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7086,7 +7140,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'inscription des enfants a l'ecole publique se fait a la mairie du lieu de residence. La mairie gere les demarches administratives."
   },
   {
-    "id": "A334",
+    "id": "A337",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7104,7 +7158,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "En principe, l'autorite parentale est exercee conjointement par les deux parents, meme apres un divorce, sauf si le juge en a decide autrement pour des raisons graves concernant l'interet de l'enfant."
   },
   {
-    "id": "A335",
+    "id": "A338",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7122,7 +7176,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'aide juridictionnelle est un dispositif qui prend en charge tout ou partie des frais d'avocat et de procedure pour les personnes dont les ressources sont insuffisantes."
   },
   {
-    "id": "A336",
+    "id": "A339",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7140,7 +7194,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La declaration de naissance est obligatoire. Elle doit etre faite a la mairie du lieu de naissance dans les 5 jours qui suivent l'accouchement."
   },
   {
-    "id": "A337",
+    "id": "A340",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7158,7 +7212,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Pour passer l'examen du permis de conduire, il est obligatoire d'avoir suivi une formation theorique (code de la route) et pratique (conduite) dispensee par une auto-ecole agreee."
   },
   {
-    "id": "A338",
+    "id": "A341",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7176,7 +7230,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Pour etre valide et securisant, un bail locatif doit etre ecrit et signe par le proprietaire et le locataire."
   },
   {
-    "id": "A339",
+    "id": "A342",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7194,7 +7248,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Les appareils electriques ne doivent pas etre jetes avec les ordures menageres. Il faut les deposer en dechetterie pour qu'ils soient recycles et pour proteger l'environnement."
   },
   {
-    "id": "A340",
+    "id": "A343",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7212,7 +7266,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le numero d'urgence pour contacter la police ou la gendarmerie en France est le 17. Le 15 concerne le SAMU (urgences medicales), le 18 les sapeurs-pompiers, et le 112 est le numero d'urgence europeen."
   },
   {
-    "id": "A341",
+    "id": "A344",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7230,7 +7284,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'Assurance Maladie, regime de base de protection sociale en France, vise a rembourser une partie significative des depenses de sante des assures, garantissant ainsi un acces aux soins pour tous."
   },
   {
-    "id": "A342",
+    "id": "A345",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7248,7 +7302,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La contraception est accessible toutes les personnes souhaitant l'utiliser, indpendamment de leur ge, de leur sexe ou de leur statut marital, dans le respect de la sant et de la vie prive."
   },
   {
-    "id": "A343",
+    "id": "A346",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7266,7 +7320,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le principe de confidentialite, ou secret medical, impose aux professionnels de sante de ne pas divulguer les informations relatives a la sante d'un patient sans son consentement ou sans y etre legalement contraints."
   },
   {
-    "id": "A344",
+    "id": "A347",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7284,7 +7338,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'affiliation a l'Assurance maladie est un droit et une obligation pour toute personne residant en France de maniere stable et reguliere, afin de garantir la couverture de ses frais de sante."
   },
   {
-    "id": "A345",
+    "id": "A348",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7302,7 +7356,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le conge parental d'education est un droit ouvert aux salaries, qu'ils soient peres ou meres, ayant au moins un an d'anciennete dans l'entreprise, pour s'occuper de leur enfant apres la naissance ou l'adoption."
   },
   {
-    "id": "A346",
+    "id": "A349",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7320,7 +7374,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le conseil de prud'hommes est une juridiction specialisee dans la resolution des conflits individuels du travail, c'est-a-dire les litiges survenant entre un salarie et son employeur."
   },
   {
-    "id": "A347",
+    "id": "A350",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7338,7 +7392,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Travailler sans declaration est qualifie de travail dissimule ou 'travail au noir'. C'est une infraction grave qui expose l'employeur a des sanctions penales et financieres, et le salarie a des risques sociaux."
   },
   {
-    "id": "A348",
+    "id": "A351",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7356,7 +7410,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'employeur peut demander des heures supplementaires dans le respect des durees maximales de travail. Ces heures donnent obligatoirement droit a une remuneration plus elevee (majoration) ou a un repos compensateur."
   },
   {
-    "id": "A349",
+    "id": "A352",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7374,7 +7428,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "France Travail (anciennement Pole emploi) a pour mission principale d'accompagner les personnes en recherche d'emploi dans leurs demarches d'insertion professionnelle et de proposer des services aux entreprises pour leurs recrutements."
   },
   {
-    "id": "A350",
+    "id": "A353",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7392,7 +7446,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le droit syndical permet aux salaries de se constituer en syndicats, de negocier collectivement avec l'employeur et de defendre leurs interets communs."
   },
   {
-    "id": "A351",
+    "id": "A354",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7410,7 +7464,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le droit de greve est un droit fondamental des salaries qui leur permet d'arreter collectivement et simultanement le travail afin d'appuyer des revendications professionnelles."
   },
   {
-    "id": "A352",
+    "id": "A355",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7428,7 +7482,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Pour beneficier des allocations chomage (indemnisation du chomage), il faut avoir ete salarie, avoir perdu involontairement son emploi, et avoir cotise suffisamment au prealable. Il faut egalement rechercher activement un emploi."
   },
   {
-    "id": "A353",
+    "id": "A356",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7446,7 +7500,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'ecole maternelle accueille les enfants de moins de 6 ans et constitue le premier cycle de l'enseignement scolaire obligatoire, visant leur developpement et leur preparation a l'ecole elementaire."
   },
   {
-    "id": "A354",
+    "id": "A357",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7464,7 +7518,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Le diplome qui valide la fin de la scolarite au college est le Diplome National du Brevet (DNB), souvent appele simplement 'le brevet'."
   },
   {
-    "id": "A355",
+    "id": "A358",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7482,7 +7536,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Les parents d'eleves ont le droit d'etre informes de la scolarite de leur enfant et de dialoguer avec les enseignants et la direction de l'ecole, notamment par des rencontres et des rendez-vous."
   },
   {
-    "id": "A356",
+    "id": "A359",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7500,7 +7554,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La cantine scolaire est generalement ouverte aux eleves de l'etablissement, ainsi qu'au personnel (enseignants, personnel administratif et de service), sous reserve des regles specifiques de chaque etablissement."
   },
   {
-    "id": "A357",
+    "id": "A360",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7518,7 +7572,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "L'instruction est obligatoire pour tous les enfants rsidant en France, ds l'ge de 3 ans, jusqu' l'ge de 16 ans rvolus. Cela inclut l'cole maternelle."
   },
   {
-    "id": "A358",
+    "id": "A361",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7536,7 +7590,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La majorit civile en France est fixe 18 ans. cet ge, une personne acquiert la pleine capacit juridique et est considre comme responsable de ses actes."
   },
   {
-    "id": "A359",
+    "id": "A362",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7554,7 +7608,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Les parents doivent respecter le bon deroulement de la vie scolaire. Faire du bruit ou perturber les cours est interdit pour ne pas gener les eleves et le personnel enseignant."
   },
   {
-    "id": "A360",
+    "id": "A363",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7572,7 +7626,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "La maladie de l'enfant est un motif legitime. Les parents doivent prevenir l'ecole et justifier l'absence. Les autres motifs (vacances, fetes) ne sont pas acceptes."
   },
   {
-    "id": "A361",
+    "id": "A364",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7590,7 +7644,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Ne pas respecter l'obligation d'instruction est un delit grave. Les parents peuvent etre condamnes a une amende allant jusqu'a 7 500 euros et a une peine d'emprisonnement pouvant aller jusqu'a 6 mois."
   },
   {
-    "id": "A362",
+    "id": "A365",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7608,7 +7662,7 @@ const SUGGESTED_QCM_BANK = [
     "explanation": "Les vacances scolaires de Noel ont lieu traditionnellement a la fin du mois de decembre et se prolongent jusqu'au debut du mois de janvier de l'annee suivante."
   },
   {
-    "id": "A363",
+    "id": "A366",
     "type": "knowledge_suggested",
     "tracks": [
       "cr"
@@ -7624,186 +7678,153 @@ const SUGGESTED_QCM_BANK = [
     ],
     "answer": 1,
     "explanation": "Tous les enfants ont le droit d'aller a l'ecole. L'etablissement doit s'adapter pour accueillir les eleves en situation de handicap et les aider a reussir comme les autres."
-  }
-];
-
-const OFFICIAL_PROMPT_BANK = [
+  },
   {
-    "id": "O001",
-    "type": "knowledge_open",
+    "id": "A367",
+    "type": "knowledge_suggested",
     "tracks": [
       "csp"
     ],
     "theme": "Principes et valeurs",
-    "source": "official_csp",
+    "source": "suggested_leqcm_csp_bridge",
     "question": "Quelle proposition est correcte ? La liberte d'expression :",
     "options": [
-      "Je connais la reponse",
-      "A revoir"
+      "Elle permet de tout dire, meme des insultes.",
+      "Elle permet de s'exprimer, mais elle a des limites.",
+      "C'est un droit reserve uniquement aux journalistes.",
+      "Elle autorise les propos racistes."
     ],
-    "answer": null,
-    "explanation": "Question officielle publique (intitule). La correction QCM officielle n'est pas publiee."
+    "answer": 1,
+    "explanation": "En France, on est libre de donner son avis. Mais il est interdit par la loi de diffuser de la haine, du racisme ou d'insulter les gens."
   },
   {
-    "id": "O002",
-    "type": "knowledge_open",
+    "id": "A368",
+    "type": "knowledge_suggested",
     "tracks": [
       "csp"
     ],
     "theme": "Systeme institutionnel et politique",
-    "source": "official_csp",
+    "source": "suggested_leqcm_csp_bridge",
     "question": "Quelle condition est necessaire pour voter aux elections europeennes ?",
     "options": [
-      "Je connais la reponse",
-      "A revoir"
+      "Etre obligatoirement de nationalite francaise",
+      "Avoir 18 ans et etre citoyen d'un pays de l'Union europeenne",
+      "Avoir juste une carte de sejour",
+      "Travailler en France"
     ],
-    "answer": null,
-    "explanation": "Question officielle publique (intitule). La correction QCM officielle n'est pas publiee."
+    "answer": 1,
+    "explanation": "Un citoyen d'un autre pays de l'Union europeenne qui habite en France peut voter aux elections europeennes."
   },
   {
-    "id": "O003",
-    "type": "knowledge_open",
+    "id": "A369",
+    "type": "knowledge_suggested",
     "tracks": [
       "csp"
     ],
     "theme": "Droits et devoirs",
-    "source": "official_csp",
+    "source": "suggested_leqcm_csp_bridge",
     "question": "Comment s'appelle le texte qui enonce les droits et devoirs des personnes residant en France ?",
     "options": [
-      "Je connais la reponse",
-      "A revoir"
+      "Le Code Civil",
+      "La Constitution",
+      "Le Code du Travail",
+      "Le Reglement interieur de l'Assemblee"
     ],
-    "answer": null,
-    "explanation": "Question officielle publique (intitule). La correction QCM officielle n'est pas publiee."
+    "answer": 1,
+    "explanation": "La Constitution est le texte le plus important en France. Elle explique les droits et les devoirs de chaque citoyen."
   },
   {
-    "id": "O004",
-    "type": "knowledge_open",
+    "id": "A370",
+    "type": "knowledge_suggested",
     "tracks": [
       "csp"
     ],
     "theme": "Vivre dans la societe francaise",
-    "source": "official_csp",
+    "source": "suggested_leqcm_csp_bridge",
     "question": "Dans quelles situations doit-on se rendre aux urgences de l'hopital ?",
     "options": [
-      "Je connais la reponse",
-      "A revoir"
+      "Seulement pour un accident grave ou un danger de mort.",
+      "Pour soigner un simple rhume ou une fatigue.",
+      "Pour demander une ordonnance de medicaments.",
+      "Pour faire un vaccin ou une visite de controle."
     ],
-    "answer": null,
-    "explanation": "Question officielle publique (intitule). La correction QCM officielle n'est pas publiee."
+    "answer": 0,
+    "explanation": "Les urgences sont reservees aux accidents graves. Pour les petites maladies comme un rhume, il faut aller chez son medecin."
   },
   {
-    "id": "O005",
-    "type": "knowledge_open",
+    "id": "A371",
+    "type": "knowledge_suggested",
     "tracks": [
       "cr"
     ],
     "theme": "Principes et valeurs",
-    "source": "official_cr",
-    "question": "Qu'est-ce que la Marseillaise ?",
-    "options": [
-      "Je connais la reponse",
-      "A revoir"
-    ],
-    "answer": null,
-    "explanation": "Question officielle publique (intitule). La correction QCM officielle n'est pas publiee."
-  },
-  {
-    "id": "O006",
-    "type": "knowledge_open",
-    "tracks": [
-      "cr"
-    ],
-    "theme": "Principes et valeurs",
-    "source": "official_cr",
+    "source": "suggested_leqcm_cr_bridge",
     "question": "Qu'est ce qui est interdit par la Charte de la laicite a l'ecole ?",
     "options": [
-      "Je connais la reponse",
-      "A revoir"
+      "Etudier l'histoire des religions en classe.",
+      "Avoir des croyances religieuses personnelles.",
+      "Porter des signes religieux tres visibles (ostentatoires).",
+      "Porter un symbole religieux discret."
     ],
-    "answer": null,
-    "explanation": "Question officielle publique (intitule). La correction QCM officielle n'est pas publiee."
+    "answer": 2,
+    "explanation": "A l'ecole publique, il est interdit de porter des signes religieux tres visibles (comme le voile, la kippa ou une grande croix). On a cependant le droit de croire et d'etudier l'histoire des religions."
   },
   {
-    "id": "O007",
-    "type": "knowledge_open",
+    "id": "A372",
+    "type": "knowledge_suggested",
     "tracks": [
       "cr"
     ],
     "theme": "Systeme institutionnel et politique",
-    "source": "official_cr",
+    "source": "suggested_leqcm_cr_bridge",
     "question": "A la fin de son mandat, le president de la Republique peut-il decider de rester au pouvoir ?",
     "options": [
-      "Je connais la reponse",
-      "A revoir"
+      "Oui, s'il est tres populaire.",
+      "Non, il doit obligatoirement etre reelu par les citoyens.",
+      "Oui, il peut prolonger son mandat de 2 ans.",
+      "Oui, car c'est le chef de l'Etat."
     ],
-    "answer": null,
-    "explanation": "Question officielle publique (intitule). La correction QCM officielle n'est pas publiee."
+    "answer": 1,
+    "explanation": "Non. En France, le President est elu pour 5 ans. Pour rester au pouvoir, il doit obligatoirement se presenter a une nouvelle election et la gagner."
   },
   {
-    "id": "O008",
-    "type": "knowledge_open",
+    "id": "A373",
+    "type": "knowledge_suggested",
     "tracks": [
       "cr"
     ],
     "theme": "Systeme institutionnel et politique",
-    "source": "official_cr",
+    "source": "suggested_leqcm_cr_bridge",
     "question": "Quel est le role du president de la Republique ?",
     "options": [
-      "Je connais la reponse",
-      "A revoir"
+      "Voter les lois.",
+      "Juger les crimes.",
+      "Etre le Chef de l'Etat et des Armees.",
+      "Diriger la Mairie."
     ],
-    "answer": null,
-    "explanation": "Question officielle publique (intitule). La correction QCM officielle n'est pas publiee."
+    "answer": 2,
+    "explanation": "Le President de la Republique est le Chef de l'Etat. Il represente la France et commande les armees. Le vote des lois appartient au Parlement."
   },
   {
-    "id": "O009",
-    "type": "knowledge_open",
-    "tracks": [
-      "cr"
-    ],
-    "theme": "Systeme institutionnel et politique",
-    "source": "official_cr",
-    "question": "Quel traite concerne la construction de l'Union europeenne ?",
-    "options": [
-      "Je connais la reponse",
-      "A revoir"
-    ],
-    "answer": null,
-    "explanation": "Question officielle publique (intitule). La correction QCM officielle n'est pas publiee."
-  },
-  {
-    "id": "O010",
-    "type": "knowledge_open",
+    "id": "A374",
+    "type": "knowledge_suggested",
     "tracks": [
       "cr"
     ],
     "theme": "Droits et devoirs",
-    "source": "official_cr",
+    "source": "suggested_leqcm_cr_bridge",
     "question": "Quelle proposition represente un exemple de delit ?",
     "options": [
-      "Je connais la reponse",
-      "A revoir"
+      "Un assassinat.",
+      "Un vol.",
+      "Un stationnement interdit.",
+      "Faire du tapage nocturne (bruit la nuit)."
     ],
-    "answer": null,
-    "explanation": "Question officielle publique (intitule). La correction QCM officielle n'est pas publiee."
-  },
-  {
-    "id": "O011",
-    "type": "knowledge_open",
-    "tracks": [
-      "cr"
-    ],
-    "theme": "Histoire, geographie et culture",
-    "source": "official_cr",
-    "question": "Durant le mandat de quel president la peine de mort a-t-elle ete abolie ?",
-    "options": [
-      "Je connais la reponse",
-      "A revoir"
-    ],
-    "answer": null,
-    "explanation": "Question officielle publique (intitule). La correction QCM officielle n'est pas publiee."
+    "answer": 1,
+    "explanation": "Le vol est un delit (puni de prison). L'assassinat est un crime (tres grave). Le stationnement et le tapage nocturne sont des contraventions (amendes)."
   }
 ];
+
+const OFFICIAL_PROMPT_BANK = [];
 
 export const QUESTION_BANK = [...BASE_QUESTION_BANK, ...SUGGESTED_QCM_BANK, ...OFFICIAL_PROMPT_BANK];

@@ -118,15 +118,26 @@ function startSessionFromForm() {
     ui.timerBox.classList.add("hidden");
   } else {
     const asked = clamp(Number(ui.practiceCountInput.value) || 20, 10, 300);
-    const promptPool = officialPromptPool.length ? officialPromptPool : gradedPool;
-    picked = pickFromCycle(
-      promptPool,
-      Math.min(asked, promptPool.length),
-      `${state.track}:official:prompts`
-    );
-    state.remainingSec = 0;
-    sessionLabel = `${EXAM_RULES[state.track].label} - Questions officielles (sans correction)`;
-    ui.timerBox.classList.add("hidden");
+    if (!officialPromptPool.length) {
+      picked = pickFromCycle(
+        gradedPool,
+        Math.min(asked, gradedPool.length),
+        `${state.track}:practice:graded`
+      );
+      state.mode = "practice";
+      state.remainingSec = 0;
+      sessionLabel = `${EXAM_RULES[state.track].label} - Entrainement corrige (QCM)`;
+      ui.timerBox.classList.add("hidden");
+    } else {
+      picked = pickFromCycle(
+        officialPromptPool,
+        Math.min(asked, officialPromptPool.length),
+        `${state.track}:official:prompts`
+      );
+      state.remainingSec = 0;
+      sessionLabel = `${EXAM_RULES[state.track].label} - Questions officielles (sans correction)`;
+      ui.timerBox.classList.add("hidden");
+    }
   }
 
   state.questions = picked.map(shuffleQuestionOptions);
