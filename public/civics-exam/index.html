@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#123f61" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Civique FR" />
+    <title>Simulateur d'examen civique local - CSP / CR</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Sora:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="app.js" defer></script>
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+    <div class="ambient ambient-three"></div>
+
+    <main class="shell">
+      <header class="hero">
+        <p class="kicker">Preparation locale, sans compte</p>
+        <h1>Simulateur d'examen civique</h1>
+        <p class="subtitle">
+          Entrainement base sur des questions officielles publiques (CSP/CR) +
+          mises en situation proches du format reel.
+        </p>
+      </header>
+
+      <section id="setupPanel" class="panel">
+        <h2>Configurer une session</h2>
+        <form id="setupForm" class="grid">
+          <label>
+            Parcours
+            <select id="trackSelect">
+              <option value="csp">Carte de sejour pluriannuelle (CSP)</option>
+              <option value="cr">Carte de resident (CR)</option>
+            </select>
+          </label>
+
+          <label>
+            Mode
+            <select id="modeSelect">
+              <option value="exam">Simulation officielle (40 questions)</option>
+              <option value="practice">Entrainement rapide</option>
+            </select>
+          </label>
+
+          <label id="practiceCountWrap">
+            Nombre de questions (entrainement)
+            <input
+              id="practiceCountInput"
+              type="number"
+              min="10"
+              max="50"
+              step="1"
+              value="20"
+            />
+          </label>
+
+          <button id="startBtn" type="submit" class="cta">Demarrer</button>
+        </form>
+
+        <div id="historyCard" class="history">
+          <h3>Historique local</h3>
+          <p id="historyText">Aucune session enregistree pour le moment.</p>
+        </div>
+      </section>
+
+      <section id="quizPanel" class="panel hidden">
+        <div class="quiz-top">
+          <div>
+            <p id="sessionLabel" class="session-label"></p>
+            <p id="counterText" class="counter"></p>
+          </div>
+          <div id="timerBox" class="timer">45:00</div>
+        </div>
+
+        <div class="progress-track">
+          <div id="progressFill" class="progress-fill"></div>
+        </div>
+
+        <div class="meta-row">
+          <span id="typeBadge" class="badge">Connaissances</span>
+          <span id="themeBadge" class="badge alt">Theme</span>
+        </div>
+
+        <h2 id="questionText" class="question-text"></h2>
+
+        <div id="optionsWrap" class="options"></div>
+
+        <div id="feedbackWrap" class="feedback hidden"></div>
+
+        <div class="nav-row">
+          <button id="prevBtn" type="button" class="ghost">Precedent</button>
+          <button id="nextBtn" type="button" class="cta">Suivant</button>
+        </div>
+      </section>
+
+      <section id="resultPanel" class="panel hidden">
+        <h2>Resultat</h2>
+        <p id="scoreLine" class="score-line"></p>
+        <p id="resultLine" class="result-line"></p>
+
+        <div id="themeBreakdown" class="breakdown"></div>
+
+        <h3>Questions a revoir</h3>
+        <div id="reviewList" class="review-list"></div>
+
+        <div class="actions">
+          <button id="restartBtn" type="button" class="cta">Nouvelle session</button>
+          <button id="backSetupBtn" type="button" class="ghost">
+            Retour a la configuration
+          </button>
+        </div>
+      </section>
+
+      <section class="panel source-panel">
+        <h2>Sources utilisees</h2>
+        <ul>
+          <li>
+            <a
+              href="https://formation-civique.interieur.gouv.fr/examen-civique/liste-officielle-des-questions-de-connaissance-csp/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Liste officielle des questions de connaissance (CSP)</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://formation-civique.interieur.gouv.fr/examen-civique/liste-officielle-des-questions-de-connaissance-cr/"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Liste officielle des questions de connaissance (CR)</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.service-public.fr/particuliers/actualites/A18713"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Regles officielles (40 questions, 45 min, seuil de reussite)</a
+            >
+          </li>
+        </ul>
+        <p class="disclaimer">
+          Note: les questions de mise en situation officielles ne sont pas
+          publiees. Cette application propose des cas d'entrainement proches.
+        </p>
+      </section>
+    </main>
+  </body>
+</html>
