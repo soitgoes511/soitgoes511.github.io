@@ -2,6 +2,7 @@ import { EXAM_RULES, QUESTION_BANK } from "./question-bank.js";
 
 const STORAGE_KEY = "civics_exam_local_history_v1";
 const STORAGE_KEY_CYCLE = "civics_exam_cycle_v1";
+const STORAGE_KEY_WEAK = "civics_exam_weak_stats_v1";
 
 const ui = {
   setupPanel: document.getElementById("setupPanel"),
@@ -81,7 +82,6 @@ function startSessionFromForm() {
   const gradedPool = pool.filter(
     (q) => q.type === "knowledge" || q.type === "knowledge_suggested" || q.type === "situation"
   );
-  const officialPromptPool = pool.filter((q) => q.type === "knowledge_open");
 
   let picked = [];
   let sessionLabel = "";
@@ -116,9 +116,10 @@ function startSessionFromForm() {
     state.remainingSec = 0;
     sessionLabel = `${EXAM_RULES[state.track].label} - Entrainement corrige (QCM)`;
     ui.timerBox.classList.add("hidden");
-  } else {
+  } else if (state.mode === "weak") {
     const asked = clamp(Number(ui.practiceCountInput.value) || 20, 10, 300);
-    if (!officialPromptPool.length) {
+    const weakPool = buildWeakQuestionPool(state.track, gradedPool);
+    if (!weakPool.length) {
       picked = pickFromCycle(
         gradedPool,
         Math.min(asked, gradedPool.length),
@@ -126,18 +127,29 @@ function startSessionFromForm() {
       );
       state.mode = "practice";
       state.remainingSec = 0;
-      sessionLabel = `${EXAM_RULES[state.track].label} - Entrainement corrige (QCM)`;
+      sessionLabel = `${EXAM_RULES[state.track].label} - Entrainement corrige (QCM, aucun historique de points faibles)`;
       ui.timerBox.classList.add("hidden");
     } else {
       picked = pickFromCycle(
-        officialPromptPool,
-        Math.min(asked, officialPromptPool.length),
-        `${state.track}:official:prompts`
+        weakPool,
+        Math.min(asked, weakPool.length),
+        `${state.track}:weak:graded`
       );
       state.remainingSec = 0;
-      sessionLabel = `${EXAM_RULES[state.track].label} - Questions officielles (sans correction)`;
+      sessionLabel = `${EXAM_RULES[state.track].label} - Revision points faibles (historique local)`;
       ui.timerBox.classList.add("hidden");
     }
+  } else {
+    const asked = clamp(Number(ui.practiceCountInput.value) || 20, 10, 300);
+    picked = pickFromCycle(
+      gradedPool,
+      Math.min(asked, gradedPool.length),
+      `${state.track}:practice:graded`
+    );
+    state.mode = "practice";
+    state.remainingSec = 0;
+    sessionLabel = `${EXAM_RULES[state.track].label} - Entrainement corrige (QCM)`;
+    ui.timerBox.classList.add("hidden");
   }
 
   state.questions = picked.map(shuffleQuestionOptions);
@@ -181,7 +193,7 @@ function renderQuestion() {
     btn.textContent = `${String.fromCharCode(65 + idx)}. ${option}`;
     btn.dataset.selected = selected === idx ? "true" : "false";
 
-    if (state.mode === "practice" && selected !== null && hasKnownAnswer(q)) {
+    if (state.mode !== "exam" && selected !== null && hasKnownAnswer(q)) {
       if (idx === q.answer) btn.classList.add("correct");
       if (idx === selected && idx !== q.answer) btn.classList.add("wrong");
     }
@@ -214,8 +226,8 @@ function renderFeedback() {
     ui.feedbackWrap.className = "feedback";
     ui.feedbackWrap.textContent =
       selected === 0
-        ? "Question marquee comme connue. La correction QCM officielle n'est pas publiee."
-        : "Question marquee a revoir. La correction QCM officielle n'est pas publiee.";
+        ? "Question marquee comme connue. La correction officielle n'est pas publiee."
+        : "Question marquee a revoir. La correction officielle n'est pas publiee.";
     return;
   }
 
@@ -246,45 +258,37 @@ function onNext() {
 function finishSession(expired) {
   clearTimer();
 
-  const total = state.questions.length;
+  const totalAsked = state.questions.length;
+  const gradedTotal = state.questions.reduce(
+    (acc, q) => acc + (hasKnownAnswer(q) ? 1 : 0),
+    0
+  );
   let good = 0;
   let percent = 0;
 
-  if (state.mode === "official") {
-    good = state.answers.reduce((acc, selected) => acc + (selected === 0 ? 1 : 0), 0);
-    percent = total ? Math.round((good / total) * 100) : 0;
-  } else {
-    const gradedTotal = state.questions.reduce(
-      (acc, q) => acc + (hasKnownAnswer(q) ? 1 : 0),
-      0
-    );
-    good = state.questions.reduce((acc, q, idx) => {
-      return acc + (hasKnownAnswer(q) && state.answers[idx] === q.answer ? 1 : 0);
-    }, 0);
-    percent = gradedTotal ? Math.round((good / gradedTotal) * 100) : 0;
-  }
+  good = state.questions.reduce((acc, q, idx) => {
+    return acc + (hasKnownAnswer(q) && state.answers[idx] === q.answer ? 1 : 0);
+  }, 0);
+  percent = gradedTotal ? Math.round((good / gradedTotal) * 100) : 0;
 
   const rules = EXAM_RULES[state.track];
   const passPercent = state.mode === "exam" ? rules.passPercent : null;
   const passed = passPercent === null ? null : percent >= passPercent;
+  const total = gradedTotal || totalAsked;
 
-  if (state.mode === "official") {
-    ui.scoreLine.textContent = `Revision: ${good}/${total} marquees "Je connais la reponse" (${percent}%)`;
-    ui.resultLine.textContent = `Session de questions officielles terminee${
-      expired ? " (temps ecoule)" : ""
-    }.`;
-  } else {
-    ui.scoreLine.textContent = `Resultat: ${good}/${total} (${percent}%)`;
-    ui.resultLine.textContent =
-      state.mode === "exam"
-        ? `${passed ? "Reussi" : "A retravailler"} - seuil ${passPercent}% pour ${
-            rules.label
-          }${expired ? " (temps ecoule)" : ""}`
+  ui.scoreLine.textContent = `Resultat: ${good}/${total} (${percent}%)`;
+  ui.resultLine.textContent =
+    state.mode === "exam"
+      ? `${passed ? "Reussi" : "A retravailler"} - seuil ${passPercent}% pour ${
+          rules.label
+        }${expired ? " (temps ecoule)" : ""}`
+      : state.mode === "weak"
+        ? `Session points faibles terminee${expired ? " (temps ecoule)" : ""}.`
         : `Session d'entrainement terminee${expired ? " (temps ecoule)" : ""}.`;
-  }
 
   renderThemeBreakdown();
   renderReviewList();
+  updateWeakStats();
   saveHistory({ mode: state.mode, track: state.track, good, total, percent, passed });
   renderHistory();
   showResults();
@@ -296,9 +300,7 @@ function renderThemeBreakdown() {
   state.questions.forEach((q, idx) => {
     const current = stats.get(q.theme) || { total: 0, good: 0 };
     current.total += 1;
-    if (hasKnownAnswer(q)) {
-      if (state.answers[idx] === q.answer) current.good += 1;
-    } else if (state.answers[idx] === 0) {
+    if (hasKnownAnswer(q) && state.answers[idx] === q.answer) {
       current.good += 1;
     }
     stats.set(q.theme, current);
@@ -317,35 +319,6 @@ function renderThemeBreakdown() {
 }
 
 function renderReviewList() {
-  if (state.mode === "official") {
-    const toReview = state.questions
-      .map((q, idx) => ({ q, idx }))
-      .filter(({ idx }) => state.answers[idx] !== 0);
-
-    ui.reviewList.innerHTML = "";
-
-    if (!toReview.length) {
-      const p = document.createElement("p");
-      p.textContent = "Aucune question marquee a revoir.";
-      ui.reviewList.appendChild(p);
-      return;
-    }
-
-    toReview.forEach(({ q, idx }) => {
-      const block = document.createElement("article");
-      block.className = "review-item";
-      const status = state.answers[idx] === 1 ? "A revoir" : "Non repondu";
-
-      block.innerHTML = `
-        <p><strong>Q:</strong> ${escapeHtml(q.question)}</p>
-        <p><strong>Statut:</strong> ${escapeHtml(status)}</p>
-        <p><strong>Note:</strong> Correction QCM officielle non publiee.</p>
-      `;
-      ui.reviewList.appendChild(block);
-    });
-    return;
-  }
-
   const misses = state.questions
     .map((q, idx) => ({ q, idx }))
     .filter(({ q, idx }) => hasKnownAnswer(q) && state.answers[idx] !== q.answer);
@@ -489,6 +462,101 @@ function getCycleStore() {
 
 function saveCycleStore(store) {
   localStorage.setItem(STORAGE_KEY_CYCLE, JSON.stringify(store));
+}
+
+function updateWeakStats() {
+  const store = getWeakStore();
+  const trackStats = ensureTrackWeakStats(store[state.track]);
+
+  state.questions.forEach((q, idx) => {
+    if (!hasKnownAnswer(q)) return;
+
+    const selected = state.answers[idx];
+    const missed = selected !== q.answer;
+
+    const qStats = trackStats.questions[q.id] || { attempts: 0, misses: 0 };
+    qStats.attempts += 1;
+    if (missed) qStats.misses += 1;
+    trackStats.questions[q.id] = qStats;
+
+    const themeStats = trackStats.themes[q.theme] || { attempts: 0, misses: 0 };
+    themeStats.attempts += 1;
+    if (missed) themeStats.misses += 1;
+    trackStats.themes[q.theme] = themeStats;
+  });
+
+  store[state.track] = trackStats;
+  localStorage.setItem(STORAGE_KEY_WEAK, JSON.stringify(store));
+}
+
+function buildWeakQuestionPool(track, gradedPool) {
+  const store = getWeakStore();
+  const trackStats = ensureTrackWeakStats(store[track]);
+
+  const weakThemes = new Set(
+    Object.entries(trackStats.themes)
+      .filter(([, stats]) => isWeakTheme(stats))
+      .map(([theme]) => theme)
+  );
+
+  return gradedPool
+    .map((q) => {
+      const qStats = trackStats.questions[q.id];
+      const qRate = getMissRate(qStats);
+      const tRate = getMissRate(trackStats.themes[q.theme]);
+      const weakQuestion = isWeakQuestion(qStats);
+      const weakTheme = weakThemes.has(q.theme);
+      const score = weakQuestion ? qRate * 2 + tRate + 1 : tRate;
+
+      return { q, weakQuestion, weakTheme, score };
+    })
+    .filter((item) => item.weakQuestion || item.weakTheme)
+    .sort((a, b) => b.score - a.score)
+    .map((item) => item.q);
+}
+
+function getWeakStore() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY_WEAK);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
+function ensureTrackWeakStats(stats) {
+  if (!stats || typeof stats !== "object") {
+    return { questions: {}, themes: {} };
+  }
+
+  const questions = stats.questions && typeof stats.questions === "object" ? stats.questions : {};
+  const themes = stats.themes && typeof stats.themes === "object" ? stats.themes : {};
+  return { questions, themes };
+}
+
+function isWeakQuestion(stats) {
+  const attempts = Number(stats?.attempts || 0);
+  const misses = Number(stats?.misses || 0);
+  if (!attempts || !misses) return false;
+  if (attempts < 3) return true;
+  return misses / attempts >= 0.34;
+}
+
+function isWeakTheme(stats) {
+  const attempts = Number(stats?.attempts || 0);
+  const misses = Number(stats?.misses || 0);
+  if (!attempts || !misses) return false;
+  if (attempts < 5) return misses >= 2;
+  return misses / attempts >= 0.3;
+}
+
+function getMissRate(stats) {
+  const attempts = Number(stats?.attempts || 0);
+  const misses = Number(stats?.misses || 0);
+  if (!attempts || !misses) return 0;
+  return misses / attempts;
 }
 
 function shuffleQuestionOptions(question) {
