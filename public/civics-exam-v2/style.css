@@ -181,6 +181,21 @@ button:disabled {
   padding-top: 10px;
 }
 
+.install-card {
+  margin-top: 14px;
+  border-top: 1px dashed var(--line);
+  padding-top: 12px;
+}
+
+.install-card h3 {
+  margin-bottom: 6px;
+}
+
+.install-card p {
+  margin: 0 0 10px;
+  color: var(--ink-soft);
+}
+
 .history h3 {
   margin-bottom: 6px;
 }

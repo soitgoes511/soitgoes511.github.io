@@ -13,6 +13,9 @@ const ui = {
   modeSelect: document.getElementById("modeSelect"),
   practiceCountWrap: document.getElementById("practiceCountWrap"),
   practiceCountInput: document.getElementById("practiceCountInput"),
+  installCard: document.getElementById("installCard"),
+  installText: document.getElementById("installText"),
+  installBtn: document.getElementById("installBtn"),
   historyText: document.getElementById("historyText"),
   sessionLabel: document.getElementById("sessionLabel"),
   counterText: document.getElementById("counterText"),
@@ -41,6 +44,7 @@ const state = {
   index: 0,
   remainingSec: 0,
   timerId: null,
+  deferredInstallPrompt: null,
 };
 
 function init() {
@@ -50,10 +54,14 @@ function init() {
   ui.nextBtn.addEventListener("click", onNext);
   ui.restartBtn.addEventListener("click", onStartFromButton);
   ui.backSetupBtn.addEventListener("click", showSetup);
+  ui.installBtn.addEventListener("click", onInstallClick);
+  window.addEventListener("beforeinstallprompt", onBeforeInstallPrompt);
+  window.addEventListener("appinstalled", onAppInstalled);
 
   onModeChange();
   renderHistory();
   registerServiceWorker();
+  renderInstallState();
 }
 
 function onModeChange() {
@@ -616,6 +624,75 @@ function escapeHtml(text) {
     .replaceAll("&", "&amp;")
     .replaceAll("<", "&lt;")
     .replaceAll(">", "&gt;");
+}
+
+function onBeforeInstallPrompt(event) {
+  event.preventDefault();
+  state.deferredInstallPrompt = event;
+  renderInstallState();
+}
+
+async function onInstallClick() {
+  if (!state.deferredInstallPrompt) {
+    renderInstallState();
+    return;
+  }
+
+  try {
+    await state.deferredInstallPrompt.prompt();
+    await state.deferredInstallPrompt.userChoice;
+  } catch (error) {
+    console.warn("Invite d'installation impossible:", error);
+  } finally {
+    state.deferredInstallPrompt = null;
+    renderInstallState();
+  }
+}
+
+function onAppInstalled() {
+  state.deferredInstallPrompt = null;
+  renderInstallState();
+}
+
+function renderInstallState() {
+  if (!ui.installCard) return;
+
+  const installed = isStandaloneApp();
+  const isChrome = /\bChrome\/\d+/i.test(navigator.userAgent);
+  const isAndroid = /Android/i.test(navigator.userAgent);
+
+  if (installed) {
+    ui.installText.textContent =
+      "Application deja installee. Ouvrez-la depuis l'ecran d'accueil de votre telephone.";
+    ui.installBtn.classList.add("hidden");
+    return;
+  }
+
+  if (state.deferredInstallPrompt) {
+    ui.installText.textContent =
+      "Cette application peut etre installee comme une vraie app. Appuyez sur le bouton ci-dessous.";
+    ui.installBtn.classList.remove("hidden");
+    return;
+  }
+
+  ui.installBtn.classList.add("hidden");
+
+  if (isAndroid && isChrome) {
+    ui.installText.textContent =
+      "Si aucun bouton d'installation n'apparait, ouvrez le menu Chrome puis choisissez 'Ajouter a l'ecran d'accueil' ou 'Installer l'application'. Utilisez bien l'URL https://soitgoes511.github.io/civics-exam/.";
+    return;
+  }
+
+  ui.installText.textContent =
+    "Pour l'installation, utilisez Chrome sur Android et ouvrez l'URL https://soitgoes511.github.io/civics-exam/. Les navigateurs integres a d'autres apps ne proposent souvent pas l'installation PWA.";
+}
+
+function isStandaloneApp() {
+  return (
+    window.matchMedia("(display-mode: standalone)").matches ||
+    window.matchMedia("(display-mode: fullscreen)").matches ||
+    navigator.standalone === true
+  );
 }
 
 async function registerServiceWorker() {
