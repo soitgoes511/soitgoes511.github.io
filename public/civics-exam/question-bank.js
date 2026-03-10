@@ -19,6 +19,8 @@ export const SOURCE_LINKS = {
   "official_csp": "https://formation-civique.interieur.gouv.fr/examen-civique/liste-officielle-des-questions-de-connaissance-csp/",
   "official_cr": "https://formation-civique.interieur.gouv.fr/examen-civique/liste-officielle-des-questions-de-connaissance-cr/",
   "exam_rules": "https://www.service-public.fr/particuliers/actualites/A18713",
+  "prepacivique_csp": "https://www.prepacivique.fr/guide/questions-officielles-csp",
+  "prepacivique_cr": "https://www.prepacivique.fr/guide/questions-officielles-cr",
   "suggested_qcm": "https://leqcmcivique.fr/",
   "suggested_qcm_license": "https://creativecommons.org/licenses/by-nc/4.0/deed.fr"
 };
@@ -7822,6 +7824,96 @@ const SUGGESTED_QCM_BANK = [
     ],
     "answer": 1,
     "explanation": "Le vol est un delit (puni de prison). L'assassinat est un crime (tres grave). Le stationnement et le tapage nocturne sont des contraventions (amendes)."
+  },
+  {
+    "id": "A375",
+    "type": "knowledge_suggested",
+    "tracks": [
+      "csp"
+    ],
+    "theme": "Principes et valeurs",
+    "source": "prepacivique_csp",
+    "question": "Lequel de ces personnages est l'allegorie de la Republique francaise ?",
+    "options": [
+      "Marianne",
+      "Jeanne d'Arc",
+      "Napoleon Ier",
+      "Moliere"
+    ],
+    "answer": 0,
+    "explanation": "Marianne est l'allegorie de la Republique francaise. Elle represente la Republique sur de nombreux symboles officiels."
+  },
+  {
+    "id": "A376",
+    "type": "knowledge_suggested",
+    "tracks": [
+      "csp"
+    ],
+    "theme": "Vivre dans la societe francaise",
+    "source": "prepacivique_csp",
+    "question": "A partir de quel age un mineur peut-il travailler ?",
+    "options": [
+      "16 ans",
+      "14 ans",
+      "12 ans",
+      "18 ans"
+    ],
+    "answer": 0,
+    "explanation": "En regle generale, un mineur peut commencer a travailler a partir de 16 ans. Il existe quelques exceptions encadrees, mais la regle de base est 16 ans."
+  },
+  {
+    "id": "A377",
+    "type": "knowledge_suggested",
+    "tracks": [
+      "csp"
+    ],
+    "theme": "Vivre dans la societe francaise",
+    "source": "prepacivique_csp",
+    "question": "Jusqu'a quel age l'ecole est-elle obligatoire ?",
+    "options": [
+      "16 ans",
+      "14 ans",
+      "18 ans",
+      "12 ans"
+    ],
+    "answer": 0,
+    "explanation": "L'instruction est obligatoire jusqu'a 16 ans en France."
+  },
+  {
+    "id": "A378",
+    "type": "knowledge_suggested",
+    "tracks": [
+      "cr"
+    ],
+    "theme": "Vivre dans la societe francaise",
+    "source": "prepacivique_cr",
+    "question": "A quel age commence l'instruction obligatoire des enfants ?",
+    "options": [
+      "3 ans",
+      "6 ans",
+      "5 ans",
+      "2 ans"
+    ],
+    "answer": 0,
+    "explanation": "L'instruction obligatoire commence a 3 ans en France."
+  },
+  {
+    "id": "A379",
+    "type": "knowledge_suggested",
+    "tracks": [
+      "cr"
+    ],
+    "theme": "Vivre dans la societe francaise",
+    "source": "prepacivique_cr",
+    "question": "Quel est l'age de la majorite ?",
+    "options": [
+      "18 ans",
+      "16 ans",
+      "21 ans",
+      "17 ans"
+    ],
+    "answer": 0,
+    "explanation": "L'age de la majorite en France est de 18 ans."
   }
 ];
 
