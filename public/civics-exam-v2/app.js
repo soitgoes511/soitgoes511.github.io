@@ -1,4 +1,4 @@
-import { EXAM_RULES, QUESTION_BANK } from "./question-bank.js";
+import { EXAM_RULES, QUESTION_BANK } from "./question-bank.js?v=20260421b";
 
 const STORAGE_KEY = "civics_exam_local_history_v1";
 const STORAGE_KEY_CYCLE = "civics_exam_cycle_v1";
@@ -13,6 +13,7 @@ const ui = {
   modeSelect: document.getElementById("modeSelect"),
   practiceCountWrap: document.getElementById("practiceCountWrap"),
   practiceCountInput: document.getElementById("practiceCountInput"),
+  setupError: document.getElementById("setupError"),
   installCard: document.getElementById("installCard"),
   installText: document.getElementById("installText"),
   installBtn: document.getElementById("installBtn"),
@@ -71,18 +72,34 @@ function onModeChange() {
 
 function onStart(event) {
   event.preventDefault();
-  startSessionFromForm();
+  try {
+    startSessionFromForm();
+  } catch (error) {
+    console.error(error);
+    showSetupError("The selected track could not be loaded. Refresh the page once and try again.");
+  }
 }
 
 function onStartFromButton() {
-  startSessionFromForm();
+  try {
+    startSessionFromForm();
+  } catch (error) {
+    console.error(error);
+    showSetupError("The selected track could not be loaded. Refresh the page once and try again.");
+  }
 }
 
 function startSessionFromForm() {
   clearTimer();
+  clearSetupError();
 
   state.mode = ui.modeSelect.value;
   state.track = ui.trackSelect.value;
+  const rules = EXAM_RULES[state.track];
+  if (!rules) {
+    showSetupError("This track is not available in the loaded question bank. Refresh the page to update the offline cache.");
+    return;
+  }
 
   const pool = QUESTION_BANK.filter((q) => q.tracks.includes(state.track));
   const knowledgePool = pool.filter((q) => q.type === "knowledge");
@@ -95,7 +112,10 @@ function startSessionFromForm() {
   let sessionLabel = "";
 
   if (state.mode === "exam") {
-    const rules = EXAM_RULES[state.track];
+    if (knowledgePool.length < rules.knowledgeCount || situationPool.length < rules.situationCount) {
+      showSetupError("This track is only partially loaded. Refresh the page to update the local files, then start again.");
+      return;
+    }
     picked = [
       ...pickFromCycle(
         knowledgePool,
@@ -158,6 +178,11 @@ function startSessionFromForm() {
     state.remainingSec = 0;
     sessionLabel = `${EXAM_RULES[state.track].label} - Entrainement corrige (QCM)`;
     ui.timerBox.classList.add("hidden");
+  }
+
+  if (!picked.length) {
+    showSetupError("No questions were available for the selected track.");
+    return;
   }
 
   state.questions = picked.map(shuffleQuestionOptions);
@@ -372,9 +397,20 @@ function showResults() {
 
 function showSetup() {
   clearTimer();
+  clearSetupError();
   ui.quizPanel.classList.add("hidden");
   ui.resultPanel.classList.add("hidden");
   ui.setupPanel.classList.remove("hidden");
+}
+
+function showSetupError(message) {
+  ui.setupError.textContent = message;
+  ui.setupError.classList.remove("hidden");
+}
+
+function clearSetupError() {
+  ui.setupError.textContent = "";
+  ui.setupError.classList.add("hidden");
 }
 
 function saveHistory(entry) {

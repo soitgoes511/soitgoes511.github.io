@@ -1,11 +1,11 @@
-const CACHE_NAME = "civique-pwa-v7";
+const CACHE_NAME = "civique-pwa-v8";
 const APP_SHELL = [
   "./",
   "./index.html",
   "./style.css",
-  "./app.js",
-  "./question-bank.js",
-  "./naturalisation-bank.js",
+  "./app.js?v=20260421b",
+  "./question-bank.js?v=20260421b",
+  "./naturalisation-bank.js?v=20260421b",
   "./manifest.webmanifest",
   "./icons/icon-192.png",
   "./icons/icon-512.png",

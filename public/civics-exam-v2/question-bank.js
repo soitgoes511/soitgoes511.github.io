@@ -1,4 +1,4 @@
-import { NATURALISATION_QUESTION_BANK } from "./naturalisation-bank.js";
+import { NATURALISATION_QUESTION_BANK } from "./naturalisation-bank.js?v=20260421b";
 
 export const EXAM_RULES = {
   "csp": {
