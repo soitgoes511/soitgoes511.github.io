@@ -1,27 +1,40 @@
+import { NATURALISATION_QUESTION_BANK } from "./naturalisation-bank.js";
+
 export const EXAM_RULES = {
   "csp": {
     "label": "Carte de sejour pluriannuelle (CSP)",
     "durationMinutes": 45,
     "knowledgeCount": 28,
     "situationCount": 12,
-    "passPercent": 60
+    "passPercent": 80
   },
   "cr": {
     "label": "Carte de resident (CR)",
     "durationMinutes": 45,
     "knowledgeCount": 28,
     "situationCount": 12,
-    "passPercent": 65
+    "passPercent": 80
+  },
+  "nat": {
+    "label": "Naturalisation / nationalite francaise",
+    "durationMinutes": 45,
+    "knowledgeCount": 28,
+    "situationCount": 12,
+    "passPercent": 80
   }
 };
 
 export const SOURCE_LINKS = {
   "official_csp": "https://formation-civique.interieur.gouv.fr/examen-civique/liste-officielle-des-questions-de-connaissance-csp/",
   "official_cr": "https://formation-civique.interieur.gouv.fr/examen-civique/liste-officielle-des-questions-de-connaissance-cr/",
-  "exam_rules": "https://www.service-public.fr/particuliers/actualites/A18713",
+  "official_nat": "https://www.immigration.interieur.gouv.fr/documentation/ressources/questions-de-connaissance-pour-lexamen-civique-nationalite-francaise.html",
+  "exam_rules": "https://formation-civique.interieur.gouv.fr/examen-civique/informations-g%C3%A9n%C3%A9rales-sur-lexamen-civique/",
+  "nat_rules": "https://www.immigration.interieur.gouv.fr/Integration-et-Acces-a-la-nationalite/La-nationalite-francaise/Les-procedures-d-acces-a-la-nationalite-francaise",
   "prepacivique_csp": "https://www.prepacivique.fr/guide/questions-officielles-csp",
   "prepacivique_cr": "https://www.prepacivique.fr/guide/questions-officielles-cr",
+  "prepacivique_nat": "https://www.prepacivique.fr/guide/questions-officielles-naturalisation",
   "suggested_qcm": "https://leqcmcivique.fr/",
+  "suggested_nat_qcm": "https://leqcmcivique.fr/naturalisation-examen-civique-reponses.html",
   "suggested_qcm_license": "https://creativecommons.org/licenses/by-nc/4.0/deed.fr"
 };
 
@@ -7919,4 +7932,18 @@ const SUGGESTED_QCM_BANK = [
 
 const OFFICIAL_PROMPT_BANK = [];
 
-export const QUESTION_BANK = [...BASE_QUESTION_BANK, ...SUGGESTED_QCM_BANK, ...OFFICIAL_PROMPT_BANK];
+function withNaturalisationSituations(question) {
+  if (question.type !== "situation") return question;
+  if (question.tracks.includes("nat")) return question;
+  return {
+    ...question,
+    tracks: [...question.tracks, "nat"],
+  };
+}
+
+export const QUESTION_BANK = [
+  ...BASE_QUESTION_BANK,
+  ...SUGGESTED_QCM_BANK,
+  ...OFFICIAL_PROMPT_BANK,
+  ...NATURALISATION_QUESTION_BANK,
+].map(withNaturalisationSituations);

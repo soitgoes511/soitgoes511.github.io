@@ -1,8 +1,8 @@
 {
-  "name": "Simulateur d'examen civique V2",
-  "short_name": "Civique FR3",
-  "id": "/civics-exam-v2/?app_id=civique-fr-v3-20260304",
-  "description": "Entrainement local a l'examen civique (CSP/CR), avec mode simulation et mode entrainement.",
+  "name": "Simulateur d'examen civique",
+  "short_name": "Civique FR2",
+  "id": "/civics-exam/?app_id=civique-fr-v2-20260304",
+  "description": "Entrainement local a l'examen civique pour CSP, CR et naturalisation, avec mode simulation et mode entrainement.",
   "lang": "fr-FR",
   "start_url": "./",
   "scope": "./",

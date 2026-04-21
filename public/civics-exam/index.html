@@ -7,7 +7,7 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-title" content="Civique FR" />
-    <title>Simulateur d'examen civique local - CSP / CR</title>
+    <title>Simulateur d'examen civique local - CSP / CR / Naturalisation</title>
     <link rel="manifest" href="./manifest.webmanifest" />
     <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -29,9 +29,9 @@
         <p class="kicker">Preparation locale, sans compte</p>
         <h1>Simulateur d'examen civique</h1>
         <p class="subtitle">
-          Entrainement base sur des questions officielles publiques (CSP/CR) +
-          mises en situation proches du format reel. Nouvelle banque officielle
-          importee (questions de connaissance).
+          Entrainement base sur les listes officielles publiques (CSP, CR,
+          naturalisation) avec mises en situation d'entrainement proches du
+          format reel.
         </p>
       </header>
 
@@ -43,6 +43,7 @@
             <select id="trackSelect">
               <option value="csp">Carte de sejour pluriannuelle (CSP)</option>
               <option value="cr">Carte de resident (CR)</option>
+              <option value="nat">Naturalisation / nationalite francaise</option>
             </select>
           </label>
 
@@ -156,7 +157,15 @@
           </li>
           <li>
             <a
-              href="https://www.service-public.fr/particuliers/actualites/A18713"
+              href="https://www.immigration.interieur.gouv.fr/documentation/ressources/questions-de-connaissance-pour-lexamen-civique-nationalite-francaise.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              >Liste officielle des questions de connaissance (naturalisation)</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://formation-civique.interieur.gouv.fr/examen-civique/informations-g%C3%A9n%C3%A9rales-sur-lexamen-civique/"
               target="_blank"
               rel="noopener noreferrer"
               >Regles officielles (40 questions, 45 min, seuil de reussite)</a
@@ -167,7 +176,7 @@
               href="https://leqcmcivique.fr/"
               target="_blank"
               rel="noopener noreferrer"
-              >Suggestions QCM (CR/CSP) pour entrainement corrige</a
+              >Suggestions QCM (CSP/CR/NAT) pour entrainement corrige</a
             >
           </li>
         </ul>
@@ -176,8 +185,9 @@
           publiees. Cette application propose des cas d'entrainement proches
           et un mode "Revision points faibles" base sur vos erreurs locales
           (stockees uniquement sur cet appareil). Les reponses suggerees
-          proviennent d'une source tierce et ne remplacent pas une source
-          officielle.
+          proviennent d'une source tierce. Pour la naturalisation, les intitules
+          suivent la liste officielle et les choix de reponses sont des
+          propositions d'entrainement.
         </p>
       </section>
     </main>
