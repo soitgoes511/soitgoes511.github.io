@@ -1,0 +1,43 @@
+---
+import Layout from './Layout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+const navigation = [
+  { label: 'Application home', href: '/mydashboard/' },
+  { label: 'Privacy policy', href: '/mydashboard/privacy/' },
+  { label: 'Terms of service', href: '/mydashboard/terms/' },
+];
+const currentPath = `${Astro.url.pathname.replace(/\/$/, '')}/`;
+---
+
+<Layout title={title === 'MyDashboard' ? 'MyDashboard | Personal Gmail & Calendar assistant' : `${title} | MyDashboard`} description={description}>
+  <article class="space-y-8">
+    <header class="space-y-4">
+      <p class="text-sm font-semibold uppercase tracking-widest text-teal-300">MyDashboard · Personal Google integration</p>
+      <h1 class="text-4xl font-extrabold tracking-tight sm:text-5xl">{title}</h1>
+      <p class="max-w-2xl text-lg leading-relaxed text-slate-300">{description}</p>
+    </header>
+    <nav aria-label="MyDashboard" class="flex flex-wrap gap-3 border-y border-slate-700 py-4 text-sm">
+      {navigation.map(({ label, href }) => (
+        <a href={href} aria-current={currentPath === href ? 'page' : undefined}
+          class:list={['rounded-lg border px-4 py-2 transition-colors focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-300',
+            currentPath === href ? 'border-teal-400 bg-teal-400/10 text-teal-200' : 'border-slate-600 text-slate-200 hover:border-teal-300 hover:text-teal-200']}>
+          {label}
+        </a>
+      ))}
+    </nav>
+    <div class="space-y-8 leading-relaxed text-slate-300 [&_h2]:mb-3 [&_h2]:text-2xl [&_h2]:font-bold [&_h2]:text-slate-100 [&_h3]:mb-2 [&_h3]:font-semibold [&_h3]:text-slate-100 [&_p]:mb-3 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6 [&_a]:text-blue-300 [&_a]:underline [&_a]:underline-offset-4 [&_a:hover]:text-blue-200">
+      <slot />
+    </div>
+    <footer class="border-t border-slate-700 pt-6 text-sm leading-relaxed text-slate-400">
+      <p>Operated by Michael (Mike) Hinkle. Support and privacy enquiries:
+        <a href="mailto:michael0745@gmail.com" class="break-all text-blue-300 underline underline-offset-4">michael0745@gmail.com</a>.
+      </p>
+    </footer>
+  </article>
+</Layout>

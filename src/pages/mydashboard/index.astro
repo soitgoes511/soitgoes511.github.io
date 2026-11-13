@@ -1,0 +1,32 @@
+---
+import MyDashboardLayout from '../../layouts/MyDashboardLayout.astro';
+---
+
+<MyDashboardLayout title="MyDashboard" description="A private, operator-controlled assistant integration for personal Gmail and Google Calendar tasks, built using Hermes Agent.">
+  <section aria-labelledby="purpose">
+    <h2 id="purpose">What MyDashboard does</h2>
+    <p>MyDashboard is Michael Hinkle’s personal Google-account integration. It connects a privately operated Hermes Agent installation to Google APIs so Michael can request email and calendar assistance.</p>
+    <ul>
+      <li>Search and read requested Gmail messages and prepare summaries or draft replies.</li>
+      <li>Send messages or manage email labels only when authorized by the operator.</li>
+      <li>Read Google Calendar events and create or update entries when instructed, including leave and remote-working schedules.</li>
+    </ul>
+    <p>Only functionality supported by the permissions granted on Google’s consent screen is available. The operator reviews requested permissions and should not grant unrelated access.</p>
+  </section>
+  <section aria-labelledby="access">
+    <h2 id="access">Personal use, not a public sign-up service</h2>
+    <p>This website provides application information and policies. It does not ask visitors for a Google password, connect their accounts, or run the private assistant in the browser.</p>
+    <p>The operator authorizes the private installation separately using Google OAuth. MyDashboard is not currently offered as a public multi-user service.</p>
+  </section>
+  <section aria-labelledby="data">
+    <h2 id="data">How Google data is handled</h2>
+    <p>Requested email or calendar content can be processed by the private installation and, where needed for an authorized assistant task, an operator-selected AI provider. Data is not claimed to remain exclusively on the operator’s PC.</p>
+    <p>The privacy policy explains access, storage, provider processing, deletion, and Google’s Limited Use requirements. Provider settings must be compatible with that policy before Google-derived content is processed.</p>
+    <p><a href="/mydashboard/privacy/">Read the privacy policy</a> · <a href="/mydashboard/terms/">Read the terms of service</a></p>
+  </section>
+  <section aria-labelledby="control">
+    <h2 id="control">Your account remains under your control</h2>
+    <p>Google authorization can be reviewed or revoked through <a href="https://myaccount.google.com/connections">Google Account connections</a>. Revoking authorization does not remove events already created or copies previously saved by the private installation.</p>
+    <p>MyDashboard is independently operated by Michael Hinkle. It is not a Google product and is not endorsed by Google.</p>
+  </section>
+</MyDashboardLayout>

@@ -1,0 +1,58 @@
+---
+import MyDashboardLayout from '../../layouts/MyDashboardLayout.astro';
+---
+
+<MyDashboardLayout title="Privacy policy" description="How MyDashboard handles Google-account information for its operator’s personal email and calendar assistance.">
+  <p class="text-sm text-slate-400">Last updated: November 13, 2026. Operator: Michael (Mike) Hinkle.</p>
+  <section aria-labelledby="scope">
+    <h2 id="scope">1. Scope and contact</h2>
+    <p>This policy covers MyDashboard’s personal Gmail and Google Calendar integration and these application-information pages. It does not describe unrelated applications elsewhere on this website. MyDashboard is operated for Michael Hinkle’s own authorized account, not as a public account-management service.</p>
+    <p>For questions, access requests, or deletion requests, contact <a href="mailto:michael0745@gmail.com">michael0745@gmail.com</a>. Do not send passwords or access tokens by email.</p>
+  </section>
+  <section aria-labelledby="collected">
+    <h2 id="collected">2. Information accessed</h2>
+    <p>Depending on the permissions granted and the task requested, the private installation may access:</p>
+    <ul>
+      <li>Google account identity, including the account’s email address.</li>
+      <li>Gmail message headers, participants, labels, message content, and attachments when needed for a requested feature.</li>
+      <li>Calendar names and event information, such as titles, descriptions, dates, times, locations, and participants.</li>
+      <li>Instructions, generated responses, task results, and operational information needed to perform and troubleshoot the requested work.</li>
+    </ul>
+    <p>Google OAuth credentials authorize the private installation. They are separate from the public website and must not be placed in its source repository or published pages.</p>
+  </section>
+  <section aria-labelledby="uses">
+    <h2 id="uses">3. Purposes and user control</h2>
+    <p>Information is used to provide requested email and calendar features: finding relevant information, preparing summaries or drafts, and making changes authorized by the operator. An OAuth permission is not, by itself, an instruction to send a message or change a calendar.</p>
+    <p>The operator reviews the requested scopes and remains responsible for authorizing actions and ensuring that the private installation follows this policy.</p>
+  </section>
+  <section aria-labelledby="sharing">
+    <h2 id="sharing">4. AI processing and other service providers</h2>
+    <p>Content needed for a requested assistant feature may be sent to an AI provider configured by the operator, such as OpenAI when selected. Google continues to process API requests, and the operator’s hosting or infrastructure providers may process information needed to run the private installation.</p>
+    <p>Provider processing and retention depend on the selected service, agreement, and settings. Before sending Google-derived content, the operator must review those settings and use only providers and configurations compatible with Google’s User Data Policy and Limited Use requirements. This policy does not certify that every model or provider available in Hermes is suitable.</p>
+    <p>MyDashboard does not sell Google user data, use it for advertising, or use it to train or improve general-purpose AI models. Provider arrangements for Google-derived content must prohibit those uses. Transfers are limited to what is needed for the requested user-facing feature, security, legal obligations, or another purpose permitted by Google’s applicable policies.</p>
+    <p>MyDashboard follows the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including its <a href="https://developers.google.com/terms/api-services-user-data-policy#additional-requirements-for-specific-api-scopes">Limited Use requirements</a>, and the applicable <a href="https://developers.google.com/workspace/workspace-api-user-data-developer-policy">Google Workspace user data and developer policy</a>.</p>
+  </section>
+  <section aria-labelledby="storage">
+    <h2 id="storage">5. Storage, retention, and security</h2>
+    <p>The private installation may retain credentials, requested extracts, generated documents, conversation records, operational logs, and backups on the operator’s computers or servers. Data can also remain with a selected service provider according to the applicable service settings and agreement.</p>
+    <p>Retention depends on the private installation’s configuration and the operator’s needs. This website does not impose or promise an automatic deletion period. The operator is responsible for protecting access to the private installation and removing information that is no longer needed.</p>
+    <p>No system can guarantee absolute security. Secrets and private Google-account content must not be published in this website or its repository.</p>
+  </section>
+  <section aria-labelledby="deletion">
+    <h2 id="deletion">6. Revoking access and deleting retained information</h2>
+    <ol>
+      <li>Review or remove the app’s authorization in <a href="https://myaccount.google.com/connections">Google Account connections</a>.</li>
+      <li>Remove stored credentials and unwanted records, exports, and backups from the private installation.</li>
+      <li>Where applicable, use the selected AI or hosting provider’s controls to remove retained data, or contact the operator for assistance.</li>
+    </ol>
+    <p>Revoking authorization does not automatically erase previously retained information, delete the Google account, undo email already sent, or remove calendar events already created.</p>
+  </section>
+  <section aria-labelledby="website">
+    <h2 id="website">7. These public information pages</h2>
+    <p>The MyDashboard pages add no analytics scripts, tracking cookies, account forms, or Google sign-in flow. GitHub Pages hosts the site and may process ordinary web-request information, such as IP addresses, under the <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement">GitHub privacy statement</a>. Following an external link takes the visitor to that provider’s service.</p>
+  </section>
+  <section aria-labelledby="changes">
+    <h2 id="changes">8. Policy changes</h2>
+    <p>This page will be updated when MyDashboard’s documented use changes. New uses of Google data must be disclosed, and additional consent obtained where required, before they begin.</p>
+  </section>
+</MyDashboardLayout>
